@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ass"
+    tools:context=".playlist">
+
+    <ImageView
+        android:id="@+id/musica4"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musica3"
+        app:srcCompat="@drawable/al6" />
+
+    <TextView
+        android:id="@+id/nomeMusica4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Orion4Life"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/musica4"
+        app:layout_constraintTop_toTopOf="@+id/musica4" />
+
+
+    <TextView
+        android:id="@+id/nomeArtista4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="23 Musics"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/nomeMusica4"
+        app:layout_constraintTop_toBottomOf="@+id/nomeMusica4" />
+
+    <ImageView
+        android:id="@+id/musica3"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musica2"
+        app:srcCompat="@drawable/al5" />
+
+    <TextView
+        android:id="@+id/nomeArtista3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="9 Musics"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/nomeMusica3"
+        app:layout_constraintTop_toBottomOf="@+id/nomeMusica3" />
+
+    <TextView
+        android:id="@+id/nomeMusica3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="zTechno"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/musica3"
+        app:layout_constraintTop_toTopOf="@+id/musica3" />
+
+    <ImageView
+        android:id="@+id/musica2"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musica"
+        app:srcCompat="@drawable/al2" />
+
+    <TextView
+        android:id="@+id/nomeArtista2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="12 Musics"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/nomeMusica2"
+        app:layout_constraintTop_toBottomOf="@+id/nomeMusica2" />
+
+    <TextView
+        android:id="@+id/nomeMusica2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="8dp"
+        android:text="Gun"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/musica2"
+        app:layout_constraintTop_toTopOf="@+id/musica2" />
+
+    <SearchView
+        android:id="@+id/procura"
+        android:layout_width="409dp"
+        android:layout_height="51dp"
+        android:background="@color/cardview_dark_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="415dp"
+        android:layout_height="55dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/menu"
+        android:onClick="menu"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/home_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbar" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/search_white"
+        android:onClick="search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbar" />
+
+    <Button
+        android:id="@+id/player"
+        android:onClick="player"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="188dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/play_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbar" />
+
+    <Button
+        android:id="@+id/list"
+        android:onClick="lists"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="274dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/alb_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbar" />
+
+    <Button
+        android:id="@+id/settings"
+        android:onClick="settings"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="348dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/setting_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbar" />
+
+
+    <ImageView
+        android:id="@+id/musica"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintTop_toBottomOf="@+id/procura"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/al1" />
+
+
+    <TextView
+        android:id="@+id/nomeArtista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="32 Musics"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/nomeMusica"
+        app:layout_constraintTop_toBottomOf="@+id/nomeMusica" />
+
+    <TextView
+        android:id="@+id/nomeMusica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="ColdPlay"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/musica"
+        app:layout_constraintTop_toTopOf="@+id/musica" />
+
+    <TextView
+        android:id="@+id/playlists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PlayLists"
+        android:textSize="30sp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/musica"
+        app:layout_constraintBottom_toTopOf="@+id/musica"
+        />
+
+    <TextView
+        android:id="@+id/asMusicas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:onClick="music"
+        android:text="Music"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/playlists"
+        app:layout_constraintTop_toTopOf="@+id/playlists" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
