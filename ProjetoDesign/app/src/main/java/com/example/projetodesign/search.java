@@ -31,7 +31,7 @@ public class search extends AppCompatActivity {
     }
 
     public void player(View view) {
-        Button player = (Button) findViewById(R.id.player);
+        Button player = (Button) findViewById(R.id.playerButton);
         player.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -42,7 +42,7 @@ public class search extends AppCompatActivity {
     }
 
     public void lists(View view) {
-        Button lists = (Button) findViewById(R.id.list);
+        Button lists = (Button) findViewById(R.id.playlistButton);
         lists.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -52,7 +52,7 @@ public class search extends AppCompatActivity {
     }
 
     public void settings(View view) {
-        Button setting = (Button) findViewById(R.id.settings);
+        Button setting = (Button) findViewById(R.id.settingsButton);
         setting.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {

@@ -18,10 +18,11 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MenuMainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
+
 
     public static final String DADOS_USERNAME = "username";
-
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private String email;
@@ -31,8 +32,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_main);
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         navigationView = findViewById(R.id.nav_view);
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fragmentManager = getSupportFragmentManager();
 
+        carregarFragmentoInicial();
     }
 
 
@@ -58,14 +58,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    /*private void carregarFragmentoInicial(){
-        navigationView.setCheckedItem(R.id.nav_estatico);
-        Fragment fragment = new ListaLivrosFragment();
+    private void carregarFragmentoInicial(){
+        navigationView.setCheckedItem(R.id.nav_home);
+        Fragment fragment = new MainFragment();
         fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
         setTitle(navigationView.getMenu().getItem(0).getTitle());
-    }*/
-
-
+    }
 
 
 

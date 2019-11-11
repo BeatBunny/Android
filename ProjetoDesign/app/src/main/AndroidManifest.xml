@@ -8,14 +8,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".MainActivity"></activity>
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MenuMainActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".music" />
         <activity android:name=".settings" />
         <activity android:name=".playlist" />
         <activity android:name=".Player" />
         <activity android:name=".search" />
-        <activity android:name=".Login">
+        <activity android:name=".LoginActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
