@@ -16,15 +16,11 @@ public class playlist extends AppCompatActivity {
         setContentView(R.layout.activity_musicas);
     }
 
-    public void music(View view) {
+    public void onClickMusic(View view) {
         TextView playlis = (TextView) findViewById(R.id.asMusicas);
-        playlis.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                startActivity(new Intent(playlist.this, music.class));
-            }
-        });
+        startActivity(new Intent(playlist.this, music.class));
     }
+
     public void search(View view) {
         Button seach = (Button) findViewById(R.id.searchButton);
         seach.setOnClickListener(new View.OnClickListener() {

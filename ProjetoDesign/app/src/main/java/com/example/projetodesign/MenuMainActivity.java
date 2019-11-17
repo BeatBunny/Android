@@ -84,7 +84,7 @@ public class MenuMainActivity extends AppCompatActivity implements
                 break;
             case R.id.nav_musics:
                 setTitle(menuItem.getTitle());
-                //fragment = new GrelhaLivrosFragment();
+                fragment = new GrelhaMusicasFragment();
                 System.out.println("-->Nav Musics");
                 break;
             case R.id.nav_email:
@@ -98,4 +98,3 @@ public class MenuMainActivity extends AppCompatActivity implements
         return true;
     }
 }
-
