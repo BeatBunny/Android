@@ -9,407 +9,357 @@
     tools:context=".MainActivity"
     tools:visibility="visible">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="415dp"
-        android:layout_height="55dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/homeButton"
-        android:layout_width="35dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/home_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Popular"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/searchButton"
-        android:layout_width="35dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/search_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2" />
+        <ImageView
+            android:id="@+id/alb3"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintStart_toEndOf="@+id/alb2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/al3" />
 
-    <Button
-        android:id="@+id/playerButton"
-        android:layout_width="35dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="188dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/play_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2" />
+        <TextView
+            android:id="@+id/nomeAlbum1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="180dp"
+            android:layout_marginTop="8dp"
+            android:text="Guns"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb1" />
 
-    <Button
-        android:id="@+id/playlistButton"
-        android:layout_width="35dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="274dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/alb_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2" />
+        <TextView
+            android:id="@+id/nomeAlbum10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="312dp"
+            android:layout_marginTop="8dp"
+            android:text="Orion"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb6" />
 
-    <Button
-        android:id="@+id/settingsButton"
-        android:layout_width="35dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="348dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/setting_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2" />
+        <TextView
+            android:id="@+id/justPlayed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="208dp"
+            android:text="Just Played"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Popular"
-        android:textSize="28dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/alb6"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/alb5"
+            app:layout_constraintTop_toBottomOf="@+id/justPlayed"
+            app:srcCompat="@drawable/al6" />
 
-    <ImageView
-        android:id="@+id/alb3"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="64dp"
-        app:layout_constraintStart_toEndOf="@+id/alb2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/al3" />
+        <TextView
+            android:id="@+id/nomeAlbum9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            android:text="Bemix"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb4" />
 
-    <TextView
-        android:id="@+id/nomeAlbum1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="8dp"
-        android:text="Guns"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb1" />
+        <ImageView
+            android:id="@+id/alb10"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/alb5"
+            app:layout_constraintTop_toBottomOf="@+id/justPlayed"
+            app:srcCompat="@drawable/al6" />
 
-    <TextView
-        android:id="@+id/nomeAlbum10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="312dp"
-        android:layout_marginTop="8dp"
-        android:text="Orion"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb6" />
+        <TextView
+            android:id="@+id/nomeAlbum14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="324dp"
+            android:text="Guns"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb9" />
 
-    <TextView
-        android:id="@+id/justPlayed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="208dp"
-        android:text="Just Played"
-        android:textSize="28dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/alb8"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/alb7"
+            app:layout_constraintTop_toBottomOf="@+id/beels"
+            app:srcCompat="@drawable/al8" />
 
-    <ImageView
-        android:id="@+id/alb6"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/alb5"
-        app:layout_constraintTop_toBottomOf="@+id/justPlayed"
-        app:srcCompat="@drawable/al6" />
+        <TextView
+            android:id="@+id/justPlayed2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="208dp"
+            android:text="Just Played"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/nomeAlbum9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="8dp"
-        android:text="Bemix"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb4" />
+        <TextView
+            android:id="@+id/nomeAlbum2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="308dp"
+            android:layout_marginTop="8dp"
+            android:text="Monster"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb1" />
 
-    <ImageView
-        android:id="@+id/alb10"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/alb5"
-        app:layout_constraintTop_toBottomOf="@+id/justPlayed"
-        app:srcCompat="@drawable/al6" />
+        <TextView
+            android:id="@+id/nomeAlbum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176dp"
+            android:text="Xtort"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb8" />
 
-    <TextView
-        android:id="@+id/nomeAlbum14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="324dp"
-        android:text="Guns"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb9" />
+        <TextView
+            android:id="@+id/nomeAlbum6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            android:text="Bemix"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb4" />
 
-    <ImageView
-        android:id="@+id/alb8"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/alb7"
-        app:layout_constraintTop_toBottomOf="@+id/beels"
-        app:srcCompat="@drawable/al8" />
+        <TextView
+            android:id="@+id/nomeAlbum5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="312dp"
+            android:layout_marginTop="8dp"
+            android:text="Orion"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb6" />
 
-    <TextView
-        android:id="@+id/justPlayed2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="208dp"
-        android:text="Just Played"
-        android:textSize="28dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/nomeAlbum8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="164dp"
+            android:layout_marginTop="8dp"
+            android:text="Techno"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb5" />
 
-    <TextView
-        android:id="@+id/nomeAlbum2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="8dp"
-        android:text="Monster"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb1" />
+        <TextView
+            android:id="@+id/beels"
+            android:layout_width="129dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="415dp"
+            android:text="Best Sels"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/nomeAlbum9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.298" />
 
-    <TextView
-        android:id="@+id/nomeAlbum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:text="Xtort"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb8" />
+        <TextView
+            android:id="@+id/nomeAlbum3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            android:text="Bemix"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb4" />
 
-    <TextView
-        android:id="@+id/nomeAlbum6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="8dp"
-        android:text="Bemix"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb4" />
+        <ImageView
+            android:id="@+id/alb4"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/justPlayed"
+            app:srcCompat="@drawable/al4" />
 
-    <TextView
-        android:id="@+id/nomeAlbum5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="312dp"
-        android:layout_marginTop="8dp"
-        android:text="Orion"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb6" />
+        <TextView
+            android:id="@+id/justPlayed3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="208dp"
+            android:text="Just Played"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/nomeAlbum8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="8dp"
-        android:text="Techno"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb5" />
+        <TextView
+            android:id="@+id/nomeAlbum4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="164dp"
+            android:layout_marginTop="8dp"
+            android:text="Techno"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb5" />
 
-    <TextView
-        android:id="@+id/beels"
-        android:layout_width="129dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="415dp"
-        android:text="Best Sels"
-        android:textSize="28dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/nomeAlbum9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.298" />
+        <ImageView
+            android:id="@+id/alb7"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/beels"
+            app:srcCompat="@drawable/al7" />
 
-    <TextView
-        android:id="@+id/nomeAlbum3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="8dp"
-        android:text="Bemix"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb4" />
+        <ImageView
+            android:id="@+id/alb9"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@+id/alb8"
+            app:layout_constraintTop_toBottomOf="@+id/beels"
+            app:srcCompat="@drawable/al2" />
 
-    <ImageView
-        android:id="@+id/alb4"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/justPlayed"
-        app:srcCompat="@drawable/al4" />
+        <ImageView
+            android:id="@+id/alb12"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/alb4"
+            app:layout_constraintTop_toBottomOf="@+id/justPlayed"
+            app:srcCompat="@drawable/al5" />
 
-    <TextView
-        android:id="@+id/justPlayed3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="208dp"
-        android:text="Just Played"
-        android:textSize="28dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/NomeAlbumc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:text="ColdPlay"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb1" />
 
-    <TextView
-        android:id="@+id/nomeAlbum4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="8dp"
-        android:text="Techno"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb5" />
+        <TextView
+            android:id="@+id/nomeAlbum11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="164dp"
+            android:layout_marginTop="8dp"
+            android:text="Techno"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb5" />
 
-    <ImageView
-        android:id="@+id/alb7"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/beels"
-        app:srcCompat="@drawable/al7" />
+        <ImageView
+            android:id="@+id/alb2"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintStart_toEndOf="@+id/alb1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/al2" />
 
-    <ImageView
-        android:id="@+id/alb9"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toEndOf="@+id/alb8"
-        app:layout_constraintTop_toBottomOf="@+id/beels"
-        app:srcCompat="@drawable/al2" />
+        <TextView
+            android:id="@+id/nomeAlbum7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="312dp"
+            android:layout_marginTop="8dp"
+            android:text="Orion"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb6" />
 
-    <ImageView
-        android:id="@+id/alb12"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/alb4"
-        app:layout_constraintTop_toBottomOf="@+id/justPlayed"
-        app:srcCompat="@drawable/al5" />
+        <ImageView
+            android:id="@+id/alb1"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:srcCompat="@drawable/al1" />
 
-    <TextView
-        android:id="@+id/NomeAlbumc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="ColdPlay"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb1" />
+        <ImageView
+            android:id="@+id/alb11"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/justPlayed"
+            app:srcCompat="@drawable/al4" />
 
-    <TextView
-        android:id="@+id/nomeAlbum11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="8dp"
-        android:text="Techno"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb5" />
+        <TextView
+            android:id="@+id/nomeAlbum13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:text="Town"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alb7" />
 
-    <ImageView
-        android:id="@+id/alb2"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="64dp"
-        app:layout_constraintStart_toEndOf="@+id/alb1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/al2" />
+        <ImageView
+            android:id="@+id/alb5"
+            android:layout_width="128dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/alb4"
+            app:layout_constraintTop_toBottomOf="@+id/justPlayed"
+            app:srcCompat="@drawable/al5" />
 
-    <TextView
-        android:id="@+id/nomeAlbum7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="312dp"
-        android:layout_marginTop="8dp"
-        android:text="Orion"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb6" />
-
-    <ImageView
-        android:id="@+id/alb1"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/al1" />
-
-    <ImageView
-        android:id="@+id/alb11"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/justPlayed"
-        app:srcCompat="@drawable/al4" />
-
-    <TextView
-        android:id="@+id/nomeAlbum13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:text="Town"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alb7" />
-
-    <ImageView
-        android:id="@+id/alb5"
-        android:layout_width="128dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/alb4"
-        app:layout_constraintTop_toBottomOf="@+id/justPlayed"
-        app:srcCompat="@drawable/al5" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

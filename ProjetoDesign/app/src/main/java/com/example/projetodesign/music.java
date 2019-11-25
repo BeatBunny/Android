@@ -1,7 +1,6 @@
 package com.example.projetodesign;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,8 +14,6 @@ public class music extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
     }
-
-
 
     public void Playlists(View view) {
         TextView music = (TextView) findViewById(R.id.playlists);

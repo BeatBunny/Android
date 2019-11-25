@@ -1,6 +1,7 @@
 package com.example.projetodesign;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.Grelha_mainMenu;
 import com.google.android.material.navigation.NavigationView;
 
 public class MenuMainActivity extends AppCompatActivity implements
@@ -41,11 +43,9 @@ public class MenuMainActivity extends AppCompatActivity implements
         drawer.addDrawerListener(toggle);
         carregarCabecalho();
         navigationView.setNavigationItemSelectedListener(this);
-
-
         fragmentManager = getSupportFragmentManager();
-
         carregarFragmentoInicial();
+
     }
 
 
@@ -60,7 +60,7 @@ public class MenuMainActivity extends AppCompatActivity implements
 
     private void carregarFragmentoInicial(){
         navigationView.setCheckedItem(R.id.nav_home);
-        Fragment fragment = new MainFragment();
+        Fragment fragment = new Grelha_mainMenu();
         fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
         setTitle(navigationView.getMenu().getItem(0).getTitle());
     }
@@ -73,7 +73,7 @@ public class MenuMainActivity extends AppCompatActivity implements
 
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
-                //fragment = new ListaLivrosFragment();
+                fragment = new Grelha_mainMenu();
                 setTitle(menuItem.getTitle());
                 System.out.println("-->Nav Menu");
                 break;
@@ -84,6 +84,7 @@ public class MenuMainActivity extends AppCompatActivity implements
                 break;
             case R.id.nav_musics:
                 setTitle(menuItem.getTitle());
+                startActivity(new Intent(this, playlist.class));
                 //fragment = new GrelhaLivrosFragment();
                 System.out.println("-->Nav Musics");
                 break;
@@ -96,6 +97,10 @@ public class MenuMainActivity extends AppCompatActivity implements
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
 
