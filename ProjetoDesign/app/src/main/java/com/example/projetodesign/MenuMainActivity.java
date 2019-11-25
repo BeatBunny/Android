@@ -84,8 +84,12 @@ public class MenuMainActivity extends AppCompatActivity implements
                 break;
             case R.id.nav_musics:
                 setTitle(menuItem.getTitle());
+<<<<<<< HEAD
                 startActivity(new Intent(this, playlist.class));
                 //fragment = new GrelhaLivrosFragment();
+=======
+                fragment = new GrelhaMusicasFragment();
+>>>>>>> 3ed5e7caa840b64e85c04e78af263abdb8ba01e5
                 System.out.println("-->Nav Musics");
                 break;
             case R.id.nav_email:
@@ -103,4 +107,3 @@ public class MenuMainActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
-

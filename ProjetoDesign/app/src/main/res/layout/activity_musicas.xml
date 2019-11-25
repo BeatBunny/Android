@@ -217,7 +217,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
-        android:onClick="music"
+        android:onClick="onClickMusic"
         android:text="Music"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/playlists"
