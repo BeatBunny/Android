@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.Grelha_mainMenu;
+import com.example.Lista_MusicFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MenuMainActivity extends AppCompatActivity implements
@@ -84,8 +85,7 @@ public class MenuMainActivity extends AppCompatActivity implements
                 break;
             case R.id.nav_musics:
                 setTitle(menuItem.getTitle());
-                //startActivity(new Intent(this, playlist.class));
-                fragment = new GrelhaMusicasFragment();
+                fragment = new Lista_MusicFragment();
                 System.out.println("-->Nav Musics");
                 break;
             case R.id.nav_email:
@@ -103,3 +103,4 @@ public class MenuMainActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
+

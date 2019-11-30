@@ -3,15 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ass"
     tools:context="com.example.Grelha_mainMenu">
 
     <!-- TODO: Update blank fragment layout -->
+
     <GridView
         android:id="@+id/GrelhaDeMusicas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ass"
-        android:gravity="center"
+        android:gravity="bottom"
         android:numColumns="3" />
 
     <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
