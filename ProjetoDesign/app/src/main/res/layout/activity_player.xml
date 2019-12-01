@@ -81,7 +81,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewMusicCover"
         android:layout_width="335dp"
         android:layout_height="327dp"
         android:layout_marginStart="38dp"
@@ -109,7 +109,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/back"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageViewMusicCover"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
         tools:ignore="MissingConstraints" />
 
@@ -134,18 +134,18 @@
         android:background="@color/colorAccent"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewMusicCover"
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/nomeMusica"
+        android:id="@+id/tituloMusica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="Non Stop Party"
         android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/imageViewMusicCover"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewMusicCover" />
 
     <TextView
         android:id="@+id/nomeArtista"
@@ -155,7 +155,7 @@
         android:text="Monster"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/nomeMusica"
-        app:layout_constraintTop_toBottomOf="@+id/nomeMusica" />
+        app:layout_constraintStart_toStartOf="@+id/tituloMusica"
+        app:layout_constraintTop_toBottomOf="@+id/tituloMusica" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
