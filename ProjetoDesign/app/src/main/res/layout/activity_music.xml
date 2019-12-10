@@ -215,8 +215,8 @@
         android:layout_marginTop="10dp"
         android:text="BeMix"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/nomeMusica"
-        app:layout_constraintTop_toBottomOf="@+id/nomeMusica" />
+        app:layout_constraintStart_toStartOf="@+id/tituloMusica"
+        app:layout_constraintTop_toBottomOf="@+id/tituloMusica" />
 
     <TextView
         android:id="@+id/ano"
@@ -229,7 +229,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nomeArtista" />
 
     <TextView
-        android:id="@+id/nomeMusica"
+        android:id="@+id/tituloMusica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
