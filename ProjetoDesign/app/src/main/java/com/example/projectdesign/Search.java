@@ -1,26 +1,22 @@
-package com.example.projetodesign;
+package com.example.projectdesign;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Player extends AppCompatActivity {
+public class Search extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player);
+        setContentView(R.layout.vsearch);
     }
-    public void search(View view) {
-        Button seach = (Button) findViewById(R.id.searchButton);
-        seach.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v) {
-                startActivity(new Intent(Player.this, search.class));
-            }
-        });
+    public void search(View view) {
+
     }
 
     public void menu(View view) {
@@ -28,13 +24,20 @@ public class Player extends AppCompatActivity {
         menu.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Player.this, MainActivity.class));
+                startActivity(new Intent(Search.this, MainActivity.class));
             }
         });
 
     }
 
     public void player(View view) {
+        Button player = (Button) findViewById(R.id.playerButton);
+        player.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                startActivity(new Intent(Search.this, Player.class));
+            }
+        });
 
     }
 
@@ -43,7 +46,7 @@ public class Player extends AppCompatActivity {
         lists.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Player.this, playlist.class));
+                startActivity(new Intent(Search.this, Playlist.class));
             }
         });
     }
@@ -53,7 +56,7 @@ public class Player extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Player.this, settings.class));
+                startActivity(new Intent(Search.this, Settings.class));
             }
         });
     }

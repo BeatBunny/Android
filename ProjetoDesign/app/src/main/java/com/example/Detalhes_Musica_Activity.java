@@ -1,23 +1,14 @@
 package com.example;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.modelo.Musica;
-import com.example.modelo.BeatBunnySingleton;
-import com.example.projetodesign.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.models.Musica;
+import com.example.models.BeatBunnySingleton;
+import com.example.projectdesign.R;
 
 public class Detalhes_Musica_Activity extends AppCompatActivity {
 

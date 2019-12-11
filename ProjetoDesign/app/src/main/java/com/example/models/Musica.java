@@ -1,39 +1,35 @@
-package com.example.modelo;
-
-import android.database.Cursor;
-
-import java.util.ArrayList;
+package com.example.models;
 
 public class Musica {
         private String Title;
-        private String Launchedate;
+        private String Launchdate;
         private int Rating;
         private int Musiccover;
         private String Musicpth;
         private String Musicgenre;
         private String Lyrics;
-        private static int iD=1;
+        private static int Id=1;
         private int Profile_id;
 
 
-        public Musica(int id, String title, String launchedate,String musicpth,String musicgenre,String lyrics, int rating, int musiccover, int profile_id) {
-            iD = id;
+        public Musica(int id, String title, String launchdate,String musicpth,String musicgenre,String lyrics, int rating, int musiccover, int profile_id) {
+            Id = id;
             Musicgenre=musicgenre;
             Title=title;
             Profile_id=profile_id;
             Lyrics=lyrics;
-            Launchedate=launchedate;
+            Launchdate=launchdate;
             Rating=rating;
             Musiccover=musiccover;
             Musicpth=musicpth;
         }
 
-        public void setiD(int id){iD = id;}
+        public void setiD(int id){Id = id;}
         public void setTitle(String title) {
             Title = title;
         }
-        public void setLaunchedate(String launchedate ) {
-            Launchedate = launchedate;
+        public void setLaunchedate(String launchdate) {
+            Launchdate = launchdate;
         }
         public void setRating(int rating) {
             Rating = rating;
@@ -47,12 +43,12 @@ public class Musica {
         public void setMusicgenre(String musicgenre){Musicgenre=musicgenre;}
         public void setLyrics(String lyrics){Lyrics=lyrics;}
         public void setProfile_id(int profile_id){Profile_id=profile_id;}
-        public int getiD() {return iD;}
+        public int getId() {return Id;}
         public String getTitle() {
             return Title;
         }
         public String getLaunchedate() {
-            return Launchedate;
+            return Launchdate;
         }
         public int getRating() {
             return Rating;

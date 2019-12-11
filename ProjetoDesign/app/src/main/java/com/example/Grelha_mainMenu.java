@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.example.Adaptadores.GrelhaMusicaAdaptor;
-import com.example.modelo.Musica;
-import com.example.modelo.BeatBunnySingleton;
-import com.example.projetodesign.R;
+import com.example.adapters.GrelhaMusicaAdapter;
+import com.example.models.Musica;
+import com.example.models.BeatBunnySingleton;
+import com.example.projectdesign.R;
 import java.util.ArrayList;
 public class Grelha_mainMenu extends Fragment {
     private GridView grelhaMusicas;
@@ -29,7 +29,7 @@ public class Grelha_mainMenu extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         listamusicas = BeatBunnySingleton.getInstance(getContext()).getListaMusica();
         grelhaMusicas = view.findViewById(R.id.GrelhaDeMusicas);
-        grelhaMusicas.setAdapter(new GrelhaMusicaAdaptor(getContext(), listamusicas));
+        grelhaMusicas.setAdapter(new GrelhaMusicaAdapter(getContext(), listamusicas));
         grelhaMusicas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {

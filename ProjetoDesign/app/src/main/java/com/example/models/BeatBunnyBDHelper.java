@@ -1,12 +1,10 @@
-package com.example.modelo;
+package com.example.models;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -113,7 +111,7 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
     }
     public Musica adicionarMusicaBD(Musica musica){
         ContentValues values = new ContentValues();
-        values.put(MUSIC_ID, musica.getiD());
+        values.put(MUSIC_ID, musica.getId());
         values.put(MUSIC_TITLE, musica.getTitle());
         values.put(MUSIC_COVER, musica.getMusiccover());
         values.put(MUSIC_GENRE, musica.getMusicgenre());
