@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.models.Musica;
 import com.example.projectdesign.R;
 
@@ -16,6 +19,7 @@ public class GrelhaMusicaAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<Musica> musicas;
+
 
 
     public GrelhaMusicaAdapter(Context context, ArrayList<Musica> musicas) {
@@ -58,12 +62,20 @@ public class GrelhaMusicaAdapter extends BaseAdapter {
 
     public class ViewHolderGrelha {
         private ImageView image;
+        private TextView tituloMusica;
         public ViewHolderGrelha(View view) {
             image = view.findViewById(R.id.imageViewGrelha);
+            tituloMusica = view.findViewById(R.id.title);
         }
-        public void update(int position, ArrayList<Musica> musicas) {
+        public void update(int position, ArrayList<Musica> musicas){
             Musica musica = musicas.get(position);
-            image.setImageResource(musica.getMusiccover());
+            tituloMusica.setText(musica.getTitle());
+            //image.setImageResource(livro.getCapa());
+            Glide.with(context)
+                    .load(musica.getMusiccover())
+                    .placeholder(R.drawable.logo_white)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .fitCenter().into(image);
         }
     }
 }

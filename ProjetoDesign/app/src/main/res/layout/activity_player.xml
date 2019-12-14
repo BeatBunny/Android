@@ -81,7 +81,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewCoverMusica"
         android:layout_width="335dp"
         android:layout_height="327dp"
         android:layout_marginStart="38dp"
@@ -109,7 +109,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/back"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCoverMusica"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
         tools:ignore="MissingConstraints" />
 
@@ -134,7 +134,7 @@
         android:background="@color/colorAccent"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCoverMusica"
         tools:visibility="visible" />
 
     <TextView
@@ -144,11 +144,11 @@
         android:layout_marginTop="15dp"
         android:text="Non Stop Party"
         android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/imageViewCoverMusica"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCoverMusica" />
 
     <TextView
-        android:id="@+id/nomeArtista"
+        android:id="@+id/nomeArtistaMusicaActivityPlayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"

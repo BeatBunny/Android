@@ -8,12 +8,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.listeners.MusicaListener;
 import com.example.utils.MusicaJSONParser;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 //import com.example.listeners.LivrosListener;
 //import com.example.utils.LivroJsonParser;
@@ -28,14 +31,17 @@ public class BeatBunnySingleton {
     private BeatBunnyBDHelper beatBunnyBD = null;
     private MusicaListener musicaListener;
 
+    private String tokenAPI = "AMSI-TOKEN";
+
     private String mUrlAPIusers = "localhost/BeatBunny/advanced/backend/web/v1/user";
     private String mUrlAPIMusicas = "localhost/BeatBunny/advanced/backend/web/v1/music";
     private static RequestQueue volleiQueue;
+    private MusicaListener MusicaListener;
 
 
     public static synchronized BeatBunnySingleton getInstance(Context context) {
         if(instance == null)
-            instance = new BeatBunnySingleton();
+            instance = new BeatBunnySingleton(context);
         return instance;
     }
 
@@ -105,44 +111,24 @@ public class BeatBunnySingleton {
 
 
 
-    private BeatBunnySingleton() {
-
+    private BeatBunnySingleton(Context context) {
+        musicas= new ArrayList<Musica>();
+        beatBunnyBD = new BeatBunnyBDHelper(context);
     }
 
 
     public ArrayList<Musica> getListaMusica() {
         return new ArrayList<>(musicas);
     }
-    public void AdicionarMusica(Musica addmusica){
-        musicas.add(addmusica);
-    }
 
-    public void Remover_musica(int Musica){
-        Musica auxMusica= getMusica(idMusica);
-        if (auxMusica!=null){
-            musicas.remove(auxMusica);
-        }
 
-    }
-    public void Adicionar_Musica(Musica musica)
-    {
-        musicas.add(musica);
-    }
 
-//    public void Editar_livro(Musica musica){
-//        Musica auxMusica= getMusica(musica.getiD());
-//        musica.setLaunchedate(auxMusica.getLaunchedate());
-//        musica.setMusiccover(auxMusica.getMusiccover());
-//        musica.setMusicpth(auxMusica.getMusicpth());
-//        musica.setTitle(auxMusica.getTitle());
-//        musica.setRating(auxMusica.getRating());
-//    }
-
-    public void getAllLivrosAPI(final Context context, boolean isConnected){
+    /*****************************Métodos que acedem à API******************************/
+    public void getAllMusicasAPI(final Context context, boolean isConnected){
         Toast.makeText(context, "isConnected:" + isConnected, Toast.LENGTH_SHORT).show();
         if(!isConnected){
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            musicas = beatBunnyBD.getAllMusicasBD();
+            musicas = beatBunnyBD.getallMusicasBD();
             if(musicaListener != null)
                 musicaListener.onRefreshListaLivros(musicas);
         }
@@ -150,10 +136,10 @@ public class BeatBunnySingleton {
             JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlAPIMusicas, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    musicas = MusicaJSONParser.parserJsonLivros(response, context);
-                    adicionarLivrosBD(livros);
-                    if(livrosListener!= null)
-                        livrosListener.onRefreshListaLivros(livros);
+                    musicas = MusicaJSONParser.parserJsonMusicas(response, context);
+                    adicionarMusicasBD(musicas);
+                    if(musicaListener!= null)
+                        musicaListener.onRefreshListaLivros(musicas);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -165,23 +151,77 @@ public class BeatBunnySingleton {
             volleiQueue.add(request);
         }
     }
+    public void adicionarMusicaAPI(final Musica musica, final Context context){
+        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIMusicas, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                onUpdateListaMusicasBD(MusicaJSONParser.parserJsonMusica(response, context), ADICIONAR_BD);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<>();
+                params.put("token", tokenAPI);
+                params.put("title", musica.getTitle());
+                params.put("cover", musica.getMusiccover());
+                params.put("genre", musica.getMusicgenre());
+                params.put("launchdate", musica.getLaunchedate()+"");
+                params.put("lyrics", musica.getLyrics());
+                params.put("path", musica.getMusicpth());
+                params.put("producer", musica.getProducer());
+                return params;
+            }
+        };
+        volleiQueue.add(request);
+    }
 
 
-    private void onUpdateListaUsersBD(User user, int operacao) {
+    private void onUpdateListaMusicasBD(Musica musica, int operacao) {
         switch (operacao){
             case ADICIONAR_BD:
-                adicionarUserBD(user);
+                adicionarMusicaBD(musica);
                 break;
             case EDITAR_BD:
-                editarUserBD(user);
+                editarMusicaBD(musica);
                 break;
             case REMOVER_BD:
-                removerUserBD(user.getId());
+                removerMusicaBD(musica.getId());
                 break;
         }
     }
 
+    public void setMusicaListener(MusicaListener livrosListener) {
+        this.MusicaListener = livrosListener;
+    }
 
+
+
+    public void adicionarMusicasBD(ArrayList<Musica> listaMusica){
+        beatBunnyBD.removerAllMusicasBD();
+        for (Musica musica : listaMusica)
+            adicionarMusicaBD(musica);
+
+    }
+
+    public void adicionarMusicaBD(Musica musica){
+        beatBunnyBD.adicionarMusicaBD(musica);
+    }
+    public void editarMusicaBD(Musica musica){
+        Musica auxMusica = getMusica(musica.getId());
+        if (auxMusica != null)
+            beatBunnyBD.guardarMusicaBD(musica);
+    }
+
+    public void removerMusicaBD(int idMusica){
+        Musica auxMusica = getMusica(idMusica);
+        if (auxMusica!=null)
+            beatBunnyBD.removerMusicaBD(idMusica);
+    }
 
 
 }

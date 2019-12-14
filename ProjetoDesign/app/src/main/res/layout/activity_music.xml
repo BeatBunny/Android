@@ -209,7 +209,7 @@
 
 
     <TextView
-        android:id="@+id/nomeArtista"
+        android:id="@+id/nomeArtistaMusicaActivityPlayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -225,8 +225,8 @@
         android:layout_marginTop="10dp"
         android:text="2016"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/nomeArtista"
-        app:layout_constraintTop_toBottomOf="@+id/nomeArtista" />
+        app:layout_constraintStart_toStartOf="@+id/nomeArtistaMusicaActivityPlayer"
+        app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer" />
 
     <TextView
         android:id="@+id/nomeMusica"

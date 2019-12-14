@@ -26,7 +26,7 @@ public class Lista_MusicFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_musica, container, false);
-        listamusicas = BeatBunnySingleton.getInstance().getListaMusica();
+        listamusicas = BeatBunnySingleton.getInstance(getContext()).getListaMusica();
         grelhaMusicas = view.findViewById(R.id.GrelhaDeMusicas);
         grelhaMusicas.setAdapter(new GrelhaMusicaAdapter(getContext(), listamusicas));
 //        grelhaMusicas.setOnItemClickListener(new AdapterView.OnItemClickListener() {

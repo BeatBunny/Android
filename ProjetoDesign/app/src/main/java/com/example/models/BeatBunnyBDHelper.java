@@ -36,12 +36,11 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
     private static final String MUSIC_ID= "id";
     private static final String MUSIC_TITLE = "title";
     private static final String MUSIC_LAUNCHDATE = "launchdate";
-    private static final String MUSIC_RATING = "rating";
     private static final String MUSIC_LYRICS = "musiclyrics";
     private static final String MUSIC_COVER = "musiccover";
     private static final String MUSIC_PATH = "musicpath";
     private static final String MUSIC_GENRE = "genre";
-    private static final String MUSIC_PROFILE_ID= "profile_id";
+    private static final String MUSIC_PRODUCER= "producer";
                     /**TabelaPlaylists**/
     private static final String PLAYLISTS_ID= "id";
     private static final String PLAYLISTS_NAME= "name";
@@ -80,14 +79,12 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
         String createMusicTable = "CREATE TABLE "+TABLE_MUSICS+
                 "( "+MUSIC_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 MUSIC_TITLE + " TEXT NOT NULL, "+
-                MUSIC_RATING + " INTEGER NOT NULL, "+
                 MUSIC_GENRE + " TEXT NOT NULL, "+
                 MUSIC_COVER + " TEXT NOT NULL,"+
                 MUSIC_LAUNCHDATE + " DATE NOT NULL, "+
                 MUSIC_LYRICS + " TEXT NOT NULL, "+
                 MUSIC_PATH + " TEXT NOT NULL,"+
-                MUSIC_PROFILE_ID+ "INTEGER, "+
-                "FOREIGN KEY ("+MUSIC_PROFILE_ID+") REFERENCES "+TABLE_PROFILE+"("+PROFILE_ID+"))";
+                MUSIC_PRODUCER+ " TEXT NOT NULL)";
         db.execSQL(createMusicTable);
 
         String createPlaylistTable = "CREATE TABLE "+TABLE_PLAYLISTS+
@@ -109,25 +106,7 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_USER);
         this.onCreate(db);
     }
-    public Musica adicionarMusicaBD(Musica musica){
-        ContentValues values = new ContentValues();
-        values.put(MUSIC_ID, musica.getId());
-        values.put(MUSIC_TITLE, musica.getTitle());
-        values.put(MUSIC_COVER, musica.getMusiccover());
-        values.put(MUSIC_GENRE, musica.getMusicgenre());
-        values.put(MUSIC_LAUNCHDATE, musica.getLaunchedate());
-        values.put(MUSIC_RATING, musica.getRating());
-        values.put(MUSIC_LYRICS, musica.getLyrics());
-        values.put(MUSIC_PATH, musica.getMusicpth());
-        values.put(MUSIC_PROFILE_ID,musica.getProfile_id());
 
-        long id = this.database.insert(TABLE_MUSICS, null, values);
-        if(id > -1){
-            musica.setiD( (int) id );
-            return musica;
-        }
-        return null;
-    }
 
     public User adicionarUserBD(User user){
         ContentValues values = new ContentValues();
@@ -177,18 +156,64 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<Musica> getallMusicsBD(){
+    public ArrayList<Musica> getallMusicasBD(){
         ArrayList<Musica> musicas = new ArrayList<Musica>();
-        Cursor cursor = this.database.query(TABLE_MUSICS, new String[]{MUSIC_ID, MUSIC_TITLE, MUSIC_LAUNCHDATE, MUSIC_PATH, MUSIC_GENRE, MUSIC_LYRICS,MUSIC_RATING,MUSIC_COVER,MUSIC_PROFILE_ID}, null, null, null,null, null);
+        Cursor cursor = this.database.query(TABLE_MUSICS, new String[]{MUSIC_ID, MUSIC_TITLE, MUSIC_LAUNCHDATE, MUSIC_PATH, MUSIC_GENRE, MUSIC_LYRICS,MUSIC_COVER,MUSIC_PRODUCER}, null, null, null,null, null);
 
         if(cursor.moveToFirst()){
             do{
-                Musica auxMusica = new Musica(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6),cursor.getInt(7),cursor.getInt(8));
+                Musica auxMusica = new Musica(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6),cursor.getString(7));
                 auxMusica.setiD(cursor.getInt(0));
                 musicas.add(auxMusica);
             }while (cursor.moveToNext());
         }
         return musicas;
+    }
+    public boolean removerAllMusicasBD() {
+        return database.delete(TABLE_MUSICS, null, null) > 0;
+    }
+
+    /****************OPERAÇÕES CRUD**************/
+
+      /****************MUSICAS****************/
+    //INSERT
+    public Musica adicionarMusicaBD(Musica musica){
+        ContentValues values = new ContentValues();
+        values.put(MUSIC_ID, musica.getId());
+        values.put(MUSIC_TITLE, musica.getTitle());
+        values.put(MUSIC_COVER, musica.getMusiccover());
+        values.put(MUSIC_GENRE, musica.getMusicgenre());
+        values.put(MUSIC_LAUNCHDATE, musica.getLaunchedate());
+        values.put(MUSIC_LYRICS, musica.getLyrics());
+        values.put(MUSIC_PATH, musica.getMusicpth());
+        values.put(MUSIC_PRODUCER,musica.getProducer());
+
+        long id = this.database.insert(TABLE_MUSICS, null, values);
+        if(id > -1){
+            musica.setiD( (int) id );
+            return musica;
+        }
+        return null;
+    }
+
+    //UPDATE
+    public boolean guardarMusicaBD(Musica musica){
+
+        ContentValues values = new ContentValues();
+        values.put(MUSIC_ID, musica.getId());
+        values.put(MUSIC_TITLE, musica.getTitle());
+        values.put(MUSIC_COVER, musica.getMusiccover());
+        values.put(MUSIC_GENRE, musica.getMusicgenre());
+        values.put(MUSIC_LAUNCHDATE, musica.getLaunchedate());
+        values.put(MUSIC_LYRICS, musica.getLyrics());
+        values.put(MUSIC_PATH, musica.getMusicpth());
+        values.put(MUSIC_PRODUCER,musica.getProducer());
+
+        return this.database.update(TABLE_MUSICS, values, "id = ?", new String[]{musica.getId()+""}) > 0;
+    }
+    //DELETE
+    public boolean removerMusicaBD(int idMusica){
+        return database.delete(TABLE_MUSICS, "id =?", new String[]{idMusica+""}) > 0;
     }
 
 }

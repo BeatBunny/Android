@@ -1,13 +1,15 @@
 package com.example;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.models.Musica;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.models.BeatBunnySingleton;
+import com.example.models.Musica;
 import com.example.projectdesign.R;
 
 public class Detalhes_Musica_Activity extends AppCompatActivity {
@@ -20,6 +22,7 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
     private TextView textViewSerieJava;
     private TextView textViewAnoJava;
     private TextView textViewAutorJava;
+    private TextView nomeArtistaJava;
 
     private ImageView imageViewCoverMusicJava;
 
@@ -34,9 +37,9 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
 
         musica = BeatBunnySingleton.getInstance(getApplicationContext()).getMusica(idMusica);
 
-        textViewTituloJava = findViewById(R.id.tituloMusica);
-
-        imageViewCoverMusicJava = findViewById(R.id.imageViewMusicCover);
+        textViewTituloJava = findViewById(R.id.nomeMusica);
+        imageViewCoverMusicJava = findViewById(R.id.imageViewCoverMusica);
+        nomeArtistaJava = findViewById(R.id.nomeArtistaMusicaActivityPlayer);
 
         if(musica != null){
             setTitle(musica.getTitle());
@@ -44,7 +47,12 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
             /*textViewAnoJava.setText(""+musica.getAno());
             textViewAutorJava.setText(musica.getAutor());
             textViewSerieJava.setText(musica.getSerie());*/
-            imageViewCoverMusicJava.setImageResource(musica.getMusiccover());
+            //imageViewCoverMusicJava.setImageResource(musica.getMusiccover());
+            Glide.with(getApplicationContext())
+                    .load(musica.getMusiccover())
+                    .placeholder(R.drawable.logo_white)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .fitCenter().into(imageViewCoverMusicJava);
         }else{
             setTitle("Music X");
         }

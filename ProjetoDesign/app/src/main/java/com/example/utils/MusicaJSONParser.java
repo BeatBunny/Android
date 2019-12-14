@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.example.models.Musica;
-import com.example.models.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,12 +21,31 @@ public class MusicaJSONParser {
         try {
             for (int i = 0; i < response.length(); i++){
                 JSONObject musica = (JSONObject) response.get(i);
-                int idUser = musica.getInt("id");
-                String usernameUser = musica.getString("username");
-                String authKeyUser = musica.getString("authKey");
-                String emailUser = musica.getString("email");
 
-                Musica auxMusica = new Musica(/*idUser, usernameUser, authKeyUser, emailUser*/);
+                /*
+                *
+                values.put(MUSIC_ID, musica.getId());
+                values.put(MUSIC_TITLE, musica.getTitle());
+                values.put(MUSIC_COVER, musica.getMusiccover());
+                values.put(MUSIC_GENRE, musica.getMusicgenre());
+                values.put(MUSIC_LAUNCHDATE, musica.getLaunchedate());
+                values.put(MUSIC_LYRICS, musica.getLyrics());
+                values.put(MUSIC_PATH, musica.getMusicpth());
+                values.put(MUSIC_PRODUCER,musica.getProducer());
+                * */
+
+                int idMusica = musica.getInt("id");
+                String titleMusica = musica.getString("title");
+                String coverMusica = musica.getString("cover");
+                String genreMusica = musica.getString("genre");
+                String launchdateMusica = musica.getString("launchdate");
+                String lyricsMusica = musica.getString("lyrics");
+                String pathMusica = musica.getString("path");
+                String producerMusica = musica.getString("producer");
+                /*
+                public Musica(int id, String title, String launchdate,String musicpth,String musicgenre,String lyrics, int musiccover, String  producer)
+                */
+                Musica auxMusica = new Musica(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica);
                 listaMusicas.add(auxMusica);
             }
         }
@@ -40,15 +58,18 @@ public class MusicaJSONParser {
     public static Musica parserJsonMusica(String response, Context context){
         Musica auxMusica = null;
         try {
-            JSONObject user = new JSONObject(response);
+            JSONObject musica = new JSONObject(response);
 
-            int idUser = user.getInt("id");
-            String usernameUser = user.getString("username");
-            String authKeyUser = user.getString("authKey");
-            String emailUser = user.getString("email");
+            int idMusica = musica.getInt("id");
+            String titleMusica = musica.getString("title");
+            String coverMusica = musica.getString("cover");
+            String genreMusica = musica.getString("genre");
+            String launchdateMusica = musica.getString("launchdate");
+            String lyricsMusica = musica.getString("lyrics");
+            String pathMusica = musica.getString("path");
+            String producerMusica = musica.getString("producer");
 
-            auxMusica = new Musica(idUser, usernameUser, authKeyUser, emailUser);
-
+            auxMusica = new Musica(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica);
         } catch (JSONException e) {
             e.printStackTrace();
         }

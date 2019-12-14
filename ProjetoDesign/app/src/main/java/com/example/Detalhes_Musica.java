@@ -1,7 +1,7 @@
 package com.example;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.modelo.Musica;
+import com.example.models.Musica;
 public class Detalhes_Musica {
     public Musica musica;
     private int idMusica;
