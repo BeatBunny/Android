@@ -1,4 +1,6 @@
-package com.example.models;
+package com.example.modelo;
+
+import com.example.projetodesign.R;
 
 import java.util.ArrayList;
 
@@ -16,7 +18,7 @@ public class BeatBunnySingleton {
     //COM FOR
     public Musica getMusicaById(int idMusica){
         for(int i = 0; i < musicas.size(); i++){
-            if(musicas.get(i).getId() == idMusica){
+            if(musicas.get(i).getiD() == idMusica){
                 return musicas.get(i);
             }
         }
@@ -27,7 +29,7 @@ public class BeatBunnySingleton {
     //COM FOREACH
     public Musica getMusica(int idMusica){
         for(Musica M : musicas){
-            if(M.getId() == idMusica){
+            if(M.getiD() == idMusica){
                 return M;
             }
         }

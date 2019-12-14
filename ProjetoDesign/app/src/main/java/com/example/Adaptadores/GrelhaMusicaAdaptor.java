@@ -1,4 +1,4 @@
-package com.example.adapters;
+package com.example.Adaptadores;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,18 +7,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.example.models.Musica;
-import com.example.projectdesign.R;
+import com.example.modelo.Musica;
+import com.example.projetodesign.R;
 
 import java.util.ArrayList;
 
-public class GrelhaMusicaAdapter extends BaseAdapter {
+public class GrelhaMusicaAdaptor extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<Musica> musicas;
 
 
-    public GrelhaMusicaAdapter(Context context, ArrayList<Musica> musicas) {
+    public GrelhaMusicaAdaptor(Context context, ArrayList<Musica> musicas) {
         this.context = context;
         this.musicas = musicas;
     }
@@ -47,7 +47,7 @@ public class GrelhaMusicaAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = layoutInflater.inflate(R.layout.item_grelha_musica, null);
 
-        GrelhaMusicaAdapter.ViewHolderGrelha viewHolderGrelha = (GrelhaMusicaAdapter.ViewHolderGrelha) convertView.getTag();
+        GrelhaMusicaAdaptor.ViewHolderGrelha viewHolderGrelha = (GrelhaMusicaAdaptor.ViewHolderGrelha) convertView.getTag();
         if (viewHolderGrelha == null) {
             viewHolderGrelha = new ViewHolderGrelha(convertView);
             convertView.setTag(viewHolderGrelha);

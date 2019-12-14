@@ -1,22 +1,26 @@
-package com.example.projectdesign;
+package com.example.projetodesign;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Search extends AppCompatActivity {
+public class Player extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vsearch);
+        setContentView(R.layout.activity_player);
     }
-
     public void search(View view) {
+        Button seach = (Button) findViewById(R.id.searchButton);
+        seach.setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View v) {
+                startActivity(new Intent(Player.this, search.class));
+            }
+        });
     }
 
     public void menu(View view) {
@@ -24,20 +28,13 @@ public class Search extends AppCompatActivity {
         menu.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Search.this, MainActivity.class));
+                startActivity(new Intent(Player.this, MainActivity.class));
             }
         });
 
     }
 
     public void player(View view) {
-        Button player = (Button) findViewById(R.id.playerButton);
-        player.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                startActivity(new Intent(Search.this, Player.class));
-            }
-        });
 
     }
 
@@ -46,7 +43,7 @@ public class Search extends AppCompatActivity {
         lists.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Search.this, Playlist.class));
+                startActivity(new Intent(Player.this, playlist.class));
             }
         });
     }
@@ -56,7 +53,7 @@ public class Search extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Search.this, Settings.class));
+                startActivity(new Intent(Player.this, settings.class));
             }
         });
     }

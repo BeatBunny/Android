@@ -1,4 +1,6 @@
-package com.example.models;
+package com.example.modelo;
+
+import android.net.Network;
 
 public class Profile {
     private static int Id ;
