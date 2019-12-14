@@ -35,32 +35,15 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        if(!IsValidPassword(password)) {
-            passwordEditText.setError("A password está errada");
-            return;
-        }
-
         Intent main = new Intent(this, MenuMainActivity.class);
         main.putExtra("EMAIL", email);
         startActivity(main);
         finish();
-
     }
 
     private boolean IsValidUsername(String email){
         boolean tof = false;
-        String goodUsername = "richardus1@gmail.com";
-        if(Patterns.EMAIL_ADDRESS.matcher(email).matches() && goodUsername.equals(email))
-            tof = true;
-
-        return tof;
-    }
-
-    private boolean IsValidPassword(String pass){
-        boolean tof = false;
-
-        String goodPassword = "ggez";
-        if(goodPassword.equals(pass))
+        if(Patterns.EMAIL_ADDRESS.matcher(email).matches())
             tof = true;
 
         return tof;
