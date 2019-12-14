@@ -1,6 +1,4 @@
-package com.example.modelo;
-
-import java.util.ArrayList;
+package com.example.models;
 
 public class User {
 
