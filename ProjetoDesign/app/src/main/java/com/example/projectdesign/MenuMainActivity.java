@@ -82,7 +82,7 @@ public class MenuMainActivity extends AppCompatActivity implements
                 break;
             case R.id.nav_musics:
                 setTitle(menuItem.getTitle());
-                fragment = new Grelha_mainMenu();
+                fragment = new Lista_MusicFragment();
                 System.out.println("-->Nav Musics");
                 break;
             case R.id.nav_email:

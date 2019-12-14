@@ -1,16 +1,21 @@
 package com.example.models;
 
+import java.net.IDN;
+
 public class Playlist {
-    private static int Id ;
+    private static int Id=1;
     private String Nome;
     private int Music_id ;
     private int Profile_id;
+    private static int contador=1;
 
     public Playlist(int id, String nome, int music_id, int profile_id) {
         Id=id;
         Nome=nome;
         Music_id=music_id;
         Profile_id=profile_id;
+        contador++;
+        Id =contador;
     }
 
     public void setId(int id){Id = id;}

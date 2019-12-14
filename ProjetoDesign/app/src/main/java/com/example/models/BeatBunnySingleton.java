@@ -116,6 +116,7 @@ public class BeatBunnySingleton {
     public void AdicionarMusica(Musica addmusica){
         musicas.add(addmusica);
     }
+
     public void Remover_musica(int Musica){
         Musica auxMusica= getMusica(idMusica);
         if (auxMusica!=null){
@@ -129,11 +130,10 @@ public class BeatBunnySingleton {
     }
 
 //    public void Editar_livro(Musica musica){
-//        Musica auxMusica=getMusica(musica.getId());
+//        Musica auxMusica= getMusica(musica.getiD());
 //        musica.setLaunchedate(auxMusica.getLaunchedate());
 //        musica.setMusiccover(auxMusica.getMusiccover());
 //        musica.setMusicpth(auxMusica.getMusicpth());
-//        musica.setPvp(auxMusica.getPvp());
 //        musica.setTitle(auxMusica.getTitle());
 //        musica.setRating(auxMusica.getRating());
 //    }
