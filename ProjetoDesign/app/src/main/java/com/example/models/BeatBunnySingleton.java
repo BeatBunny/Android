@@ -1,16 +1,85 @@
 package com.example.models;
 
+import android.content.Context;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.listeners.MusicaListener;
+import com.example.utils.MusicaJSONParser;
+
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
+//import com.example.listeners.LivrosListener;
+//import com.example.utils.LivroJsonParser;
+
 public class BeatBunnySingleton {
+    private static final int ADICIONAR_BD = 1;
+    private static final int EDITAR_BD = 2;
+    private static final int REMOVER_BD = 3;
     public int idMusica;
     private ArrayList<Musica> musicas;
     private static BeatBunnySingleton instance = null;
-    public static synchronized BeatBunnySingleton getInstance() {
+    private BeatBunnyBDHelper beatBunnyBD = null;
+    private MusicaListener musicaListener;
+
+    private String mUrlAPIusers = "localhost/BeatBunny/advanced/backend/web/v1/user";
+    private String mUrlAPIMusicas = "localhost/BeatBunny/advanced/backend/web/v1/music";
+    private static RequestQueue volleiQueue;
+
+
+    public static synchronized BeatBunnySingleton getInstance(Context context) {
         if(instance == null)
             instance = new BeatBunnySingleton();
         return instance;
     }
+
+    /*public void loginUserAPI(final String username, final String password, final Context context){
+        String request = new StringRequest(Request.Method.POST, mUrlAPIusers, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                onUpdateListaUsersBD(UserJSONParser.parserJsonUser(response, context), ADICIONAR_BD);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<>();
+                params.put("username", user.getTitulo());
+                params.put("serie", livro.getSerie());
+                params.put("autor", livro.getAutor());
+                params.put("ano", livro.getAno()+"");
+                params.put("capa", livro.getCapa());
+                return params;
+            }
+        };
+    }
+
+
+    private void onUpdateListaUsersBD(User user, int operacao) {
+        switch (operacao){
+            case ADICIONAR_BD:
+                adicionarUserBD(user);
+                break;
+            case EDITAR_BD:
+                editarUserBD(user);
+                break;
+            case REMOVER_BD:
+                removerUserBD(user.getId());
+                break;
+        }
+    }*/
+
 
 
     //COM FOR
@@ -37,30 +106,9 @@ public class BeatBunnySingleton {
 
 
     private BeatBunnySingleton() {
-        gerarFakeData();
+
     }
 
-    private void gerarFakeData(){
-        musicas = new ArrayList<>();
-//        musicas.add(new Musica(1,"Rock","23/04/2019","musicpath",10,2,R.drawable.al1));
-//        musicas.add(new Musica(2,"Rock","23/04/2019","musicpath",10,2,R.drawable.al2));
-//        musicas.add(new Musica(3,"Rock","23/04/2019","musicpath",10,2,R.drawable.al3));
-//        musicas.add(new Musica(4,"Rock","23/04/2019","musicpath",10,2,R.drawable.al4));
-//        musicas.add(new Musica(5,"Rock","23/04/2019","musicpath",10,2,R.drawable.al5));
-//        musicas.add(new Musica(6,"Rock","23/04/2019","musicpath",10,2,R.drawable.al6));
-//        musicas.add(new Musica(7,"Rock","23/04/2019","musicpath",10,2,R.drawable.al1));
-//        musicas.add(new Musica(8,"Rock","23/04/2019","musicpath",10,2,R.drawable.al2));
-//        musicas.add(new Musica(9,"Rock","23/04/2019","musicpath",10,2,R.drawable.al3));
-//        musicas.add(new Musica(10,"Rock","23/04/2019","musicpath",10,2,R.drawable.al4));
-//        musicas.add(new Musica(11,"Rock","23/04/2019","musicpath",10,2,R.drawable.al5));
-//        musicas.add(new Musica(12,"Rock","23/04/2019","musicpath",10,2,R.drawable.al6));
-//        musicas.add(new Musica(13,"Rock","23/04/2019","musicpath",10,2,R.drawable.al1));
-//        musicas.add(new Musica(14,"Rock","23/04/2019","musicpath",10,2,R.drawable.al2));
-//        musicas.add(new Musica(15,"Rock","23/04/2019","musicpath",10,2,R.drawable.al3));
-//        musicas.add(new Musica(16,"Rock","23/04/2019","musicpath",10,2,R.drawable.al4));
-//        musicas.add(new Musica(17,"Rock","23/04/2019","musicpath",10,2,R.drawable.al5));
-//        musicas.add(new Musica(18,"Rock","23/04/2019","musicpath",10,2,R.drawable.al6));
-    }
 
     public ArrayList<Musica> getListaMusica() {
         return new ArrayList<>(musicas);
@@ -89,5 +137,51 @@ public class BeatBunnySingleton {
 //        musica.setTitle(auxMusica.getTitle());
 //        musica.setRating(auxMusica.getRating());
 //    }
+
+    public void getAllLivrosAPI(final Context context, boolean isConnected){
+        Toast.makeText(context, "isConnected:" + isConnected, Toast.LENGTH_SHORT).show();
+        if(!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            musicas = beatBunnyBD.getAllMusicasBD();
+            if(musicaListener != null)
+                musicaListener.onRefreshListaLivros(musicas);
+        }
+        else{
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlAPIMusicas, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    musicas = MusicaJSONParser.parserJsonLivros(response, context);
+                    adicionarLivrosBD(livros);
+                    if(livrosListener!= null)
+                        livrosListener.onRefreshListaLivros(livros);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            );
+            volleiQueue.add(request);
+        }
+    }
+
+
+    private void onUpdateListaUsersBD(User user, int operacao) {
+        switch (operacao){
+            case ADICIONAR_BD:
+                adicionarUserBD(user);
+                break;
+            case EDITAR_BD:
+                editarUserBD(user);
+                break;
+            case REMOVER_BD:
+                removerUserBD(user.getId());
+                break;
+        }
+    }
+
+
+
 
 }

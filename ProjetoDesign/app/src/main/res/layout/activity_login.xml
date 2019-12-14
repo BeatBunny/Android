@@ -15,9 +15,8 @@
         android:layout_marginTop="235dp"
         android:layout_marginEnd="2dp"
         android:ems="10"
-        android:hint="@string/email"
+        android:hint="Your email"
         android:inputType="textEmailAddress"
-        android:text="richardus1@gmail.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,9 +28,8 @@
         android:layout_marginTop="27dp"
         android:layout_marginEnd="5dp"
         android:ems="10"
-        android:hint="@string/password"
+        android:hint="Your password"
         android:inputType="textPassword"
-        android:text="ggez"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
