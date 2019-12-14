@@ -2,7 +2,7 @@ package com.example.beatbunny;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.projectdesign.R;
+import com.example.projetodesign.R;
 
 public class MainActivity extends AppCompatActivity {
 

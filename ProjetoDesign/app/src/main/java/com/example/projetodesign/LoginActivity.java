@@ -1,4 +1,4 @@
-package com.example.projectdesign;
+package com.example.projetodesign;
 
 
 import android.content.Intent;
@@ -10,7 +10,8 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.projectdesign.R;
+import com.example.projetodesign.MenuMainActivity;
+import com.example.projetodesign.R;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -1,24 +1,35 @@
-package com.example.projectdesign;
+package com.example.projetodesign;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class Player extends AppCompatActivity {
+public class music extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player);
+        setContentView(R.layout.activity_music);
+    }
+
+    public void Playlists(View view) {
+        TextView music = (TextView) findViewById(R.id.playlists);
+        music.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                startActivity(new Intent(music.this, playlist.class));
+            }
+        });
     }
     public void search(View view) {
         Button seach = (Button) findViewById(R.id.searchButton);
         seach.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Player.this, Search.class));
+                startActivity(new Intent(music.this, search.class));
             }
         });
     }
@@ -28,13 +39,20 @@ public class Player extends AppCompatActivity {
         menu.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Player.this, MainActivity.class));
+                startActivity(new Intent(music.this, MainActivity.class));
             }
         });
 
     }
 
     public void player(View view) {
+        Button player = (Button) findViewById(R.id.playerButton);
+        player.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                startActivity(new Intent(music.this, Player.class));
+            }
+        });
 
     }
 
@@ -43,7 +61,7 @@ public class Player extends AppCompatActivity {
         lists.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Player.this, Playlist.class));
+                startActivity(new Intent(music.this, playlist.class));
             }
         });
     }
@@ -53,7 +71,7 @@ public class Player extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(Player.this, Settings.class));
+                startActivity(new Intent(music.this, settings.class));
             }
         });
     }

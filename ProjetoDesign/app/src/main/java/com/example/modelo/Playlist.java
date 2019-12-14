@@ -1,4 +1,6 @@
-package com.example.models;
+package com.example.modelo;
+
+import android.net.Network;
 
 import java.net.IDN;
 
