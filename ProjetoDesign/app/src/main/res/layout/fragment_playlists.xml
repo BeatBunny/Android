@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ass"
+    tools:context="com.example.Grelha_mainMenu">
+
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="699dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:gravity="right"
+            android:text="Music"
+            android:textSize="30dp" />
+
+        <com.diegodobelo.expandingview.ExpandingList
+            android:id="@+id/expanding_list_playlists"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:text="Playlists"
+            android:textSize="30dp" />
+
+    </LinearLayout>
+
+</FrameLayout>
+
