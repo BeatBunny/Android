@@ -1,29 +1,31 @@
 package com.example.models;
 
 public class Musica {
+        private int Id;
         private String Title;
         private String Launchdate;
         private String Musiccover;
         private String Musicpath;
         private String Musicgenre;
         private String Lyrics;
-        private static int Id=1;
         private String Producer;
+        private float Pvp;
 
 
-        public Musica(int id, String title, String launchdate,String musicpath,String musicgenre,String lyrics, String musiccover, String  producer) {
+        public Musica(int id, String title, String launchdate,String musicpath,String musicgenre,String lyrics, String musiccover, String producer, float pvp) {
             Id = id;
-            Musicgenre=musicgenre;
             Title=title;
-            Producer=producer;
-            Lyrics=lyrics;
             Launchdate=launchdate;
-            Musiccover=musiccover;
             Musicpath=musicpath;
+            Musicgenre=musicgenre;
+            Lyrics=lyrics;
+            Musiccover=musiccover;
+            Producer=producer;
+            Pvp = pvp;
         }
 
 
-        public void setId(int id){Id = id;}
+        //public void setId(int id){Id = id;}
         public void setTitle(String title) {
             Title = title;
         }
@@ -57,6 +59,7 @@ public class Musica {
             return Musicpath;
         }
         public String getLyrics(){return Lyrics;}
+        public float getPvp(){return Pvp;}
 
 }
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 public class Grelha_mainMenu extends Fragment implements MusicaListener {
     private GridView grelhaMusicas;
     private ArrayList<Musica> listamusicas;
-
+    private ImageView imageViewGrelhaJava;
     private SearchView searchView;
     public Grelha_mainMenu() {
         // Required empty public constructor
@@ -39,6 +40,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
         setHasOptionsMenu(true);
         //listamusicas = BeatBunnySingleton.getInstance(getContext()).getListaMusicas();
         grelhaMusicas = view.findViewById(R.id.GrelhaDeMusicas);
+        imageViewGrelhaJava = view.findViewById(R.id.imageViewGrelha);
         //grelhaMusicas.setAdapter(new GrelhaMusicaAdaptor(getContext(), listamusicas));
         grelhaMusicas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -107,9 +109,8 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
 
     @Override
     public void onRefreshListaMusica(ArrayList<Musica> musicas) {
-
-        GrelhaMusicaAdapter listaMusicaAdaptador = new GrelhaMusicaAdapter(getContext(), musicas);
-        grelhaMusicas.setAdapter(listaMusicaAdaptador);
+        GrelhaMusicaAdapter grelhaMusicaAdapter = new GrelhaMusicaAdapter(getContext(), musicas);
+        grelhaMusicas.setAdapter(grelhaMusicaAdapter);
     }
 
     @Override

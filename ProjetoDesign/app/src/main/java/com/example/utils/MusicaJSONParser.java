@@ -24,16 +24,14 @@ public class MusicaJSONParser {
 
                 int idMusica = musica.getInt("id");
                 String titleMusica = musica.getString("title");
-                String coverMusica = musica.getString("cover");
-                String genreMusica = musica.getString("genre");
+                String coverMusica = musica.getString("musiccover");
+                String genreMusica = musica.getString("genres_id");
                 String launchdateMusica = musica.getString("launchdate");
                 String lyricsMusica = musica.getString("lyrics");
-                String pathMusica = musica.getString("path");
-                String producerMusica = musica.getString("producer");
-                /*
-                public Musica(int id, String title, String launchdate,String musicpth,String musicgenre,String lyrics, int musiccover, String  producer)
-                */
-                Musica auxMusica = new Musica(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica);
+                String pathMusica = musica.getString("musicpath");
+                String producerMusica = musica.getString("profile_id");
+                String pvpMusica = musica.getString("pvp");
+                Musica auxMusica = new Musica(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica, Float.parseFloat(pvpMusica));
                 listaMusicas.add(auxMusica);
             }
         }
@@ -50,14 +48,15 @@ public class MusicaJSONParser {
 
             int idMusica = musica.getInt("id");
             String titleMusica = musica.getString("title");
-            String coverMusica = musica.getString("cover");
-            String genreMusica = musica.getString("genre");
+            String coverMusica = musica.getString("musiccover");
+            String genreMusica = musica.getString("genres_id");
             String launchdateMusica = musica.getString("launchdate");
             String lyricsMusica = musica.getString("lyrics");
-            String pathMusica = musica.getString("path");
-            String producerMusica = musica.getString("producer");
+            String pathMusica = musica.getString("musicpath");
+            String producerMusica = musica.getString("producer_id");
+            double pvpMusica = musica.getDouble("pvp");
 
-            auxMusica = new Musica(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica);
+            auxMusica = new Musica(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica, (float) pvpMusica);
         } catch (JSONException e) {
             e.printStackTrace();
         }

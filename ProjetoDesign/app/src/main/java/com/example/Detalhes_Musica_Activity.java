@@ -3,6 +3,7 @@ package com.example;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,9 +30,9 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_player);
         //TER A SETINHA DE TRAS
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         idMusica = getIntent().getIntExtra("DETALHES", -1);
 
@@ -44,12 +45,13 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
         if(musica != null){
             setTitle(musica.getTitle());
             textViewTituloJava.setText(musica.getTitle());
+            nomeArtistaJava.setText(musica.getProducer());
             /*textViewAnoJava.setText(""+musica.getAno());
             textViewAutorJava.setText(musica.getAutor());
             textViewSerieJava.setText(musica.getSerie());*/
             //imageViewCoverMusicJava.setImageResource(musica.getMusiccover());
             Glide.with(getApplicationContext())
-                    .load(musica.getMusiccover())
+                    .load("http://192.168.1.65:80/BeatBunny/advanced/frontend/web/"+musica.getMusiccover()+"/image_"+musica.getId()+".png")
                     .placeholder(R.drawable.logo_white)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fitCenter().into(imageViewCoverMusicJava);

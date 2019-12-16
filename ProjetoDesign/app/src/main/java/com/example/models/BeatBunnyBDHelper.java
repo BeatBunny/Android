@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -41,6 +40,7 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
     private static final String MUSIC_PATH = "musicpath";
     private static final String MUSIC_GENRE = "genre";
     private static final String MUSIC_PRODUCER= "producer";
+    private static final String MUSIC_PVP = "pvp";
                     /**TabelaPlaylists**/
     private static final String PLAYLISTS_ID= "id";
     private static final String PLAYLISTS_NAME= "name";
@@ -78,7 +78,8 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
                 MUSIC_LAUNCHDATE + " DATE NOT NULL, "+
                 MUSIC_LYRICS + " TEXT NOT NULL, "+
                 MUSIC_PATH + " TEXT NOT NULL,"+
-                MUSIC_PRODUCER+ " TEXT NOT NULL)";
+                MUSIC_PRODUCER+ " TEXT NOT NULL,"+
+                MUSIC_PVP+ " TEXT NOT NULL)";
         database.execSQL(createMusicTable);
 
         String createPlaylistTable = "CREATE TABLE "+TABLE_PLAYLISTS+
@@ -121,12 +122,12 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
 
     public ArrayList<Musica> getallMusicasBD(){
         ArrayList<Musica> musicas = new ArrayList<Musica>();
-        Cursor cursor = this.database.query(TABLE_MUSICS, new String[]{MUSIC_ID, MUSIC_TITLE, MUSIC_LAUNCHDATE, MUSIC_PATH, MUSIC_GENRE, MUSIC_LYRICS,MUSIC_COVER,MUSIC_PRODUCER}, null, null, null,null, null);
+        Cursor cursor = this.database.query(TABLE_MUSICS, new String[]{MUSIC_ID, MUSIC_TITLE, MUSIC_LAUNCHDATE, MUSIC_PATH, MUSIC_GENRE, MUSIC_LYRICS,MUSIC_COVER,MUSIC_PRODUCER, MUSIC_PVP}, null, null, null,null, null);
 
         if(cursor.moveToFirst()){
             do{
-                Musica auxMusica = new Musica(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6),cursor.getString(7));
-                auxMusica.setId(cursor.getInt(0));
+                Musica auxMusica = new Musica(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),cursor.getString(6),cursor.getString(7), cursor.getFloat(8));
+                //auxMusica.setId(cursor.getInt(0));
                 musicas.add(auxMusica);
             }while (cursor.moveToNext());
         }
@@ -140,7 +141,7 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
 
       /****************MUSICAS****************/
     //INSERT
-    public Musica adicionarMusicaBD(Musica musica){
+    public void adicionarMusicaBD(Musica musica){
         ContentValues values = new ContentValues();
         values.put(MUSIC_ID, musica.getId());
         values.put(MUSIC_TITLE, musica.getTitle());
@@ -150,13 +151,9 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
         values.put(MUSIC_LYRICS, musica.getLyrics());
         values.put(MUSIC_PATH, musica.getMusicpath());
         values.put(MUSIC_PRODUCER,musica.getProducer());
+        values.put(MUSIC_PVP, musica.getPvp());
 
-        long id = this.database.insert(TABLE_MUSICS, null, values);
-        if(id > -1){
-            musica.setId( (int) id );
-            return musica;
-        }
-        return null;
+        this.database.insert(TABLE_MUSICS, null, values);
     }
 
     //UPDATE
@@ -171,6 +168,7 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
         values.put(MUSIC_LYRICS, musica.getLyrics());
         values.put(MUSIC_PATH, musica.getMusicpath());
         values.put(MUSIC_PRODUCER,musica.getProducer());
+        values.put(MUSIC_PVP, musica.getPvp());
 
         return this.database.update(TABLE_MUSICS, values, "id = ?", new String[]{musica.getId()+""}) > 0;
     }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -19,7 +20,6 @@ public class GrelhaMusicaAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<Musica> musicas;
-
 
 
     public GrelhaMusicaAdapter(Context context, ArrayList<Musica> musicas) {
@@ -70,11 +70,10 @@ public class GrelhaMusicaAdapter extends BaseAdapter {
         public void update(int position, ArrayList<Musica> musicas){
             Musica musica = musicas.get(position);
             tituloMusica.setText(musica.getTitle());
-            //image.setImageResource(livro.getCapa());
             Glide.with(context)
-                    .load(musica.getMusiccover())
+                    .load("http://192.168.1.65:80/BeatBunny/advanced/frontend/web/"+musica.getMusiccover()+"/image_"+musica.getId()+".png")
                     .placeholder(R.drawable.logo_white)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .fitCenter().into(image);
         }
     }
