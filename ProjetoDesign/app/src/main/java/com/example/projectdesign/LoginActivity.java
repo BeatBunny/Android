@@ -1,4 +1,4 @@
-package com.example.projetodesign;
+package com.example.projectdesign;
 
 
 import android.content.Intent;
@@ -9,8 +9,11 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.modelo.BeatBunnySingleton;
+import com.example.models.BeatBunnySingleton;
 import com.example.utils.UserJSONParser;
+
+import com.example.projectdesign.MenuMainActivity;
+import com.example.projectdesign.R;
 
 public class LoginActivity extends AppCompatActivity {
 

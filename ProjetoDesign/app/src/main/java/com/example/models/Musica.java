@@ -1,17 +1,17 @@
-package com.example.modelo;
+package com.example.models;
 
 public class Musica {
         private String Title;
         private String Launchdate;
         private String Musiccover;
-        private String Musicpth;
+        private String Musicpath;
         private String Musicgenre;
         private String Lyrics;
         private static int Id=1;
         private String Producer;
 
 
-        public Musica(int id, String title, String launchdate,String musicpth,String musicgenre,String lyrics, String musiccover, String  producer) {
+        public Musica(int id, String title, String launchdate,String musicpath,String musicgenre,String lyrics, String musiccover, String  producer) {
             Id = id;
             Musicgenre=musicgenre;
             Title=title;
@@ -19,22 +19,22 @@ public class Musica {
             Lyrics=lyrics;
             Launchdate=launchdate;
             Musiccover=musiccover;
-            Musicpth=musicpth;
+            Musicpath=musicpath;
         }
 
 
-        public void setiD(int id){Id = id;}
+        public void setId(int id){Id = id;}
         public void setTitle(String title) {
             Title = title;
         }
-        public void setLaunchedate(String launchedate ) {
-            Launchdate = launchedate;
+        public void setLaunchdate(String launchdate) {
+            Launchdate = launchdate;
         }
         public void setMusiccover(String musiccover) {
             Musiccover = musiccover;
         }
-        public void setMusicpth(String musicpth){
-            Musicpth=musicpth;
+        public void setMusicpath(String musicpath){
+            Musicpath=musicpath;
         }
         public void setMusicgenre(String musicgenre){Musicgenre=musicgenre;}
         public void setLyrics(String lyrics){Lyrics=lyrics;}
@@ -45,7 +45,7 @@ public class Musica {
         public String getTitle() {
             return Title;
         }
-        public String getLaunchedate() {
+        public String getLaunchdate() {
             return Launchdate;
         }
         public String getMusiccover() {
@@ -53,8 +53,8 @@ public class Musica {
         }
         public String getProducer(){return Producer;}
         public String getMusicgenre(){return Musicgenre;}
-        public String getMusicpth() {
-            return Musicpth;
+        public String getMusicpath() {
+            return Musicpath;
         }
         public String getLyrics(){return Lyrics;}
 

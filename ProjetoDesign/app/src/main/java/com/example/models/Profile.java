@@ -1,4 +1,4 @@
-package com.example.modelo;
+package com.example.models;
 
 public class Profile {
     private static int Profile_ID ;
