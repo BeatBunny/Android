@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.modelo.BeatBunnySingleton;
-import com.example.modelo.Musica;
-import com.example.projetodesign.R;
+import com.example.models.BeatBunnySingleton;
+import com.example.models.Musica;
+import com.example.projectdesign.R;
 
 public class Detalhes_Musica_Activity extends AppCompatActivity {
 

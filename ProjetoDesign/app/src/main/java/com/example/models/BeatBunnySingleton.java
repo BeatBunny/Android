@@ -1,7 +1,6 @@
 
 package com.example.models;
 
-import com.example.projectdesign.R;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -40,10 +39,10 @@ public class BeatBunnySingleton {
 
     private String tokenAPI = "AMSI-TOKEN";
 
-    private String mUrlAPIusers = "http://10.0.2.2:8888/web/v1/user";
+    private String mUrlAPIusers = "http://10.200.12.249/web/v1/user";
     //http://127.0.0.1:8888/web/v1/
     //http://localhost/BeatBunny/advanced/backend/web/v1
-    private String mUrlAPIMusicas = "http://10.0.2.2:8888/web/v1/music";
+    private String mUrlAPIMusicas = "http://10.200.12.249:80/BeatBunny/advanced/backend/web/v1/music";
     private static RequestQueue volleiQueue;
 
 

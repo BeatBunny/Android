@@ -9,12 +9,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.models.BeatBunnySingleton;
-import com.example.utils.UserJSONParser;
-
-import com.example.projectdesign.MenuMainActivity;
-import com.example.projectdesign.R;
-
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailEditText;
@@ -38,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        BeatBunnySingleton.getInstance(getApplicationContext()).getAllUsersAPI(getApplicationContext(), UserJSONParser.isConnectionInternet(getApplicationContext()));
+        //BeatBunnySingleton.getInstance(getApplicationContext()).getAllUsersAPI(getApplicationContext(), UserJSONParser.isConnectionInternet(getApplicationContext()));
 
         Intent main = new Intent(this, MenuMainActivity.class);
         main.putExtra("EMAIL", email);

@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.modelo.Musica;
-import com.example.projetodesign.R;
+import com.example.models.Musica;
+import com.example.projectdesign.R;
 
 import java.util.ArrayList;
 

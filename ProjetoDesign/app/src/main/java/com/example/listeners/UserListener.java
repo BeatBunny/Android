@@ -1,6 +1,6 @@
 package com.example.listeners;
 
-import com.example.modelo.User;
+import com.example.models.User;
 
 import java.util.ArrayList;
 

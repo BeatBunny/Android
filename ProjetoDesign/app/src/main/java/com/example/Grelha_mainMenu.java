@@ -15,13 +15,12 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.Adaptadores.GrelhaMusicaAdaptor;
+import com.example.adapters.GrelhaMusicaAdapter;
 import com.example.listeners.MusicaListener;
-import com.example.modelo.BeatBunnySingleton;
-import com.example.modelo.Musica;
-import com.example.projetodesign.R;
+import com.example.models.BeatBunnySingleton;
+import com.example.models.Musica;
+import com.example.projectdesign.R;
 import com.example.utils.MusicaJSONParser;
-import com.example.utils.UserJSONParser;
 
 import java.util.ArrayList;
 public class Grelha_mainMenu extends Fragment implements MusicaListener {
@@ -78,7 +77,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
                     if(m.getTitle().toLowerCase().contains(newText.toLowerCase()))
                         filtroListaMusica.add(m);
 
-                grelhaMusicas.setAdapter(new GrelhaMusicaAdaptor(getContext(), filtroListaMusica));
+                grelhaMusicas.setAdapter(new GrelhaMusicaAdapter(getContext(), filtroListaMusica));
                 return true;
             }
         });
@@ -100,7 +99,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
             searchView.onActionViewCollapsed();
         }
         BeatBunnySingleton.getInstance(getContext()).getAllMusicasAPI(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
-        BeatBunnySingleton.getInstance(getContext()).getAllUsersAPI(getContext(), UserJSONParser.isConnectionInternet(getContext()));
+        //BeatBunnySingleton.getInstance(getContext()).getAllUsersAPI(getContext(), UserJSONParser.isConnectionInternet(getContext()));
 
         super.onResume();
     }
@@ -109,8 +108,8 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
     @Override
     public void onRefreshListaMusica(ArrayList<Musica> musicas) {
 
-        GrelhaMusicaAdaptor listaLivroAdaptador = new GrelhaMusicaAdaptor(getContext(), musicas);
-        grelhaMusicas.setAdapter(listaLivroAdaptador);
+        GrelhaMusicaAdapter listaMusicaAdaptador = new GrelhaMusicaAdapter(getContext(), musicas);
+        grelhaMusicas.setAdapter(listaMusicaAdaptador);
     }
 
     @Override

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.example.modelo.Profile;
+import com.example.models.Profile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
