@@ -1,8 +1,4 @@
-package com.example.modelo;
-
-import android.database.Cursor;
-
-import java.util.ArrayList;
+package com.example.models;
 
 public class Musica {
         private String Title;
@@ -31,8 +27,8 @@ public class Musica {
         public void setTitle(String title) {
             Title = title;
         }
-        public void setLaunchedate(String launchedate ) {
-            Launchedate = launchedate;
+        public void setLaunchedate(String launchdate) {
+            Launchdate = launchdate;
         }
         public void setMusiccover(String musiccover) {
             Musiccover = musiccover;
@@ -50,7 +46,7 @@ public class Musica {
             return Title;
         }
         public String getLaunchedate() {
-            return Launchedate;
+            return Launchdate;
         }
         public String getMusiccover() {
             return Musiccover;

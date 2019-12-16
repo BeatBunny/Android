@@ -1,4 +1,4 @@
-package com.example.projetodesign;
+package com.example.projectdesign;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,21 +6,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
+import android.widget.TextView;
 
-public class settings extends AppCompatActivity {
+public class Playlist extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_musicas);
+    }
+
+    public void music(View view) {
+        TextView playlis = (TextView) findViewById(R.id.asMusicas);
+        playlis.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                startActivity(new Intent(Playlist.this, Music.class));
+            }
+        });
     }
     public void search(View view) {
         Button seach = (Button) findViewById(R.id.searchButton);
         seach.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(settings.this, search.class));
+                startActivity(new Intent(Playlist.this, Search.class));
             }
         });
     }
@@ -30,7 +40,7 @@ public class settings extends AppCompatActivity {
         menu.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(settings.this, MainActivity.class));
+                startActivity(new Intent(Playlist.this, MainActivity.class));
             }
         });
 
@@ -41,32 +51,22 @@ public class settings extends AppCompatActivity {
         player.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(settings.this, Player.class));
+                startActivity(new Intent(Playlist.this, Player.class));
             }
         });
 
     }
 
     public void lists(View view) {
-        Button lists = (Button) findViewById(R.id.playlistButton);
-        lists.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                startActivity(new Intent(settings.this, playlist.class));
-            }
-        });
     }
 
     public void settings(View view) {
-    }
+        Button setting = (Button) findViewById(R.id.settingsButton);
+        setting.setOnClickListener(new View.OnClickListener() {
 
-
-    public void white(View view) {
-        Switch white = (Switch)findViewById(R.id.whitemode);
-        Boolean checked = white.isChecked();
-        if(checked==true){
-
-        }
+            public void onClick(View v) {
+                startActivity(new Intent(Playlist.this, Settings.class));
+            }
+        });
     }
 }
-

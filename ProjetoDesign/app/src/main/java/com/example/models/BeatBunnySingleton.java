@@ -1,6 +1,4 @@
-package com.example.modelo;
-
-import com.example.projetodesign.R;
+package com.example.models;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -93,7 +91,7 @@ public class BeatBunnySingleton {
     //COM FOR
     public Musica getMusicaById(int idMusica){
         for(int i = 0; i < musicas.size(); i++){
-            if(musicas.get(i).getiD() == idMusica){
+            if(musicas.get(i).getId() == idMusica){
                 return musicas.get(i);
             }
         }
@@ -104,7 +102,7 @@ public class BeatBunnySingleton {
     //COM FOREACH
     public Musica getMusica(int idMusica){
         for(Musica M : musicas){
-            if(M.getiD() == idMusica){
+            if(M.getId() == idMusica){
                 return M;
             }
         }
