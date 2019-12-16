@@ -1,5 +1,7 @@
 package com.example.models;
 
+import android.net.Network;
+
 public class Profile {
     private static int Id ;
     private int Saldo;

@@ -1,5 +1,6 @@
 package com.example.models;
 
+import com.example.projectdesign.R;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -170,9 +171,9 @@ public class BeatBunnySingleton {
                 params.put("title", musica.getTitle());
                 params.put("cover", musica.getMusiccover());
                 params.put("genre", musica.getMusicgenre());
-                params.put("launchdate", musica.getLaunchedate()+"");
+                params.put("launchdate", musica.getLaunchdate()+"");
                 params.put("lyrics", musica.getLyrics());
-                params.put("path", musica.getMusicpth());
+                params.put("path", musica.getMusicpath());
                 params.put("producer", musica.getProducer());
                 return params;
             }

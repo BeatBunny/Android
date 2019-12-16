@@ -2,6 +2,8 @@ package com.example.models;
 
 import java.net.IDN;
 
+import android.net.Network;
+
 public class Playlist {
     private static int Id=1;
     private String Nome;
