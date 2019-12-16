@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
 
 public class BeatBunnyBDHelper extends SQLiteOpenHelper {
@@ -26,12 +24,11 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
     private static final String USER_AUTH_KEY = "auth_key";
     private static final String USER_EMAIL = "email";
                      /**TabelaProfile**/
-    private static final String USER_PROFILE_ID= "id";
+    private static final String PROFILE_ID= "profile_id";
     private static final String PROFILE_SALDO = "saldo";
     private static final String PROFILE_NOME = "nome";
     private static final String PROFILE_NIF = "nif";
     private static final String PROFILE_IMAGE = "profileimage";
-    private static final String PROFILE_USER_ID= "user_id";
                      /**TabelaMusics**/
     private static final String MUSIC_ID= "id";
     private static final String MUSIC_TITLE = "title";
@@ -56,19 +53,19 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
 
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase database) {
 
         String createUserTable = "CREATE TABLE "+TABLE_USER+
                 "( "+USER_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 USER_USERNAME + " TEXT NOT NULL, "+
                 USER_AUTH_KEY + " TEXT NOT NULL, "+
-                USER_PROFILE_ID + " INTEGER NOT NULL, "+
                 USER_EMAIL + " TEXT NOT NULL,"+
-                PROFILE_NOME + " TEXT NOT NULL, "+
-                PROFILE_SALDO + " TEXT NOT NULL, "+
-                PROFILE_NIF + " TEXT NOT NULL, "+
-                PROFILE_IMAGE + " TEXT NOT NULL)";
-        db.execSQL(createUserTable);
+                PROFILE_ID + " INTEGER,"+
+                PROFILE_NOME + " TEXT, "+
+                PROFILE_SALDO + " TEXT, "+
+                PROFILE_NIF + " TEXT, "+
+                PROFILE_IMAGE + " TEXT)";
+        database.execSQL(createUserTable);
 
         String createMusicTable = "CREATE TABLE "+TABLE_MUSICS+
                 "( "+MUSIC_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
@@ -79,48 +76,29 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
                 MUSIC_LYRICS + " TEXT NOT NULL, "+
                 MUSIC_PATH + " TEXT NOT NULL,"+
                 MUSIC_PRODUCER+ " TEXT NOT NULL)";
-        db.execSQL(createMusicTable);
+        database.execSQL(createMusicTable);
 
         String createPlaylistTable = "CREATE TABLE "+TABLE_PLAYLISTS+
                 "( "+PLAYLISTS_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 PLAYLISTS_NAME + " TEXT NOT NULL, "+
-                PLAYLIST_MUSIC_ID+ "INTEGER, "+
-                PLAYLIST_PROFILE_ID+ "INTEGER,"+
+                PLAYLIST_MUSIC_ID+ " INTEGER NOT NULL, "+
+                PLAYLIST_PROFILE_ID+ " INTEGER NOT NULL,"+
                 "FOREIGN KEY ("+PLAYLIST_MUSIC_ID+") REFERENCES "+TABLE_MUSICS+"("+MUSIC_ID+"),"+
-                "FOREIGN KEY ("+PLAYLIST_PROFILE_ID+") REFERENCES "+TABLE_USER+"("+USER_PROFILE_ID+"))";
-        db.execSQL(createPlaylistTable);
+                "FOREIGN KEY ("+PLAYLIST_PROFILE_ID+") REFERENCES "+TABLE_USER+"("+PROFILE_ID+"))";
+        database.execSQL(createPlaylistTable);
 
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_PLAYLISTS);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_MUSICS);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_USER);
-        this.onCreate(db);
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        database.execSQL("DROP TABLE IF EXISTS "+TABLE_PLAYLISTS);
+        database.execSQL("DROP TABLE IF EXISTS "+TABLE_MUSICS);
+        database.execSQL("DROP TABLE IF EXISTS "+TABLE_USER);
+        this.onCreate(database);
     }
 
 
-    public User adicionarUserBD(User user,Profile profile){
-        ContentValues values = new ContentValues();
-        values.put(USER_ID, user.getId());
-        values.put(USER_USERNAME, user.getUsername());
-        values.put(USER_AUTH_KEY, user.getAuthKey());
-        values.put(USER_EMAIL, user.getEmail());
-        values.put(USER_PROFILE_ID, profile.getId());
-        values.put(PROFILE_NOME, profile.getNome());
-        values.put(PROFILE_SALDO, profile.getSaldo());
-        values.put(PROFILE_NIF, profile.getNif());
-        values.put(PROFILE_IMAGE, profile.getProfileimage());
-        values.put(PROFILE_USER_ID, profile.getUser_id());
 
-        long id = this.database.insert(TABLE_USER, null, values);
-        if(id > -1){
-            user.setId( (int) id );
-            return user;
-        }
-        return null;
-    }
 
 
     public Playlist adicionarPlaylistBD(Playlist playlist){
@@ -199,5 +177,67 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
         return database.delete(TABLE_MUSICS, "id =?", new String[]{idMusica+""}) > 0;
     }
 
+
+
+
+    /****************USERS****************/
+
+
+    public User adicionarUserBD(User user){
+        ContentValues values = new ContentValues();
+        values.put(USER_ID, user.getId());
+        values.put(USER_USERNAME, user.getUsername());
+        values.put(USER_AUTH_KEY, user.getAuthKey());
+        values.put(USER_EMAIL, user.getEmail());
+
+        long id = this.database.insert(TABLE_USER, null, values);
+        if(id > -1){
+            user.setId( (int) id );
+            return user;
+        }
+        return null;
+    }
+
+    public boolean adicionarProfileBD(Profile profile, int user_id){
+
+        ContentValues values = new ContentValues();
+        values.put(PROFILE_ID, profile.getProfileId());
+        values.put(PROFILE_NOME, profile.getNome());
+        values.put(PROFILE_SALDO, profile.getSaldo());
+        values.put(PROFILE_NIF, profile.getNif());
+        values.put(PROFILE_IMAGE, profile.getProfileimage());
+
+        return this.database.update(TABLE_USER, values, "id = ?", new String[]{user_id+""}) > 0;
+
+    }
+
+    public boolean guardarUserBD(User user) {
+
+        ContentValues values = new ContentValues();
+        values.put(USER_ID, user.getId());
+        values.put(USER_USERNAME, user.getUsername());
+        values.put(USER_EMAIL, user.getEmail());
+        values.put(USER_AUTH_KEY, user.getAuthKey());
+
+        return this.database.update(TABLE_USER, values, "id = ?", new String[]{user.getId()+""}) > 0;
+    }
+
+    public ArrayList<User> getAllUsersBD(){
+        ArrayList<User> users = new ArrayList<User>();
+        Cursor cursor = this.database.query(TABLE_USER, new String[]{USER_ID, USER_USERNAME, USER_AUTH_KEY, USER_EMAIL}, null, null, null,null, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                User auxUser = new User(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                auxUser.setId(cursor.getInt(0));
+                users.add(auxUser);
+            }while (cursor.moveToNext());
+        }
+        return users;
+    }
+
+    public boolean removerAllUsersBD() {
+        return database.delete(TABLE_USER, null, null) > 0;
+    }
 }
 

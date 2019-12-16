@@ -1,10 +1,10 @@
 package com.example.listeners;
 
-import com.example.models.Musica;
+import com.example.modelo.Musica;
 
 import java.util.ArrayList;
 
 public interface MusicaListener {
-    void onRefreshListaLivros(ArrayList<Musica> livros);
-    void onUpdateListaLivros(Musica musica, int operacao);
+    void onRefreshListaMusica(ArrayList<Musica> musicas);
+    void onUpdateListaMusica(Musica musica, int operacao);
 }

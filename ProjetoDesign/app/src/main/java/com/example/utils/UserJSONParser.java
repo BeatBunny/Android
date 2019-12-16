@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.example.models.User;
+import com.example.modelo.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +25,7 @@ public class UserJSONParser {
                 String authKeyUser = user.getString("authKey");
                 String emailUser = user.getString("email");
 
+
                 User auxUser = new User(idUser, usernameUser, authKeyUser, emailUser);
                 listaUser.add(auxUser);
             }
@@ -39,11 +40,12 @@ public class UserJSONParser {
         User auxUser = null;
         try {
             JSONObject user = new JSONObject(response);
-
+    //int id, String username, String authKey, String email,int profile_ID, int saldo, String nome, int nif, String profileimage
             int idUser = user.getInt("id");
             String usernameUser = user.getString("username");
             String authKeyUser = user.getString("authKey");
             String emailUser = user.getString("email");
+
 
             auxUser = new User(idUser, usernameUser, authKeyUser, emailUser);
 

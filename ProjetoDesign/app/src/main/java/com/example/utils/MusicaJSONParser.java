@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.example.models.Musica;
+import com.example.modelo.Musica;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,22 +17,10 @@ public class MusicaJSONParser {
 
     public static ArrayList<Musica> parserJsonMusicas(JSONArray response, Context context){
         ArrayList<Musica> listaMusicas = new ArrayList<Musica>();
-
+        System.out.println("-------> "+response);
         try {
             for (int i = 0; i < response.length(); i++){
                 JSONObject musica = (JSONObject) response.get(i);
-
-                /*
-                *
-                values.put(MUSIC_ID, musica.getId());
-                values.put(MUSIC_TITLE, musica.getTitle());
-                values.put(MUSIC_COVER, musica.getMusiccover());
-                values.put(MUSIC_GENRE, musica.getMusicgenre());
-                values.put(MUSIC_LAUNCHDATE, musica.getLaunchedate());
-                values.put(MUSIC_LYRICS, musica.getLyrics());
-                values.put(MUSIC_PATH, musica.getMusicpth());
-                values.put(MUSIC_PRODUCER,musica.getProducer());
-                * */
 
                 int idMusica = musica.getInt("id");
                 String titleMusica = musica.getString("title");
@@ -79,7 +67,6 @@ public class MusicaJSONParser {
     public static boolean isConnectionInternet(Context context){
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-
         return networkInfo != null && networkInfo.isConnected();
     }
 }
