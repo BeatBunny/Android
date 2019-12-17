@@ -86,6 +86,9 @@ public class MenuMainActivity extends AppCompatActivity implements
                 fragment = new Grelha_mainMenu();
                 System.out.println("-->Nav Musics");
                 break;
+            case R.id.nav_playlists:
+                setTitle(menuItem.getTitle());
+                fragment = new PlaylistFragment();
             case R.id.nav_email:
                 System.out.println("-->Nav Email");
                 break;

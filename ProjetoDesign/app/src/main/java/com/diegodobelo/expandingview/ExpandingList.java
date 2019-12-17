@@ -45,7 +45,7 @@ public class ExpandingList extends ScrollView {
      * Method to add a new item.
      * @param item The ExpandingItem item.
      */
-    private void addItem(ExpandingItem item) {
+    private void addItem(com.diegodobelo.expandingview.ExpandingItem item) {
         mContainer.addView(item);
     }
 
@@ -54,11 +54,11 @@ public class ExpandingList extends ScrollView {
      * @param layoutId The item Layout.
      * @return The created item.
      */
-    public ExpandingItem createNewItem(int layoutId) {
+    public com.diegodobelo.expandingview.ExpandingItem createNewItem(int layoutId) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         ViewGroup item = (ViewGroup) inflater.inflate(layoutId, this, false);
-        if (item instanceof ExpandingItem) {
-            ExpandingItem expandingItem = (ExpandingItem) item;
+        if (item instanceof com.diegodobelo.expandingview.ExpandingItem) {
+            com.diegodobelo.expandingview.ExpandingItem expandingItem = (com.diegodobelo.expandingview.ExpandingItem) item;
             expandingItem.setParent(this);
             addItem(expandingItem);
             return expandingItem;
@@ -71,11 +71,11 @@ public class ExpandingList extends ScrollView {
      * @param index The index of the item.
      * @return An ExpandingItem in the list.
      */
-    public ExpandingItem getItemByIndex(int index) {
+    public com.diegodobelo.expandingview.ExpandingItem getItemByIndex(int index) {
         if (index < 0 || index >= getItemsCount()) {
             throw new RuntimeException("Index must be grater than 0 and lesser than list size");
         }
-        return (ExpandingItem) mContainer.getChildAt(index);
+        return (com.diegodobelo.expandingview.ExpandingItem) mContainer.getChildAt(index);
     }
 
     /**

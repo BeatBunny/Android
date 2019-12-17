@@ -228,19 +228,19 @@ public class ExpandingItem extends RelativeLayout {
      */
     private void readAttributes(Context context, AttributeSet attrs) {
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs,
-                R.styleable.ExpandingItem, 0, 0);
+                com.diegodobelo.expandingview.R.styleable.ExpandingItem, 0, 0);
 
         try {
-            mItemLayoutId = array.getResourceId(R.styleable.ExpandingItem_item_layout, 0);
-            mSeparatorLayoutId = array.getResourceId(R.styleable.ExpandingItem_separator_layout, 0);
-            mSubItemLayoutId = array.getResourceId(R.styleable.ExpandingItem_sub_item_layout, 0);
-            mIndicatorSize = array.getDimensionPixelSize(R.styleable.ExpandingItem_indicator_size, 0);
-            mIndicatorMarginLeft = array.getDimensionPixelSize(R.styleable.ExpandingItem_indicator_margin_left, 0);
-            mIndicatorMarginRight = array.getDimensionPixelSize(R.styleable.ExpandingItem_indicator_margin_right, 0);
-            mShowIndicator = array.getBoolean(R.styleable.ExpandingItem_show_indicator, true);
-            mShowAnimation = array.getBoolean(R.styleable.ExpandingItem_show_animation, true);
-            mStartCollapsed = array.getBoolean(R.styleable.ExpandingItem_start_collapsed, true);
-            mAnimationDuration = array.getInt(R.styleable.ExpandingItem_animation_duration, DEFAULT_ANIM_DURATION);
+            mItemLayoutId = array.getResourceId(com.diegodobelo.expandingview.R.styleable.ExpandingItem_item_layout, 0);
+            mSeparatorLayoutId = array.getResourceId(com.diegodobelo.expandingview.R.styleable.ExpandingItem_separator_layout, 0);
+            mSubItemLayoutId = array.getResourceId(com.diegodobelo.expandingview.R.styleable.ExpandingItem_sub_item_layout, 0);
+            mIndicatorSize = array.getDimensionPixelSize(com.diegodobelo.expandingview.R.styleable.ExpandingItem_indicator_size, 0);
+            mIndicatorMarginLeft = array.getDimensionPixelSize(com.diegodobelo.expandingview.R.styleable.ExpandingItem_indicator_margin_left, 0);
+            mIndicatorMarginRight = array.getDimensionPixelSize(com.diegodobelo.expandingview.R.styleable.ExpandingItem_indicator_margin_right, 0);
+            mShowIndicator = array.getBoolean(com.diegodobelo.expandingview.R.styleable.ExpandingItem_show_indicator, true);
+            mShowAnimation = array.getBoolean(com.diegodobelo.expandingview.R.styleable.ExpandingItem_show_animation, true);
+            mStartCollapsed = array.getBoolean(com.diegodobelo.expandingview.R.styleable.ExpandingItem_start_collapsed, true);
+            mAnimationDuration = array.getInt(com.diegodobelo.expandingview.R.styleable.ExpandingItem_animation_duration, DEFAULT_ANIM_DURATION);
         } finally {
             array.recycle();
         }
@@ -252,15 +252,15 @@ public class ExpandingItem extends RelativeLayout {
      */
     private void inflateLayouts(Context context) {
         mInflater = LayoutInflater.from(context);
-        mBaseLayout = (RelativeLayout) mInflater.inflate(R.layout.expanding_item_base_layout,
+        mBaseLayout = (RelativeLayout) mInflater.inflate(com.diegodobelo.expandingview.R.layout.expanding_item_base_layout,
                 null, false);
-        mBaseListLayout = mBaseLayout.findViewById(R.id.base_list_layout);
-        mBaseSubListLayout = mBaseLayout.findViewById(R.id.base_sub_list_layout);
-        mIndicatorImage = mBaseLayout.findViewById(R.id.indicator_image);
-        mBaseLayout.findViewById(R.id.icon_indicator_top).bringToFront();
-        mSeparatorStub = mBaseLayout.findViewById(R.id.base_separator_stub);
-        mIndicatorBackground = mBaseLayout.findViewById(R.id.icon_indicator_middle);
-        mIndicatorContainer = mBaseLayout.findViewById(R.id.indicator_container);
+        mBaseListLayout = mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.base_list_layout);
+        mBaseSubListLayout = mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.base_sub_list_layout);
+        mIndicatorImage = mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.indicator_image);
+        mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_top).bringToFront();
+        mSeparatorStub = mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.base_separator_stub);
+        mIndicatorBackground = mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_middle);
+        mIndicatorContainer = mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.indicator_container);
         mIndicatorContainer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,13 +281,13 @@ public class ExpandingItem extends RelativeLayout {
      * Set the indicator background width, height and margins
      */
     private void setIndicatorBackgroundSize() {
-        CustomViewUtils.setViewHeight(mBaseLayout.findViewById(R.id.icon_indicator_top), mIndicatorSize);
-        CustomViewUtils.setViewHeight(mBaseLayout.findViewById(R.id.icon_indicator_bottom), mIndicatorSize);
-        CustomViewUtils.setViewHeight(mBaseLayout.findViewById(R.id.icon_indicator_middle), 0);
+        CustomViewUtils.setViewHeight(mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_top), mIndicatorSize);
+        CustomViewUtils.setViewHeight(mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_bottom), mIndicatorSize);
+        CustomViewUtils.setViewHeight(mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_middle), 0);
 
-        CustomViewUtils.setViewWidth(mBaseLayout.findViewById(R.id.icon_indicator_top), mIndicatorSize);
-        CustomViewUtils.setViewWidth(mBaseLayout.findViewById(R.id.icon_indicator_bottom), mIndicatorSize);
-        CustomViewUtils.setViewWidth(mBaseLayout.findViewById(R.id.icon_indicator_middle), mIndicatorSize);
+        CustomViewUtils.setViewWidth(mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_top), mIndicatorSize);
+        CustomViewUtils.setViewWidth(mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_bottom), mIndicatorSize);
+        CustomViewUtils.setViewWidth(mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_middle), mIndicatorSize);
 
         mItemLayout.post(new Runnable() {
             @Override
@@ -297,8 +297,8 @@ public class ExpandingItem extends RelativeLayout {
             }
         });
 
-        CustomViewUtils.setViewMarginTop(mBaseLayout.findViewById(R.id.icon_indicator_middle), (-1 * mIndicatorSize / 2));
-        CustomViewUtils.setViewMarginTop(mBaseLayout.findViewById(R.id.icon_indicator_bottom), (-1 * mIndicatorSize / 2));
+        CustomViewUtils.setViewMarginTop(mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_middle), (-1 * mIndicatorSize / 2));
+        CustomViewUtils.setViewMarginTop(mBaseLayout.findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_bottom), (-1 * mIndicatorSize / 2));
 
     }
 
@@ -395,9 +395,9 @@ public class ExpandingItem extends RelativeLayout {
      * @param color The color value.
      */
     public void setIndicatorColor(int color) {
-        ((GradientDrawable) findViewById(R.id.icon_indicator_top).getBackground().mutate()).setColor(color);
-        ((GradientDrawable) findViewById(R.id.icon_indicator_bottom).getBackground().mutate()).setColor(color);
-        findViewById(R.id.icon_indicator_middle).setBackgroundColor(color);
+        ((GradientDrawable) findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_top).getBackground().mutate()).setColor(color);
+        ((GradientDrawable) findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_bottom).getBackground().mutate()).setColor(color);
+        findViewById(com.diegodobelo.expandingview.R.id.icon_indicator_middle).setBackgroundColor(color);
     }
 
     /**

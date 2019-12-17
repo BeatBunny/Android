@@ -28,9 +28,18 @@ public class PlaylistFragment extends Fragment {
 
         ExpandingItem item = expandingList.createNewItem(R.layout.expanding_layout_playlists);
 
-/*ExpandingItem extends from View, so you can call
-findViewById to get any View inside the layout*/
-        
+        ((TextView) item.findViewById(R.id.title_playlist)).setText("It Works!!");
+
+        item.createSubItems(5);
+
+        View subItemZero = item.getSubItemView(0);
+        ((TextView) subItemZero.findViewById(R.id.sub_playlist)).setText("Cool");
+
+        View subItemOne = item.getSubItemView(1);
+        ((TextView) subItemOne.findViewById(R.id.sub_playlist)).setText("Awesome");
+
+        item.setIndicatorColorRes(R.color.common_google_signin_btn_text_light_default);
+        item.setIndicatorIconRes(R.drawable.ic_musicbeat);
 
         /*listaLivros = SingletonGestorLivros.getInstance().getListaLivros();
 

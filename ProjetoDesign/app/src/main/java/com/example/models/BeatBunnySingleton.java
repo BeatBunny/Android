@@ -42,7 +42,7 @@ public class BeatBunnySingleton {
     private String mUrlAPIusers = "http://10.200.12.249/web/v1/user";
     //http://127.0.0.1:8888/web/v1/
     //http://localhost/BeatBunny/advanced/backend/web/v1
-    private String mUrlAPIMusicas = "http://192.168.1.65:80/BeatBunny/advanced/backend/web/v1/music";
+    private String mUrlAPIMusicas = "http://10.200.14.190:80/BeatBunny/advanced/backend/web/v1/music";
     private static RequestQueue volleiQueue;
 
 
