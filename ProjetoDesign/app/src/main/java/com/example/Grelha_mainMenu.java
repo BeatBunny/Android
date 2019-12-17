@@ -39,6 +39,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
 
         setHasOptionsMenu(true);
         //listamusicas = BeatBunnySingleton.getInstance(getContext()).getListaMusicas();
+
         grelhaMusicas = view.findViewById(R.id.GrelhaDeMusicas);
         imageViewGrelhaJava = view.findViewById(R.id.imageViewGrelha);
         //grelhaMusicas.setAdapter(new GrelhaMusicaAdaptor(getContext(), listamusicas));
