@@ -39,13 +39,14 @@ public class BeatBunnySingleton {
 
     private String tokenAPI = "AMSI-TOKEN";
 
-    private String mUrlAPIusers = "http://10.200.12.249/web/v1/user";
-    //http://127.0.0.1:8888/web/v1/
-    //http://localhost/BeatBunny/advanced/backend/web/v1
-    private String mUrlAPIMusicas = "http://192.168.1.65:80/BeatBunny/advanced/backend/web/v1/music";
+    private String mUrlAPIusersLogin = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
+    private String mUrlAPIusersRegister = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
+    private String mUrlAPIMusicas = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/music";
     private static RequestQueue volleiQueue;
 
-
+    public void setUserListener(UserListener userListener) {
+        this.userListener = userListener;
+    }
 
     public static synchronized BeatBunnySingleton getInstance(Context context) {
 
@@ -56,72 +57,72 @@ public class BeatBunnySingleton {
         return INSTANCE;
     }
 
-    public void loginUserAPI(final String username, final String password, final Context context){
-        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIusers, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                onUpdateListaUsersBD(UserJSONParser.parserJsonUser(response, context), ADICIONAR_BD);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                params.put("username", username);
-                params.put("password", password);
-                return params;
-            }
-        };
-        volleiQueue.add(request);
-    }
-
-
-    public void getAllUsersAPI(final Context context, boolean isConnected){
-        //Toast.makeText(context, "isConnected:" + isConnected, Toast.LENGTH_SHORT).show();
+    public void loginUserAPI(final String username, final String password, final Context context, boolean isConnected){
         if(!isConnected){
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            users = beatBunnyBD.getAllUsersBD();
-            if(userListener != null)
-                userListener.onRefreshListaUser(users);
+            //TODO: fazer aparecer botão para entrar como guest
+            //TODO: fazer função de entrar como guest
         }
         else{
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlAPIusers, null
-                    , new Response.Listener<JSONArray>() {
+            StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIusersLogin, new Response.Listener<String>() {
                 @Override
-                public void onResponse(JSONArray response) {
-                    users = UserJSONParser.parserJsonUsers(response, context);
-                    adicionarUsersBD(users);
-                    if(userListener!= null)
-                        userListener.onRefreshListaUser(users);
+                public void onResponse(String response) {
+                    User user = UserJSONParser.parserJsonUser(response, context);
+                    userListener.onRefreshListaUser(user);
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            }
-            );
+            }) {
+                @Override
+                protected Map<String, String> getParams(){
+                    Map<String, String> params = new HashMap<>();
+                    params.put("username", username);
+                    params.put("password", password);
+                    return params;
+                }
+            };
             volleiQueue.add(request);
         }
     }
 
 
-
-    private void onUpdateListaUsersBD(User user, int operacao) {
-        switch (operacao){
-            case ADICIONAR_BD:
-                adicionarUserBD(user);
-                break;
-            case EDITAR_BD:
-                editarUserBD(user);
-                break;
+    public void registoUserAPI(final String username, final String password,final String email, final String nome, final String nif, final Context context, boolean isConnected){
+        if(!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            //TODO: fazer aparecer botão para entrar como guest
+            //TODO: fazer função de entrar como guest
+        }
+        else{
+            StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIusersRegister, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    User user = UserJSONParser.parserJsonUser(response, context);
+                    userListener.onRefreshListaUser(user);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams(){
+                    Map<String, String> params = new HashMap<>();
+                    params.put("username", username);
+                    params.put("password", password);
+                    params.put("email", email);
+                    params.put("nome", nome);
+                    params.put("nif", nif);
+                    return params;
+                }
+            };
+            volleiQueue.add(request);
         }
     }
+
 
 
     public User getUser(int idUser){
@@ -131,22 +132,6 @@ public class BeatBunnySingleton {
         return null;
     }
 
-
-    private void adicionarUsersBD(ArrayList<User> users) {
-        beatBunnyBD.removerAllUsersBD();
-        for (User user : users)
-            adicionarUserBD(user);
-    }
-
-    private void editarUserBD(User user) {
-        User auxUser = getUser(user.getId());
-        if (auxUser != null)
-            beatBunnyBD.guardarUserBD(auxUser);
-    }
-
-    private void adicionarUserBD(User user) {
-        beatBunnyBD.adicionarUserBD(user);
-    }
 
 
     //COM FOR
@@ -172,15 +157,10 @@ public class BeatBunnySingleton {
 
 
 
-
-
     private BeatBunnySingleton(Context context) {
         musicas= new ArrayList<Musica>();
         users= new ArrayList<User>();
         beatBunnyBD = new BeatBunnyBDHelper(context);
-
-
-
     }
 
 
@@ -189,11 +169,6 @@ public class BeatBunnySingleton {
         return musicas;
     }
 
-
-    public ArrayList<User> getListaUsers() {
-        users = beatBunnyBD.getAllUsersBD();
-        return users;
-    }
 
 
 
@@ -226,50 +201,6 @@ public class BeatBunnySingleton {
                 volleiQueue.add(request);
             }
         }
-
-    public void adicionarMusicaAPI(final Musica musica, final Context context){
-        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIMusicas, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                onUpdateListaMusicasBD(MusicaJSONParser.parserJsonMusica(response, context), ADICIONAR_BD);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                params.put("token", tokenAPI);
-                params.put("title", musica.getTitle());
-                params.put("cover", musica.getMusiccover());
-                params.put("genre", musica.getMusicgenre());
-                params.put("launchdate", musica.getLaunchdate()+"");
-                params.put("lyrics", musica.getLyrics());
-                params.put("path", musica.getMusicpath());
-                params.put("producer", musica.getProducer());
-                return params;
-            }
-        };
-        volleiQueue.add(request);
-    }
-
-
-    private void onUpdateListaMusicasBD(Musica musica, int operacao) {
-        switch (operacao){
-            case ADICIONAR_BD:
-                adicionarMusicaBD(musica);
-                break;
-            case EDITAR_BD:
-                editarMusicaBD(musica);
-                break;
-            case REMOVER_BD:
-                removerMusicaBD(musica.getId());
-                break;
-        }
-    }
 
     public void setMusicaListener(MusicaListener musicaListener) {
         this.musicaListener = musicaListener;
