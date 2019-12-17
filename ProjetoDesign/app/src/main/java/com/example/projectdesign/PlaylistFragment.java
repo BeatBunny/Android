@@ -22,8 +22,15 @@ public class PlaylistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        
         View view = inflater.inflate(R.layout.fragment_playlists, container, false);
+
+        ExpandingList expandingList = (ExpandingList) view.findViewById(R.id.expanding_list_playlists);
+
+        ExpandingItem item = expandingList.createNewItem(R.layout.expanding_layout_playlists);
+
+/*ExpandingItem extends from View, so you can call
+findViewById to get any View inside the layout*/
+        
 
         /*listaLivros = SingletonGestorLivros.getInstance().getListaLivros();
 
