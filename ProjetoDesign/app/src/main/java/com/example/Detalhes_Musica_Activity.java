@@ -42,7 +42,6 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
         imageViewCoverMusicJava = findViewById(R.id.imageViewCoverMusica);
         nomeArtistaJava = findViewById(R.id.nomeArtistaMusicaActivityPlayer);
 
-
         if(musica != null){
             setTitle(musica.getTitle());
             textViewTituloJava.setText(musica.getTitle());
