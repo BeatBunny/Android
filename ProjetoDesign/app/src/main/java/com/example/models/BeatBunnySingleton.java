@@ -42,6 +42,7 @@ public class BeatBunnySingleton {
     private String mUrlAPIusersLogin = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
     private String mUrlAPIusersRegister = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
     private String mUrlAPIMusicas = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/music";
+
     private static RequestQueue volleiQueue;
 
     public void setUserListener(UserListener userListener) {
@@ -230,5 +231,33 @@ public class BeatBunnySingleton {
             beatBunnyBD.removerMusicaBD(idMusica);
     }
 
-
+/********************************Registar User na Api********************************/
+public void AdicionarUserAPI (final User user, final Context context){
+    StringRequest request = new StringRequest(Request.Method.POST, mURlAPIRegisto, new Response.Listener<String>(){
+        @Override
+        public void onResponse(String response) {
+            onUpdateListaUsersBD(UserJSONParser.parserJsonUser(response,context),ADICIONAR_BD);
+        }
+    }, new Response.ErrorListener(){
+        @Override
+        public void onErrorResponse(VolleyError error){
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    });
+//    ){
+//        @Override
+//        protected Map<String,String> getParams(){
+//            Map<String,String> params =new HashMap<>();
+//            params.put("token",tokenAPI);
+//            params.put("username",user.getUsername());
+//            params.put("email",user.getEmail());
+////            params.put("password",user.getPassword());
+//            params.put("nbom        ",livro.getCapa());
+//            params.put("Autor",livro.getAutor());
+//            return params;
+//
+//        }
+//    };
+//    volleyQueue.add(request);
+}
 }
