@@ -43,7 +43,7 @@ public class UserJSONParser {
     //int id, String username, String authKey, String email,int profile_ID, int saldo, String nome, int nif, String profileimage
             int idUser = user.getInt("id");
             String usernameUser = user.getString("username");
-            String authKeyUser = user.getString("authKey");
+            String authKeyUser = user.getString("auth_key");
             String emailUser = user.getString("email");
 
 

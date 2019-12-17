@@ -41,6 +41,7 @@ public class PlaylistFragment extends Fragment {
         item.setIndicatorColorRes(R.color.common_google_signin_btn_text_light_default);
         item.setIndicatorIconRes(R.drawable.ic_musicbeat);
 
+
         /*listaLivros = SingletonGestorLivros.getInstance().getListaLivros();
 
         lvListaLivros = view.findViewById(R.id.lvListaLivros);
