@@ -39,11 +39,9 @@ public class BeatBunnySingleton {
 
     private String tokenAPI = "AMSI-TOKEN";
 
-
     private String mUrlAPIusersLogin = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
     private String mUrlAPIusersRegister = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
     private String mUrlAPIMusicas = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/music";
-
 
     private static RequestQueue volleiQueue;
 
