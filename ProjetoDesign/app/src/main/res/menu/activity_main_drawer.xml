@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view"
     >
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" >
         <item
             android:id="@+id/nav_home"
-            android:title="Home" />
+            android:title="@string/home"
+            />
         <item
-            android:id="@+id/nav_about"
-            android:title="About" />
+            android:id="@+id/nav_playlists"
+            android:title="@string/your_playlists" />
         <item
             android:id="@+id/nav_musics"
-            android:title="Musics" />
+            android:title="@string/your_musics" />
         <item
             android:id="@+id/nav_settings"
             android:title="Settings"
@@ -22,14 +23,6 @@
             android:id="@+id/nav_playlists"
             android:title="Playlists"
             />
+        </item>
     </group>
-    <item
-        android:title="settings">
-        <menu>
-
-            <item
-                android:id="@+id/nav_email"
-                android:title="Email" />
-        </menu>
-    </item>
 </menu>

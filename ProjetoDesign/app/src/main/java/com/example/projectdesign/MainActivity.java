@@ -1,6 +1,9 @@
 package com.example.projectdesign;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,13 +12,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setTitle(menuItem.getTitle());
                 System.out.println("-->Nav Menu");
                 break;
-            case R.id.nav_about:
+            case R.id.nav_playlists:
                 setTitle(menuItem.getTitle());
                 //fragment = new GrelhaLivrosFragment();
                 System.out.println("-->Nav About");
@@ -90,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new MusicFragment();
                 System.out.println("-->Nav Musics");
                 break;
-            case R.id.nav_email:
+            case R.id.nav_logout:
                 System.out.println("-->Nav Email");
                 break;
         }

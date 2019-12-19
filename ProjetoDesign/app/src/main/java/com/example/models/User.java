@@ -1,10 +1,8 @@
 package com.example.models;
 
-import java.util.ArrayList;
-
 public class User {
 
-    private static int Id ;
+    private int Id ;
     private String Username;
     private String AuthKey;
     private String Email;

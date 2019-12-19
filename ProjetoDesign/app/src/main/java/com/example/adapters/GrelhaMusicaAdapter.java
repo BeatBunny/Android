@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.models.BeatBunnySingleton;
 import com.example.models.Musica;
 import com.example.projectdesign.R;
 
@@ -20,10 +21,12 @@ public class GrelhaMusicaAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private ArrayList<Musica> musicas;
 
+    private String currentIP = "";
 
     public GrelhaMusicaAdapter(Context context, ArrayList<Musica> musicas) {
         this.context = context;
         this.musicas = musicas;
+        currentIP = BeatBunnySingleton.getInstance(context).getCURRENT_IP();
     }
 
     @Override
@@ -70,7 +73,7 @@ public class GrelhaMusicaAdapter extends BaseAdapter {
             Musica musica = musicas.get(position);
             tituloMusica.setText(musica.getTitle());
             Glide.with(context)
-                    .load("http://10.200.7.141:80/BeatBunny/advanced/frontend/web/"+musica.getMusiccover()+"/image_"+musica.getId()+".png")
+                    .load("http://"+currentIP+":80/BeatBunny/advanced/frontend/web/"+musica.getMusiccover()+"/image_"+musica.getId()+".png")
                     .placeholder(R.drawable.logo_white)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .fitCenter().into(image);

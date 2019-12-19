@@ -37,15 +37,20 @@ public class BeatBunnySingleton {
 
     private UserListener userListener;
 
+    public String CURRENT_IP = "192.168.1.65";
+
+
     private String tokenAPI = "AMSI-TOKEN";
 
+    private String mUrlAPIusersLogin = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
+    private String mUrlAPIusersRegister = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
+    private String mUrlAPIMusicas = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/music";
 
-    private String mUrlAPIusersLogin = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
-    private String mUrlAPIusersRegister = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
-    private String mUrlAPIMusicas = "http://10.200.7.141:80/BeatBunny/advanced/backend/web/v1/music";
 
 
     private static RequestQueue volleiQueue;
+
+    public String getCURRENT_IP(){ return CURRENT_IP; }
 
     public void setUserListener(UserListener userListener) {
         this.userListener = userListener;
@@ -126,7 +131,9 @@ public class BeatBunnySingleton {
         }
     }
 
-
+    public void setIP(String ip){
+        CURRENT_IP = ip;
+    }
 
     public User getUser(int idUser){
         for (User u : users)
@@ -250,4 +257,3 @@ public class BeatBunnySingleton {
 //    };
 //    volleyQueue.add(request);
 }
-
