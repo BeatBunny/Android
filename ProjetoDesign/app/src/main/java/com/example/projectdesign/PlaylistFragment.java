@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-//
-//import com.diegodobelo.expandingview.ExpandingItem;
-//import com.diegodobelo.expandingview.ExpandingList;
+
+import com.diegodobelo.expandingview.ExpandingItem;
+import com.diegodobelo.expandingview.ExpandingList;
 
 public class PlaylistFragment extends Fragment {
 

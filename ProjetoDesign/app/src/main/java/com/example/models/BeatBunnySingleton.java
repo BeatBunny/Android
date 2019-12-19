@@ -234,18 +234,6 @@ public class BeatBunnySingleton {
     }
 
 /********************************Registar User na Api********************************/
-public void AdicionarUserAPI (final User user, final Context context){
-    StringRequest request = new StringRequest(Request.Method.POST, mURlAPIRegisto, new Response.Listener<String>(){
-        @Override
-        public void onResponse(String response) {
-            onUpdateListaUsersBD(UserJSONParser.parserJsonUser(response,context),ADICIONAR_BD);
-        }
-    }, new Response.ErrorListener(){
-        @Override
-        public void onErrorResponse(VolleyError error){
-            Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    });
 //    ){
 //        @Override
 //        protected Map<String,String> getParams(){
@@ -262,4 +250,4 @@ public void AdicionarUserAPI (final User user, final Context context){
 //    };
 //    volleyQueue.add(request);
 }
-}
+

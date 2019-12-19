@@ -31,8 +31,8 @@ public class PlaylistJSONParser {
                 String pathMusica = playlist.getString("musicpath");
                 String producerMusica = playlist.getString("profile_id");
                 String pvpMusica = playlist.getString("pvp");
-                Playlist auxMusica = new Playlist(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica, Float.parseFloat(pvpMusica));
-                listaPlaylists.add(auxMusica);
+//              Playlist auxMusica = new Playlist(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica, Float.parseFloat(pvpMusica));
+//              listaPlaylists.add(auxMusica);
             }
         }
         catch (JSONException e) {
@@ -56,7 +56,7 @@ public class PlaylistJSONParser {
             String producerMusica = musica.getString("producer_id");
             double pvpMusica = musica.getDouble("pvp");
 
-            auxMusica = new Playlist(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica, (float) pvpMusica);
+       //     auxMusica = new Playlist(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica, (float) pvpMusica);
         } catch (JSONException e) {
             e.printStackTrace();
         }
