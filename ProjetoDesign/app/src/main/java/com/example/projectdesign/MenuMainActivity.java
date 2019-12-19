@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.Grelha_mainMenu;
 import com.example.Lista_MusicFragment;
+import com.example.Settings;
 import com.google.android.material.navigation.NavigationView;
 
 public class MenuMainActivity extends AppCompatActivity implements
@@ -88,6 +89,10 @@ public class MenuMainActivity extends AppCompatActivity implements
                 break;
             case R.id.nav_email:
                 System.out.println("-->Nav Email");
+                break;
+            case R.id.nav_settings:
+                System.out.println("-->Nav Settings");
+                fragment = new Settings();
                 break;
         }
         if(fragment != null){

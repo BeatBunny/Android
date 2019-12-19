@@ -19,8 +19,6 @@
             android:theme="@style/Theme.AppCompat" />
         <activity android:name="com.example.projectdesign.Music"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name="com.example.projectdesign.Settings"
-            android:theme="@style/Theme.AppCompat" />
         <activity android:name="com.example.projectdesign.Playlist"
             android:theme="@style/Theme.AppCompat" />
         <activity android:name="com.example.projectdesign.Player"
@@ -32,7 +30,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
