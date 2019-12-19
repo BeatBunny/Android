@@ -3,7 +3,6 @@ package com.example;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,13 +26,15 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
 
     private ImageView imageViewCoverMusicJava;
 
+    private String currentIP;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_player);
         //TER A SETINHA DE TRAS
-
+        currentIP = BeatBunnySingleton.getInstance(getApplicationContext()).getCURRENT_IP();
         idMusica = getIntent().getIntExtra("DETALHES", -1);
 
         musica = BeatBunnySingleton.getInstance(getApplicationContext()).getMusica(idMusica);
@@ -51,7 +52,7 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
             textViewSerieJava.setText(musica.getSerie());*/
             //imageViewCoverMusicJava.setImageResource(musica.getMusiccover());
             Glide.with(getApplicationContext())
-                    .load("http://192.168.1.65:80/BeatBunny/advanced/frontend/web/"+musica.getMusiccover()+"/image_"+musica.getId()+".png")
+                    .load("http://"+currentIP+":80/BeatBunny/advanced/frontend/web/"+musica.getMusiccover()+"/image_"+musica.getId()+".png")
                     .placeholder(R.drawable.logo_white)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fitCenter().into(imageViewCoverMusicJava);

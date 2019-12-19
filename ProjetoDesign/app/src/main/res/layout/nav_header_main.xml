@@ -8,10 +8,12 @@
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+
+    >
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageViewUserBNavbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher" />
