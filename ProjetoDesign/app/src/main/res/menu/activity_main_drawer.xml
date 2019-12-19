@@ -19,10 +19,5 @@
             android:id="@+id/nav_settings"
             android:title="Settings"
             />
-        <item
-            android:id="@+id/nav_playlists"
-            android:title="Playlists"
-            />
-        </item>
     </group>
 </menu>
