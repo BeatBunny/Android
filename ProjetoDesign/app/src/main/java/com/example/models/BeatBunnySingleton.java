@@ -46,6 +46,8 @@ public class BeatBunnySingleton {
     private String mUrlAPIusersRegister = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
     private String mUrlAPIMusicas = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/music";
 
+
+
     private static RequestQueue volleiQueue;
 
     public String getCURRENT_IP(){ return CURRENT_IP; }

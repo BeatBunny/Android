@@ -66,13 +66,4 @@ public class Music extends AppCompatActivity {
         });
     }
 
-    public void settings(View view) {
-        Button setting = (Button) findViewById(R.id.settingsButton);
-        setting.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                startActivity(new Intent(Music.this, Settings.class));
-            }
-        });
-    }
 }

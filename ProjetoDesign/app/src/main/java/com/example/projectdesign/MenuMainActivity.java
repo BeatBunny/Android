@@ -23,6 +23,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.Grelha_mainMenu;
 import com.example.models.BeatBunnySingleton;
+import com.example.Lista_MusicFragment;
+import com.example.Settings;
 import com.google.android.material.navigation.NavigationView;
 
 public class MenuMainActivity extends AppCompatActivity implements
@@ -137,20 +139,23 @@ public class MenuMainActivity extends AppCompatActivity implements
                 setTitle(menuItem.getTitle());
                 System.out.println("-->Nav Menu");
                 break;
-            case R.id.nav_playlists:
-                setTitle(menuItem.getTitle());
-                //fragment = new GrelhaLivrosFragment();
-                System.out.println("-->Nav Playlists");
-                break;
             case R.id.nav_musics:
                 setTitle(menuItem.getTitle());
                 fragment = new Grelha_mainMenu();
                 System.out.println("-->Nav Your Musics");
                 break;
+            case R.id.nav_playlists:
+                setTitle(menuItem.getTitle());
+                fragment = new PlaylistFragment();
+                System.out.println("-->Nav Playlists");
+                break;
+            case R.id.nav_settings:
+                System.out.println("-->Nav Settings");
+                fragment = new Settings();
+                break;
             case R.id.nav_logout:
                 createDialog();
                 System.out.println("-->Nav Logout");
-                break;
         }
         if(fragment != null){
             fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();

@@ -19,8 +19,6 @@
             android:theme="@style/Theme.AppCompat" />
         <activity android:name="com.example.projectdesign.Music"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name="com.example.projectdesign.Settings"
-            android:theme="@style/Theme.AppCompat" />
         <activity android:name="com.example.projectdesign.Playlist"
             android:theme="@style/Theme.AppCompat" />
         <activity android:name="com.example.projectdesign.Player"
