@@ -34,7 +34,7 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_player);
         //TER A SETINHA DE TRAS
-        currentIP = BeatBunnySingleton.getInstance(getApplicationContext()).getCURRENT_IP();
+        currentIP = BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput();
         idMusica = getIntent().getIntExtra("DETALHES", -1);
 
         musica = BeatBunnySingleton.getInstance(getApplicationContext()).getMusica(idMusica);

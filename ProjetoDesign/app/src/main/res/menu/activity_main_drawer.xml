@@ -17,11 +17,11 @@
             android:title="@string/your_musics" />
         <item
             android:id="@+id/nav_settings"
-            android:title="Settings"
+            android:title="@string/settings"
             />
         <item
             android:id="@+id/nav_logout"
-            android:title="Logout"
+            android:title="@string/logout"
             />
     </group>
 </menu>

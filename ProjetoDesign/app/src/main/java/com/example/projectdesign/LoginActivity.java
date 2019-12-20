@@ -9,11 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.listeners.UserListener;
 import com.example.models.BeatBunnySingleton;
+import com.example.models.SharedPreferencesSettersGetters;
 import com.example.models.User;
 import com.example.utils.UserJSONParser;
 
@@ -21,6 +23,11 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
+    private String ip;
+    public static final String INFO_USER = "user";
+    private String username;
+    private String authkey;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
         setContentView(R.layout.activity_login);
         usernameEditText = findViewById(R.id.editTextUsername);
         passwordEditText = findViewById(R.id.editTextPassword);
+        SharedPreferencesSettersGetters.init(getApplicationContext());
     }
 
     public void onClickLogin(View view){
@@ -56,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
             Intent main = new Intent(this, MenuMainActivity.class);
             main.putExtra("IDUSER", user.getId());
             main.putExtra("USERNAME", user.getUsername());
+            main.putExtra("AUTH_KEY", user.getAuthKey());
             startActivity(main);
             finish();
         }
@@ -85,32 +94,40 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
 
 
         if(id == R.id.action_settings){
+            createDialog();
 
-            final Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.ip_picker_dialog);
-            dialog.setTitle("IP ADDRESS");
-            final EditText textIP = dialog.findViewById(R.id.ipDialog);
-            Button dialogButtonSave = (Button) dialog.findViewById(R.id.buttonSave);
-            Button dialogButtonCancel = (Button) dialog.findViewById(R.id.buttonCancel);
-
-            dialogButtonSave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    BeatBunnySingleton.getInstance(getApplicationContext()).setIP(textIP.getText().toString());
-                    dialog.dismiss();
-                }
-            });
-
-            dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.cancel();
-                }
-            });
-
-            dialog.show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public Dialog createDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.ip_picker_dialog);
+        dialog.setTitle("IP ADDRESS");
+        final EditText textIP = dialog.findViewById(R.id.ipDialog);
+        Button dialogButtonSave = (Button) dialog.findViewById(R.id.buttonSave);
+        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.buttonCancel);
+
+        dialogButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BeatBunnySingleton.getInstance(getApplicationContext()).setIP(textIP.getText().toString());
+                Toast.makeText(getApplicationContext(), BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput(), Toast.LENGTH_SHORT).show();
+                textIP.setText(BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput());
+                dialog.dismiss();
+            }
+        });
+
+        dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+        return dialog;
     }
 
 

@@ -22,9 +22,8 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.Grelha_mainMenu;
-import com.example.models.BeatBunnySingleton;
-import com.example.Lista_MusicFragment;
 import com.example.Settings;
+import com.example.models.BeatBunnySingleton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MenuMainActivity extends AppCompatActivity implements
@@ -34,16 +33,16 @@ public class MenuMainActivity extends AppCompatActivity implements
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private String username;
+    private String authkey;
     private int id;
     private FragmentManager fragmentManager;
     private ImageView imageViewProfileNavbar;
-    private Boolean isToLogout = false;
     private String currentIP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currentIP = BeatBunnySingleton.getInstance(getApplicationContext()).getCURRENT_IP();
+        currentIP = BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput();
         setContentView(R.layout.activity_menu_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,10 +62,13 @@ public class MenuMainActivity extends AppCompatActivity implements
     private void carregarCabecalho(){
         username = getIntent().getStringExtra("USERNAME");
         id = getIntent().getIntExtra("IDUSER", 0);
+        authkey = getIntent().getStringExtra("AUTH_KEY");
         System.out.println("-->"+ username);
         View hView = navigationView.getHeaderView(0);
         TextView nav_user = hView.findViewById(R.id.textViewEmail);
         nav_user.setText(username);
+
+
         imageViewProfileNavbar = hView.findViewById(R.id.imageViewUserBNavbar);
         Glide.with(getApplicationContext())
                 .load("http://"+currentIP+":80/BeatBunny/advanced/frontend/web/uploads/"+id+"/profileimage_"+id+".png")
@@ -111,7 +113,6 @@ public class MenuMainActivity extends AppCompatActivity implements
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogo) {
-                isToLogout = true;
 
                 System.out.println("-->>>>>>>>>>>>>>>>> DISMISSED");
             }

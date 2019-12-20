@@ -26,7 +26,7 @@ public class GrelhaMusicaAdapter extends BaseAdapter {
     public GrelhaMusicaAdapter(Context context, ArrayList<Musica> musicas) {
         this.context = context;
         this.musicas = musicas;
-        currentIP = BeatBunnySingleton.getInstance(context).getCURRENT_IP();
+        currentIP = BeatBunnySingleton.getInstance(context).getIPInput();
     }
 
     @Override

@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+;
+
 //import com.example.listeners.LivrosListener;
 //import com.example.utils.LivroJsonParser;
 
@@ -37,20 +39,16 @@ public class BeatBunnySingleton {
 
     private UserListener userListener;
 
-    public String CURRENT_IP = "192.168.1.65";
-
+    public String CURRENT_IP;
 
     private String tokenAPI = "AMSI-TOKEN";
 
-    private String mUrlAPIusersLogin = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
-    private String mUrlAPIusersRegister = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
-    private String mUrlAPIMusicas = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/music";
-
-
+    private String mUrlAPIusersLogin = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
+    private String mUrlAPIusersRegister = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
+    private String mUrlAPIMusicas = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/music";
 
     private static RequestQueue volleiQueue;
 
-    public String getCURRENT_IP(){ return CURRENT_IP; }
 
     public void setUserListener(UserListener userListener) {
         this.userListener = userListener;
@@ -58,34 +56,36 @@ public class BeatBunnySingleton {
 
     public static synchronized BeatBunnySingleton getInstance(Context context) {
 
-        if(INSTANCE == null){
+        if (INSTANCE == null) {
             INSTANCE = new BeatBunnySingleton(context);
             volleiQueue = Volley.newRequestQueue(context);
         }
         return INSTANCE;
     }
 
-    public void loginUserAPI(final String username, final String password, final Context context, boolean isConnected){
-        if(!isConnected){
+    public void loginUserAPI(final String username, final String password, final Context context, boolean isConnected) {
+        if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
             //TODO: fazer aparecer botão para entrar como guest
             //TODO: fazer função de entrar como guest
-        }
-        else{
+        } else {
             StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIusersLogin, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     User user = UserJSONParser.parserJsonUser(response, context);
                     userListener.onRefreshListaUser(user);
+                    SharedPreferencesSettersGetters.write(SharedPreferencesSettersGetters.USERNAME_USER, user.getUsername());//save string in shared preference.
+                    SharedPreferencesSettersGetters.write(SharedPreferencesSettersGetters.ID_USER, user.getId());//save int in shared preference.
+                    SharedPreferencesSettersGetters.write(SharedPreferencesSettersGetters.AUTH_KEY, user.getAuthKey());//save boolean in shared preference.
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
-                protected Map<String, String> getParams(){
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("username", username);
                     params.put("password", password);
@@ -97,13 +97,12 @@ public class BeatBunnySingleton {
     }
 
 
-    public void registoUserAPI(final String username, final String password,final String email, final String nome, final String nif, final Context context, boolean isConnected){
-        if(!isConnected){
+    public void registoUserAPI(final String username, final String password, final String email, final String nome, final String nif, final Context context, boolean isConnected) {
+        if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
             //TODO: fazer aparecer botão para entrar como guest
             //TODO: fazer função de entrar como guest
-        }
-        else{
+        } else {
             StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIusersRegister, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -113,11 +112,11 @@ public class BeatBunnySingleton {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, "Error:"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
-                protected Map<String, String> getParams(){
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("username", username);
                     params.put("password", password);
@@ -131,34 +130,30 @@ public class BeatBunnySingleton {
         }
     }
 
-    public void setIP(String ip){
+    public void setIP(String ip) {
         CURRENT_IP = ip;
+        SharedPreferencesSettersGetters.write(SharedPreferencesSettersGetters.SETTINGS_IP, CURRENT_IP);//save boolean in shared preference.
+        mUrlAPIusersLogin = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
+        mUrlAPIusersRegister = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
+        mUrlAPIMusicas = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/music";
     }
 
-    public User getUser(int idUser){
+    public String getIPInput() {
+        return CURRENT_IP;
+    }
+
+    public User getUser(int idUser) {
         for (User u : users)
-            if(u.getId() == idUser)
+            if (u.getId() == idUser)
                 return u;
         return null;
     }
 
 
-
-    //COM FOR
-    public Musica getMusicaById(int idMusica){
-        for(int i = 0; i < musicas.size(); i++){
-            if(musicas.get(i).getId() == idMusica){
-                return musicas.get(i);
-            }
-        }
-        return null;
-    }
-
-
     //COM FOREACH
-    public Musica getMusica(int idMusica){
-        for(Musica M : musicas){
-            if(M.getId() == idMusica){
+    public Musica getMusica(int idMusica) {
+        for (Musica M : musicas) {
+            if (M.getId() == idMusica) {
                 return M;
             }
         }
@@ -166,11 +161,14 @@ public class BeatBunnySingleton {
     }
 
 
-
     private BeatBunnySingleton(Context context) {
-        musicas= new ArrayList<Musica>();
-        users= new ArrayList<User>();
+        musicas = new ArrayList<Musica>();
+        users = new ArrayList<User>();
         beatBunnyBD = new BeatBunnyBDHelper(context);
+        CURRENT_IP = SharedPreferencesSettersGetters.read(SharedPreferencesSettersGetters.SETTINGS_IP, null);//read string in shared preference.
+        mUrlAPIusersLogin = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
+        mUrlAPIusersRegister = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
+        mUrlAPIMusicas = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/music";
     }
 
 
@@ -180,80 +178,60 @@ public class BeatBunnySingleton {
     }
 
 
-
-
     /*****************************Métodos que acedem à API******************************/
-        public void getAllMusicasAPI(final Context context, boolean isConnected){
-            //Toast.makeText(context, "isConnected:" + isConnected, Toast.LENGTH_SHORT).show();
-            if(!isConnected){
-                Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                musicas = beatBunnyBD.getallMusicasBD();
-                if(musicaListener != null)
-                    musicaListener.onRefreshListaMusica(musicas);
-            }
-            else{
-                JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlAPIMusicas, null
-                , new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        musicas = MusicaJSONParser.parserJsonMusicas(response, context);
-                        adicionarMusicasBD(musicas);
-                        if(musicaListener!= null)
-                            musicaListener.onRefreshListaMusica(musicas);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+    public void getAllMusicasAPI(final Context context, boolean isConnected) {
+        //Toast.makeText(context, "isConnected:" + isConnected, Toast.LENGTH_SHORT).show();
+        if (!isConnected) {
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            musicas = beatBunnyBD.getallMusicasBD();
+            if (musicaListener != null)
+                musicaListener.onRefreshListaMusica(musicas);
+        } else {
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlAPIMusicas, null
+                    , new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    musicas = MusicaJSONParser.parserJsonMusicas(response, context);
+                    adicionarMusicasBD(musicas);
+                    if (musicaListener != null)
+                        musicaListener.onRefreshListaMusica(musicas);
                 }
-                );
-                volleiQueue.add(request);
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
+            );
+            volleiQueue.add(request);
         }
+    }
 
     public void setMusicaListener(MusicaListener musicaListener) {
         this.musicaListener = musicaListener;
     }
 
 
-
-    public void adicionarMusicasBD(ArrayList<Musica> listaMusica){
+    public void adicionarMusicasBD(ArrayList<Musica> listaMusica) {
         beatBunnyBD.removerAllMusicasBD();
         for (Musica musica : listaMusica)
             adicionarMusicaBD(musica);
 
     }
 
-    public void adicionarMusicaBD(Musica musica){
+    public void adicionarMusicaBD(Musica musica) {
         beatBunnyBD.adicionarMusicaBD(musica);
     }
-    public void editarMusicaBD(Musica musica){
+
+    public void editarMusicaBD(Musica musica) {
         Musica auxMusica = getMusica(musica.getId());
         if (auxMusica != null)
             beatBunnyBD.guardarMusicaBD(musica);
     }
 
-    public void removerMusicaBD(int idMusica){
+    public void removerMusicaBD(int idMusica) {
         Musica auxMusica = getMusica(idMusica);
-        if (auxMusica!=null)
+        if (auxMusica != null)
             beatBunnyBD.removerMusicaBD(idMusica);
     }
-
-/********************************Registar User na Api********************************/
-//    ){
-//        @Override
-//        protected Map<String,String> getParams(){
-//            Map<String,String> params =new HashMap<>();
-//            params.put("token",tokenAPI);
-//            params.put("username",user.getUsername());
-//            params.put("email",user.getEmail());
-////            params.put("password",user.getPassword());
-//            params.put("nbom        ",livro.getCapa());
-//            params.put("Autor",livro.getAutor());
-//            return params;
-//
-//        }
-//    };
-//    volleyQueue.add(request);
 }

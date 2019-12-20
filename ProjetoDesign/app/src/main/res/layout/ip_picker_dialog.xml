@@ -28,7 +28,7 @@
                     android:layout_marginBottom="4dp"
                     android:hint="@string/ip"
                     android:inputType="text"
-                    android:text="@string/ip" />
+                    />
             </LinearLayout>
 
             <LinearLayout
