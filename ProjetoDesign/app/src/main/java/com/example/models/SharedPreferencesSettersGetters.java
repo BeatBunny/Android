@@ -22,32 +22,38 @@ public class SharedPreferencesSettersGetters {
             mSharedPref = context.getSharedPreferences(context.getPackageName(), Activity.MODE_PRIVATE);
     }
 
-    public static String read(String key, String defValue) {
+    public static String readString(String key, String defValue) {
         return mSharedPref.getString(key, defValue);
     }
 
-    public static void write(String key, String value) {
+    public static void writeString(String key, String value) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.putString(key, value);
         prefsEditor.commit();
     }
 
-    public static boolean read(String key, boolean defValue) {
+    public static boolean readBoolean(String key, boolean defValue) {
         return mSharedPref.getBoolean(key, defValue);
     }
 
-    public static void write(String key, boolean value) {
+    public static void writeBoolean(String key, boolean value) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.putBoolean(key, value);
         prefsEditor.commit();
     }
 
-    public static Integer read(String key, int defValue) {
+    public static Integer readInt(String key, int defValue) {
         return mSharedPref.getInt(key, defValue);
     }
 
-    public static void write(String key, Integer value) {
+    public static void writeInt(String key, Integer value) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.putInt(key, value).commit();
     }
+
+    public static void removeKey(String key){
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove(key).commit();
+    }
+
 }

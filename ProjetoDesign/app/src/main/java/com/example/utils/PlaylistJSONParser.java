@@ -17,22 +17,15 @@ public class PlaylistJSONParser {
 
     public static ArrayList<Playlist> parserJsonPlaylists(JSONArray response, Context context){
         ArrayList<Playlist> listaPlaylists = new ArrayList<Playlist>();
-        System.out.println("-------> "+response);
         try {
             for (int i = 0; i < response.length(); i++){
                 JSONObject playlist = (JSONObject) response.get(i);
 
-                int idMusica = playlist.getInt("id");
-                String titleMusica = playlist.getString("title");
-                String coverMusica = playlist.getString("musiccover");
-                String genreMusica = playlist.getString("genres_id");
-                String launchdateMusica = playlist.getString("launchdate");
-                String lyricsMusica = playlist.getString("lyrics");
-                String pathMusica = playlist.getString("musicpath");
-                String producerMusica = playlist.getString("profile_id");
-                String pvpMusica = playlist.getString("pvp");
-//              Playlist auxMusica = new Playlist(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica, Float.parseFloat(pvpMusica));
-//              listaPlaylists.add(auxMusica);
+                int idPlaylist = playlist.getInt("id");
+                String nomePlaylist = playlist.getString("nome");
+                String creationdatePlaylist = playlist.getString("creationdate");
+                Playlist auxPlaylist = new Playlist(idPlaylist, nomePlaylist, creationdatePlaylist);
+                listaPlaylists.add(auxPlaylist);
             }
         }
         catch (JSONException e) {
@@ -41,7 +34,7 @@ public class PlaylistJSONParser {
         return listaPlaylists;
     }
 
-    public static Playlist parserJsonMusica(String response, Context context){
+    public static Playlist parserJsonMusicsFromPlaylist(String response, Context context){
         Playlist auxMusica = null;
         try {
             JSONObject musica = new JSONObject(response);

@@ -24,6 +24,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.Grelha_mainMenu;
 import com.example.Settings;
 import com.example.models.BeatBunnySingleton;
+import com.example.models.SharedPreferencesSettersGetters;
 import com.google.android.material.navigation.NavigationView;
 
 public class MenuMainActivity extends AppCompatActivity implements
@@ -96,7 +97,9 @@ public class MenuMainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 //BeatBunnySingleton.getInstance(getApplicationContext()).setIP(textIP.getText().toString());
-
+                SharedPreferencesSettersGetters.removeKey(SharedPreferencesSettersGetters.ID_USER);
+                SharedPreferencesSettersGetters.removeKey(SharedPreferencesSettersGetters.AUTH_KEY);
+                SharedPreferencesSettersGetters.removeKey(SharedPreferencesSettersGetters.USERNAME_USER);
                 Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(login);
                 dialog.dismiss();

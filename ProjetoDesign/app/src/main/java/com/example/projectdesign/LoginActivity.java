@@ -36,6 +36,22 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
         usernameEditText = findViewById(R.id.editTextUsername);
         passwordEditText = findViewById(R.id.editTextPassword);
         SharedPreferencesSettersGetters.init(getApplicationContext());
+
+
+        Integer UserIdSaved = SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER, 0);
+        String UserUsernameSaved = SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.USERNAME_USER, null);
+        String UserAuthkeySaved = SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null);
+
+        if(UserIdSaved != null && UserUsernameSaved != null && UserAuthkeySaved != null){
+            Intent main = new Intent(this, MenuMainActivity.class);
+            main.putExtra("IDUSER", UserIdSaved);
+            main.putExtra("USERNAME", UserUsernameSaved);
+            main.putExtra("AUTH_KEY", UserAuthkeySaved);
+            System.out.println("->>>>>>>>>>>>>>>>>>> Tinha lá cenas guardadas:"+ UserIdSaved + " | "+UserUsernameSaved + " | "+UserAuthkeySaved);
+            startActivity(main);
+            finish();
+        }
+
     }
 
     public void onClickLogin(View view){
@@ -61,6 +77,9 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
         }
         else{
             //TODO:guardar no shared: email,username,token
+            SharedPreferencesSettersGetters.writeInt(SharedPreferencesSettersGetters.ID_USER, user.getId());//save int in shared preference.
+            SharedPreferencesSettersGetters.writeString(SharedPreferencesSettersGetters.USERNAME_USER, user.getUsername());//save string in shared preference.
+            SharedPreferencesSettersGetters.writeString(SharedPreferencesSettersGetters.AUTH_KEY, user.getAuthKey());//save boolean in shared preference.
             Intent main = new Intent(this, MenuMainActivity.class);
             main.putExtra("IDUSER", user.getId());
             main.putExtra("USERNAME", user.getUsername());
@@ -106,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
         dialog.setContentView(R.layout.ip_picker_dialog);
         dialog.setTitle("IP ADDRESS");
         final EditText textIP = dialog.findViewById(R.id.ipDialog);
+        textIP.setText(SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.SETTINGS_IP, null));
         Button dialogButtonSave = (Button) dialog.findViewById(R.id.buttonSave);
         Button dialogButtonCancel = (Button) dialog.findViewById(R.id.buttonCancel);
 

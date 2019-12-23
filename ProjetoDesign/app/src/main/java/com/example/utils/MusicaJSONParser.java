@@ -17,7 +17,6 @@ public class MusicaJSONParser {
 
     public static ArrayList<Musica> parserJsonMusicas(JSONArray response, Context context){
         ArrayList<Musica> listaMusicas = new ArrayList<Musica>();
-        System.out.println("-------> "+response);
         try {
             for (int i = 0; i < response.length(); i++){
                 JSONObject musica = (JSONObject) response.get(i);

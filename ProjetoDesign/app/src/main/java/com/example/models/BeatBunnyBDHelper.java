@@ -44,8 +44,7 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
                     /**TabelaPlaylists**/
     private static final String PLAYLISTS_ID= "id";
     private static final String PLAYLISTS_NAME= "name";
-    private static final String PLAYLIST_MUSIC_ID= "music_id";
-    private static final String PLAYLIST_PROFILE_ID= "profile_id";
+    private static final String PLAYLISTS_CREATIONDATE = "creationdate";
 
 
     public BeatBunnyBDHelper(Context context) {
@@ -85,10 +84,7 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
         String createPlaylistTable = "CREATE TABLE "+TABLE_PLAYLISTS+
                 "( "+PLAYLISTS_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 PLAYLISTS_NAME + " TEXT NOT NULL, "+
-                PLAYLIST_MUSIC_ID+ " INTEGER NOT NULL, "+
-                PLAYLIST_PROFILE_ID+ " INTEGER NOT NULL,"+
-                "FOREIGN KEY ("+PLAYLIST_MUSIC_ID+") REFERENCES "+TABLE_MUSICS+"("+MUSIC_ID+"),"+
-                "FOREIGN KEY ("+PLAYLIST_PROFILE_ID+") REFERENCES "+TABLE_USER+"("+PROFILE_ID+"))";
+                PLAYLISTS_CREATIONDATE+ " TEXT NOT NULL) ";
         database.execSQL(createPlaylistTable);
 
     }
@@ -108,8 +104,7 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(PLAYLISTS_ID, playlist.getId());
         values.put(PLAYLISTS_NAME, playlist.getNome());
-        values.put(PLAYLIST_MUSIC_ID, playlist.getMusic_id());
-        values.put(PLAYLIST_PROFILE_ID, playlist.getProfile_id());
+        values.put(PLAYLISTS_CREATIONDATE, playlist.getCreationdate());
 
         long id = this.database.insert(TABLE_PLAYLISTS, null, values);
         if(id > -1){

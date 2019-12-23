@@ -10,9 +10,15 @@ import androidx.fragment.app.Fragment;
 
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
+import com.example.listeners.PlaylistListener;
+import com.example.models.BeatBunnySingleton;
+import com.example.models.Playlist;
+import com.example.utils.PlaylistJSONParser;
+
+import java.util.ArrayList;
 
 
-public class PlaylistFragment extends Fragment {
+public class PlaylistFragment extends Fragment implements PlaylistListener {
 
     public PlaylistFragment() {
 
@@ -24,6 +30,7 @@ public class PlaylistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_playlists, container, false);
+
 
         ExpandingList expandingList = (ExpandingList) view.findViewById(R.id.expanding_list_playlists);
 
@@ -61,6 +68,26 @@ public class PlaylistFragment extends Fragment {
             }
         });*/
 
+        BeatBunnySingleton.getInstance(getContext()).setPlaylistListener(this);
+
         return view;
+    }
+
+    @Override
+    public void onRefreshListaPlaylist(ArrayList<Playlist> playlist) {
+
+    }
+
+    @Override
+    public void onUpdateListaMusica(Playlist playlist, int operacao) {
+
+    }
+
+    @Override
+    public void onResume() {
+        BeatBunnySingleton.getInstance(getContext()).getAllPlaylistsFromUserAPI(getContext(), PlaylistJSONParser.isConnectionInternet(getContext()));
+        //BeatBunnySingleton.getInstance(getContext()).getAllMusicsFromEachPlaylist(getContext(), PlaylistJSONParser.isConnectionInternet(getContext()));
+        super.onResume();
+
     }
 }

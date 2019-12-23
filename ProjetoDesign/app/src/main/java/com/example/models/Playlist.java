@@ -1,35 +1,26 @@
 package com.example.models;
 
-import java.net.IDN;
-
-import android.net.Network;
+import java.util.ArrayList;
 
 public class Playlist {
-    private static int Id=1;
+    private int Id;
+    private String Creationdate;
     private String Nome;
-    private int Music_id ;
-    private int Profile_id;
-    private static int contador=1;
+    private ArrayList<Musica> ListaMusicasDestaPlaylist;
 
-    public Playlist(int id, String nome, int music_id, int profile_id) {
+    public Playlist(int id, String nome, String creationdate) {
         Id=id;
         Nome=nome;
-        Music_id=music_id;
-        Profile_id=profile_id;
-        contador++;
-        Id =contador;
+        Creationdate = creationdate;
     }
 
     public void setId(int id){Id = id;}
-    public void setNome (String nome) {
-        Nome = nome;
-    }
-    public void setMusic_id(int music_id ) { Music_id=music_id;
-    }
-    public void setProfile_id(int profile_id){Profile_id=profile_id;}
+    public void setNome(String nome){Nome = nome;}
+    public void setCreationdate(String creationdate){Creationdate = creationdate;}
+    public void setListaMusicasDestaPlaylist(ArrayList<Musica> listaMusicasDestaPlaylist){ListaMusicasDestaPlaylist = listaMusicasDestaPlaylist;}
 
     public int getId(){return Id;}
     public String getNome(){return Nome;}
-    public int getMusic_id(){return Music_id;}
-    public int getProfile_id(){return Profile_id;}
+    public String getCreationdate(){return Creationdate;}
+    public ArrayList<Musica> getListaMusicasDestaPlaylist(){return ListaMusicasDestaPlaylist;}
 }
