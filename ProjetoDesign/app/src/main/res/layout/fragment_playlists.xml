@@ -12,14 +12,6 @@
         android:layout_height="699dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:gravity="right"
-            android:text="Music"
-            android:textSize="30dp" />
-
         <com.diegodobelo.expandingview.ExpandingList
             android:id="@+id/expanding_list_playlists"
             android:layout_width="match_parent"
@@ -31,12 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:text="Playlists"
-            android:textSize="30dp" />
 
     </LinearLayout>
 

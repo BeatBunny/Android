@@ -18,4 +18,5 @@
     <string name="home">Home</string>
     <string name="yes">Yes</string>
     <string name="your_playlists">Your Playlists</string>
+    <string name="player" />
 </resources>

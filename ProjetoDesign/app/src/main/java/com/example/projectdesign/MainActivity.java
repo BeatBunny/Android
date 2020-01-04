@@ -81,11 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //fragment = new GrelhaLivrosFragment();
                 System.out.println("-->Nav About");
                 break;
-            case R.id.nav_musics:
-                setTitle(menuItem.getTitle());
-                fragment = new MusicFragment();
-                System.out.println("-->Nav Musics");
-                break;
             case R.id.nav_logout:
                 System.out.println("-->Nav Email");
                 break;
