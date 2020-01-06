@@ -48,4 +48,6 @@ public class Player extends AppCompatActivity {
         });
     }
 
+    public void play(View view) {
+    }
 }

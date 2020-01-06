@@ -1,21 +1,21 @@
 package com.example;
 
-import android.content.Intent;
-import android.media.AudioManager;
+
+import android.annotation.SuppressLint;
+import android.media.MediaDataSource;
 import android.media.MediaPlayer;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -25,8 +25,9 @@ import com.example.models.Musica;
 import com.example.projectdesign.R;
 
 import java.io.IOException;
+import java.util.Objects;
 
-import static android.widget.Toast.LENGTH_SHORT;
+import static com.example.projectdesign.R.drawable.*;
 
 
 public class Detalhes_Musica_Activity extends AppCompatActivity {
@@ -36,10 +37,10 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
     private TextView Artist, Muisic;
     private ImageView MusicCover;
     private ProgressBar progressBar;
-    private Button go_back, skip, play, stop;
+    private ImageButton play;
+    private Button stop,back;
     private MediaPlayer mediaPlayer;
-    SeekBar sbar;
-
+    private SeekBar sbar;
     private TextView textViewTituloJava;
     private TextView textViewSerieJava;
     private TextView textViewAnoJava;
@@ -47,19 +48,25 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
     private TextView nomeArtistaJava;
 
     private ImageView imageViewCoverMusicJava;
-
+    private int isPlaying;
     private String currentIP;
+
+    public Detalhes_Musica_Activity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final boolean[] stoped = {false};
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
         sbar = findViewById(R.id.seekBar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         currentIP = BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput();
         idMusica = getIntent().getIntExtra("DETALHES", -1);
+        play = this.findViewById(R.id.play);
+        back = this.findViewById(R.id.back);
 
         musica = BeatBunnySingleton.getInstance(getApplicationContext()).getMusica(idMusica);
 
@@ -67,44 +74,73 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
         imageViewCoverMusicJava = findViewById(R.id.imageViewCoverMusica);
         nomeArtistaJava = findViewById(R.id.nomeArtistaMusicaActivityPlayer);
 
-        if(musica != null){
+        if(musica != null) {
             setTitle(musica.getTitle());
             textViewTituloJava.setText(musica.getTitle());
             nomeArtistaJava.setText(musica.getProducer());
             Glide.with(getApplicationContext())
-                    .load("http://"+currentIP+":80/BeatBunny/advanced/frontend/web/"+musica.getMusiccover()+"/image_"+musica.getId()+".png")
-                    .placeholder(R.drawable.logo_white)
+                    .load("http://" + currentIP + ":80/BeatBunny/advanced/frontend/web/" + musica.getMusiccover() + "/image_" + musica.getId() + ".png")
+                    .placeholder(logo_white)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fitCenter().into(imageViewCoverMusicJava);
 
-            play = this.findViewById(R.id.play);
             mediaPlayer = new MediaPlayer();
-            play.setOnClickListener(new View.OnClickListener() {
-                public void onClick (View v){
-                    String musicURL= "http://"+currentIP+":80/BeatBunny/advanced/frontend/web/" +musica.getMusicpath()+"/music_"+musica.getId()+"_"+musica.getTitle()+".mp3";
-                    try {
-                        mediaPlayer.setDataSource(musicURL);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    mediaPlayer.prepareAsync();
-                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            mp.start();
-                            sbar.setProgress(0);
-                            sbar.setMax(mediaPlayer.getDuration());
+            final String musicURL = "http://" + currentIP + ":80/BeatBunny/advanced/frontend/web/" + musica.getMusicpath() + "/music_" + musica.getId() + "_" + musica.getTitle() + ".mp3";
+             try {
+                mediaPlayer.setDataSource(musicURL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+                    play.setOnClickListener(new View.OnClickListener() {
+                        private boolean Playing = false;
+                        private boolean GotMusic = false;
+
+                    public void onClick(View v) {
+                        if (back.getText()==" "){
+                            this.Playing=false;
+                            this.GotMusic=false;
                         }
-                    });
+                        if (!this.Playing) {
+                            back.setText(".");
+                            if(this.GotMusic ) {
+                                mediaPlayer.start();
+                            }else {
+                                mediaPlayer.prepareAsync();
+                                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                    @Override
+                                    public void onPrepared(MediaPlayer mp) {
+                                        mp.start();
+                                        sbar.setProgress(0);
+                                        sbar.setMax(mediaPlayer.getDuration());
+                                    }
+                                });
+                            }
+                            this.Playing = true;
+                            play.setBackgroundResource(R.drawable.stop);
+                        } else {
+                            mediaPlayer.pause();
+                            play.setBackgroundResource(R.drawable.plays);
+                            this.Playing=false;
+                            this.GotMusic=true;
+                        }
+                    }
+
+                });
+                final Thread runSekBar = new runSeekBar();
+                runSekBar.start();
+                back.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    play.setBackgroundResource(R.drawable.plays);
+                    back.setText(" ");
+                    back.setTextScaleX(1);
+                    mediaPlayer.stop();
                 }
             });
-            Thread runSekBar = new runSeekBar();
-            runSekBar.start();
         }else{
             setTitle("Music X");
         }
     }
-
 
     public class runSeekBar extends Thread {
         @Override
@@ -140,4 +176,4 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
 //        });
 //    }
 //}
-}
+
