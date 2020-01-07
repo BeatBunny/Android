@@ -1,12 +1,8 @@
 package com.example;
 
 
-import android.annotation.SuppressLint;
-import android.media.MediaDataSource;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,7 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -27,7 +22,7 @@ import com.example.projectdesign.R;
 import java.io.IOException;
 import java.util.Objects;
 
-import static com.example.projectdesign.R.drawable.*;
+import static com.example.projectdesign.R.drawable.logo_white;
 
 
 public class Detalhes_Musica_Activity extends AppCompatActivity {
@@ -164,6 +159,7 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
     }
 
 
+
 //    public void back(View view) {
 //        go_back.setOnClickListener(new View.OnClickListener() {
 //
@@ -175,5 +171,11 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
 //            }
 //        });
 //    }
-//}
+
+
+
+
+
+
+}
 

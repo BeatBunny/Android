@@ -34,10 +34,12 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
 
         ExpandingList expandingList = (ExpandingList) view.findViewById(R.id.expanding_list_playlists);
 
+        //TODO: FOR A PARTIR DAQUI A ENGLOBAR AS PLAYLISTS
         ExpandingItem item = expandingList.createNewItem(R.layout.expanding_layout_playlists);
 
         ((TextView) item.findViewById(R.id.title_playlist)).setText("It Works!!");
 
+        //TODO: CADA SUBITEM É UMA MUSICA, FOREACHE DENTRO DO FOREACH DAS PLAYLISTS PARA CADA UMA DAS PLAYLISTS
         item.createSubItems(5);
 
         View subItemZero = item.getSubItemView(0);
@@ -49,6 +51,58 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
         item.setIndicatorColorRes(R.color.common_google_signin_btn_text_light_default);
         item.setIndicatorIconRes(R.drawable.ic_musicbeat);
 
+
+        //TODO: CRIAR PLAYLIST
+            //feito api
+                //http://localhost/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate?access-token=XXX
+                /*
+                * ENVIAR POR POST:
+                *   "nome":"BeatBunnyPlaylist #N",
+                *   "idUser":"X" (ID DO USER NA SHAREDPREFERENCES)
+                *
+                * */
+
+        //TODO: EDITAR O NOME DA PLAYLIST
+            //feito api
+                //http://localhost/BeatBunny/advanced/backend/web/v1/playlists/playlistupdate/11?access-token=XXX
+                /*
+                * ENVIAR POR PUT
+                *   "nome":"BeatBunnyPlaylist #N"
+                *
+                * */
+
+        //TODO: ADICIONAR A MÚSICA À PLAYLIST (A PARTIR DA ACTIVITY DA MÚSICA)
+            //feito api
+                //http://localhost/BeatBunny/advanced/backend/web/v1/playlists/putsong?access-token=            XXX
+                /*
+                * ENVIAR POR POST
+                *   "idPlaylist":"ID DA PLAYLIST QUE É PARA TER A MÚSICA",
+                *   "idMusic":"ID DA MÚSICA QUE É PARA ADICIONAR À PLAYLIST"
+                *
+                * */
+
+        //TODO: REMOVER A MUSICA DA PLAYLIST
+            //feito api
+                //http://localhost/BeatBunny/advanced/backend/web/v1/playlists/removesong?access-token=         XXX
+                /*
+                * ENVIAR POR DELETE
+                *   "idPlaylist":"ID DA PLAYLIST QUE É PARA TER A MÚSICA",
+                *   "idMusic":"ID DA MÚSICA QUE É PARA ADICIONAR À PLAYLIST"
+                *
+                * */
+
+        //TODO: ELIMINAR A PLAYLIST TODA
+            //feito api
+                //http://localhost/BeatBunny/advanced/backend/web/v1/playlists/delete/      XX    ?access-token=    XXX
+                /*
+                * ENVIAR POR DELETE
+                *   é preciso meter o ID da PLAYLIST que é para ELIMINAR
+                *
+                * */
+
+
+
+        /*TREZE != TREUZE*/
 
         /*listaLivros = SingletonGestorLivros.getInstance().getListaLivros();
 
