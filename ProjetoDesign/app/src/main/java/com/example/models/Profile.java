@@ -1,33 +1,37 @@
 package com.example.models;
 
 public class Profile {
-    private static int Profile_ID ;
-    private int Saldo;
+    private int Profile_ID ;
+    private String Saldo;
     private String Nome;
     private int Nif ;
     private String Profileimage;
 
 
-    public Profile(int profile_ID, int saldo, String nome, int nif, String profileimage) {
+    public Profile(int profile_ID, String saldo, String nome, int nif) {
         Profile_ID=profile_ID;
         Saldo=saldo;
         Nome=nome;
         Nif=nif;
-        Profileimage=profileimage;
     }
 
-    public void setProfileId(int profile_ID){Profile_ID = profile_ID;}
-    public void setSaldo(int saldo) {
+    public void setSaldo(String saldo) {
         Saldo = saldo;
     }
-    public void setNome(String nome ) { Nome=nome;
+    public void setNome(String nome ) {
+        Nome=nome;
     }
-    public void setNif(int nif){Nif=nif;}
-    public void setProfileimage(String profileimage){Profileimage=profileimage;}
+    public void setNif(int nif){
+        Nif=nif;
+    }
 
-    public int getProfileId(){return Profile_ID;}
-    public int getSaldo(){return Saldo;}
-    public String getNome(){return Nome;}
-    public int getNif(){return Nif;}
-    public String getProfileimage(){return Profileimage;}
+    public String getSaldo(){
+        return Saldo;
+    }
+    public String getNome(){
+        return Nome;
+    }
+    public String getNif(){
+        return Nif+"" ;
+    }
 }

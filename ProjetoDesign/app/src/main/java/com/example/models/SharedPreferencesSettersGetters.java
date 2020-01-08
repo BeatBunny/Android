@@ -10,6 +10,9 @@ public class SharedPreferencesSettersGetters {
     public static final String ID_USER = "ID_USER";
     public static final String AUTH_KEY = "AUTH_KEY";
     public static final String SETTINGS_IP = "SETTINGS_IP";
+    public static final String NOME_PROFILE = "NOME_PROFILE";
+    public static final String NIF_PROFILE = "NIF_PROFILE";
+    public static final String SALDO_PROFILE = "SALDO_PROFILE";
 
     private SharedPreferencesSettersGetters()
     {

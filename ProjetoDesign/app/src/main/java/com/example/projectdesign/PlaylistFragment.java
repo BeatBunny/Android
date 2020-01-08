@@ -1,10 +1,14 @@
 package com.example.projectdesign;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -14,6 +18,7 @@ import com.example.listeners.PlaylistListener;
 import com.example.models.BeatBunnySingleton;
 import com.example.models.Playlist;
 import com.example.utils.PlaylistJSONParser;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -29,8 +34,22 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_playlists, container, false);
+        View view = inflater.inflate(R.layout.fragment_playlist, container, false);
 
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(!PlaylistJSONParser.isConnectionInternet(getContext())){
+                    Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    createDialog();
+                }
+            }
+        });
 
         ExpandingList expandingList = (ExpandingList) view.findViewById(R.id.expanding_list_playlists);
 
@@ -122,9 +141,43 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
             }
         });*/
 
+
+
         BeatBunnySingleton.getInstance(getContext()).setPlaylistListener(this);
 
         return view;
+    }
+
+    public Dialog createDialog() {
+
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.new_playlist_dialog);
+        dialog.setTitle("New Playlist");
+        final EditText textNomePlaylist = dialog.findViewById(R.id.newPlaylist);
+        Button dialogButtonSave = (Button) dialog.findViewById(R.id.buttonSavePlaylist);
+        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.buttonCancelPlaylist);
+
+        dialogButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //BeatBunnySingleton.getInstance(getContext()).setIP(textNomePlaylist.getText().toString());
+                //Toast.makeText(getContext(), BeatBunnySingleton.getInstance(getContext()).getIPInput(), Toast.LENGTH_SHORT).show();
+
+                BeatBunnySingleton.getInstance(getContext()).createNewPlaylist(getContext(), PlaylistJSONParser.isConnectionInternet(getContext()), textNomePlaylist.getText().toString());
+
+                dialog.dismiss();
+            }
+        });
+
+        dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+        return dialog;
     }
 
     @Override
@@ -140,8 +193,10 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
     @Override
     public void onResume() {
         BeatBunnySingleton.getInstance(getContext()).getAllPlaylistsFromUserAPI(getContext(), PlaylistJSONParser.isConnectionInternet(getContext()));
-        //BeatBunnySingleton.getInstance(getContext()).getAllMusicsFromEachPlaylist(getContext(), PlaylistJSONParser.isConnectionInternet(getContext()));
         super.onResume();
 
     }
+
+
+
 }

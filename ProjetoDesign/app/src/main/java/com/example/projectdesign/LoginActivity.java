@@ -15,8 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.listeners.UserListener;
 import com.example.models.BeatBunnySingleton;
+import com.example.models.Profile;
 import com.example.models.SharedPreferencesSettersGetters;
 import com.example.models.User;
+import com.example.utils.ProfileJSONParser;
 import com.example.utils.UserJSONParser;
 
 public class LoginActivity extends AppCompatActivity implements UserListener {
@@ -42,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
         String UserUsernameSaved = SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.USERNAME_USER, null);
         String UserAuthkeySaved = SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null);
 
-        if(UserIdSaved != null && UserUsernameSaved != null && UserAuthkeySaved != null){
+        if(UserIdSaved != 0 && UserUsernameSaved != null && UserAuthkeySaved != null){
             Intent main = new Intent(this, MenuMainActivity.class);
             main.putExtra("IDUSER", UserIdSaved);
             main.putExtra("USERNAME", UserUsernameSaved);
@@ -76,14 +78,24 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
             usernameEditText.setError("Username or Password is wrong");
         }
         else{
-            //TODO:guardar no shared: email,username,token
             SharedPreferencesSettersGetters.writeInt(SharedPreferencesSettersGetters.ID_USER, user.getId());//save int in shared preference.
             SharedPreferencesSettersGetters.writeString(SharedPreferencesSettersGetters.USERNAME_USER, user.getUsername());//save string in shared preference.
             SharedPreferencesSettersGetters.writeString(SharedPreferencesSettersGetters.AUTH_KEY, user.getAuthKey());//save boolean in shared preference.
+            BeatBunnySingleton.getInstance(getApplicationContext()).getProfileFromLogin(getApplicationContext(), ProfileJSONParser.isConnectionInternet(getApplicationContext()));
+        }
+    }
+
+    @Override
+    public void onRefreshListaProfiles(Profile profile) {
+        if(profile != null) {
+            //TODO:guardar no shared: email,username,token
+            SharedPreferencesSettersGetters.writeString(SharedPreferencesSettersGetters.NOME_PROFILE, profile.getNome());//save int in shared preference.
+            SharedPreferencesSettersGetters.writeString(SharedPreferencesSettersGetters.SALDO_PROFILE, profile.getSaldo());//save int in shared preference.
+            SharedPreferencesSettersGetters.writeString(SharedPreferencesSettersGetters.NIF_PROFILE, profile.getNif());//save string in shared preference.
             Intent main = new Intent(this, MenuMainActivity.class);
-            main.putExtra("IDUSER", user.getId());
-            main.putExtra("USERNAME", user.getUsername());
-            main.putExtra("AUTH_KEY", user.getAuthKey());
+            main.putExtra("IDUSER", SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER, 0));
+            main.putExtra("USERNAME", SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.USERNAME_USER, null));
+            main.putExtra("AUTH_KEY", SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null));
             startActivity(main);
             finish();
         }

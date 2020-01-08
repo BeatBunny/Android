@@ -96,7 +96,6 @@ public class MenuMainActivity extends AppCompatActivity implements
         dialogButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //BeatBunnySingleton.getInstance(getApplicationContext()).setIP(textIP.getText().toString());
                 SharedPreferencesSettersGetters.removeKey(SharedPreferencesSettersGetters.ID_USER);
                 SharedPreferencesSettersGetters.removeKey(SharedPreferencesSettersGetters.AUTH_KEY);
                 SharedPreferencesSettersGetters.removeKey(SharedPreferencesSettersGetters.USERNAME_USER);
@@ -148,9 +147,16 @@ public class MenuMainActivity extends AppCompatActivity implements
                 fragment = new PlaylistFragment();
                 System.out.println("-->Nav Playlists");
                 break;
+            case R.id.nav_your_musics:
+                setTitle(menuItem.getTitle());
+                fragment = new YourmusicsFragment();
+                System.out.println("-->Your Musics");
+                break;
             case R.id.nav_settings:
                 System.out.println("-->Nav Settings");
+                setTitle(menuItem.getTitle());
                 fragment = new Settings();
+                System.out.println("-->Settings");
                 break;
             case R.id.nav_logout:
                 createDialog();
@@ -169,10 +175,5 @@ public class MenuMainActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    protected void onStop() {
-        //TODO: desfazer-se do USER enviado pela api nas SharedPreferences
-        super.onStop();
-    }
 }
 

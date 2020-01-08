@@ -1,4 +1,4 @@
-package com.example;
+package com.example.projectdesign;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,34 +16,36 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.Detalhes_Musica_Activity;
 import com.example.adapters.GrelhaMusicaAdapter;
 import com.example.listeners.MusicaListener;
 import com.example.models.BeatBunnySingleton;
 import com.example.models.Musica;
-import com.example.projectdesign.R;
 import com.example.utils.MusicaJSONParser;
 
 import java.util.ArrayList;
-public class Grelha_mainMenu extends Fragment implements MusicaListener {
-    private GridView grelhaMusicas;
-    private ArrayList<Musica> listamusicas;
+
+public class YourmusicsFragment extends Fragment implements MusicaListener {
+
+    private GridView yourMusicsGrid;
     private ImageView imageViewGrelhaJava;
     private SearchView searchView;
-    public Grelha_mainMenu() {
+
+    public YourmusicsFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        View view = inflater.inflate(R.layout.fragment_yourmusics, container, false);
         setHasOptionsMenu(true);
         //listamusicas = BeatBunnySingleton.getInstance(getContext()).getListaMusicas();
 
-        grelhaMusicas = view.findViewById(R.id.GrelhaDeMusicas);
+        yourMusicsGrid = view.findViewById(R.id.YourMusicsGrid);
         imageViewGrelhaJava = view.findViewById(R.id.imageViewGrelha);
         //grelhaMusicas.setAdapter(new GrelhaMusicaAdaptor(getContext(), listamusicas));
-        grelhaMusicas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        yourMusicsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
                 Musica musica = (Musica) parent.getItemAtPosition(position);
@@ -57,7 +59,20 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
 
         BeatBunnySingleton.getInstance(getContext()).setMusicaListener(this);
         return view;
+
     }
+
+    @Override
+    public void onRefreshListaMusica(ArrayList<Musica> musicas) {
+        GrelhaMusicaAdapter grelhaMusicaAdapter = new GrelhaMusicaAdapter(getContext(), musicas);
+        yourMusicsGrid.setAdapter(grelhaMusicaAdapter);
+    }
+
+    @Override
+    public void onUpdateListaMusica(Musica musica, int operacao) {
+
+    }
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -83,7 +98,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
                     if(m.getTitle().toLowerCase().contains(newText.toLowerCase()))
                         filtroListaMusica.add(m);
 
-                grelhaMusicas.setAdapter(new GrelhaMusicaAdapter(getContext(), filtroListaMusica));
+                yourMusicsGrid.setAdapter(new GrelhaMusicaAdapter(getContext(), filtroListaMusica));
                 return true;
             }
         });
@@ -97,28 +112,14 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
     }
 
 
-
-
     @Override
     public void onResume(){
         if(searchView!=null){
             searchView.onActionViewCollapsed();
         }
-        BeatBunnySingleton.getInstance(getContext()).getAllMusicasAPI(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
-        //BeatBunnySingleton.getInstance(getContext()).getAllUsersAPI(getContext(), UserJSONParser.isConnectionInternet(getContext()));
+        BeatBunnySingleton.getInstance(getContext()).getMusicFromProfileHasClientAPI(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
 
         super.onResume();
     }
 
-
-    @Override
-    public void onRefreshListaMusica(ArrayList<Musica> musicas) {
-        GrelhaMusicaAdapter grelhaMusicaAdapter = new GrelhaMusicaAdapter(getContext(), musicas);
-        grelhaMusicas.setAdapter(grelhaMusicaAdapter);
-    }
-
-    @Override
-    public void onUpdateListaMusica(Musica musica, int operacao) {
-
-    }
 }

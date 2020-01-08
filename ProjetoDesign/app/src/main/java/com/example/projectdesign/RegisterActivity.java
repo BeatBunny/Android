@@ -1,4 +1,5 @@
 package com.example.projectdesign;
+
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.listeners.UserListener;
 import com.example.models.BeatBunnySingleton;
+import com.example.models.Profile;
 import com.example.models.User;
 import com.example.utils.UserJSONParser;
 
@@ -77,6 +79,12 @@ public class RegisterActivity extends AppCompatActivity implements UserListener 
 
     @Override
     public void onRefreshListaUser(User user) {
+
+        this.finish();
+    }
+
+    @Override
+    public void onRefreshListaProfiles(Profile profile){
 
         this.finish();
     }

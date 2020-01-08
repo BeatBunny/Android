@@ -1,11 +1,8 @@
 package com.example;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaDataSource;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,11 +21,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.models.BeatBunnySingleton;
 import com.example.models.Musica;
-import com.example.projectdesign.MenuMainActivity;
 import com.example.projectdesign.R;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import static com.example.projectdesign.R.drawable.logo_white;
 
@@ -74,11 +69,11 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
 
 //        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        sbar = findViewById(R.id.seekBar);
+        sbar = findViewById(R.id.seekBarMusic);
         currentIP = BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput();
         idMusica = getIntent().getIntExtra("DETALHES", -1);
-        play = this.findViewById(R.id.play);
-        back = this.findViewById(R.id.back);
+        play = this.findViewById(R.id.playMusic);
+        back = this.findViewById(R.id.backMusic);
 
         musica = BeatBunnySingleton.getInstance(getApplicationContext()).getMusica(idMusica);
 

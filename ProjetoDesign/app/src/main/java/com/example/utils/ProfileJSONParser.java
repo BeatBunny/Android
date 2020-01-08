@@ -16,13 +16,12 @@ public class ProfileJSONParser {
         try {
             JSONObject profile = new JSONObject(response);
             //int id, String username, String authKey, String email,int profile_ID, int saldo, String nome, int nif, String profileimage
-            int profile_ID = profile.getInt("profile_id");
-            int profile_saldo = profile.getInt("saldo");
+            int profile_ID = profile.getInt("id");
+            String profile_saldo = profile.getString("saldo");
             String profile_nome = profile.getString("nome");
             int profile_nif = profile.getInt("nif");
-            String profileimage = profile.getString("profileimage");
 
-            auxProfile = new Profile(profile_ID, profile_saldo, profile_nome, profile_nif, profileimage);
+            auxProfile = new Profile(profile_ID, profile_saldo, profile_nome, profile_nif);
 
         } catch (JSONException e) {
             e.printStackTrace();

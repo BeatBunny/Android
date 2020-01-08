@@ -16,6 +16,7 @@ import com.example.listeners.PlaylistListener;
 import com.example.listeners.UserListener;
 import com.example.utils.MusicaJSONParser;
 import com.example.utils.PlaylistJSONParser;
+import com.example.utils.ProfileJSONParser;
 import com.example.utils.UserJSONParser;
 
 import org.json.JSONArray;
@@ -34,6 +35,8 @@ public class BeatBunnySingleton {
     private static final int EDITAR_BD = 2;
     private static final int REMOVER_BD = 3;
     private ArrayList<Musica> musicas;
+    private ArrayList<Musica> yourMusics;
+    private ArrayList<Musica> listaMusicasProduzidas;
     private ArrayList<Playlist> playlists;
     private ArrayList<User> users;
     private static BeatBunnySingleton INSTANCE = null;
@@ -50,8 +53,8 @@ public class BeatBunnySingleton {
     private String mUrlAPIusersLogin = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
     private String mUrlAPIusersRegister = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
     private String mUrlAPIMusicas = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/music";
-    private String mUrlAPIPutMusicInPlaylist;
-    private String mUrlGetPlaylistsFromUser;
+    private String mUrlAPIPutMusicInPlaylist = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate";
+    private String mUrlGetStuffFromUser;
 
     private static RequestQueue volleiQueue;
 
@@ -72,7 +75,7 @@ public class BeatBunnySingleton {
         return INSTANCE;
     }
 
-    public void loginUserAPI(final String username, final String password, final Context context, boolean isConnected) {
+    public void loginUserAPI(final String username, final String password, final Context context, final boolean isConnected) {
         if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
             //TODO: fazer aparecer botão para entrar como guest
@@ -95,6 +98,61 @@ public class BeatBunnySingleton {
                     Map<String, String> params = new HashMap<>();
                     params.put("username", username);
                     params.put("password", password);
+                    return params;
+                }
+            };
+            volleiQueue.add(request);
+        }
+    }
+
+    public void getProfileFromLogin(final Context context, final boolean isConnected){
+        if(!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            StringRequest request = new StringRequest(Request.Method.GET, mUrlGetStuffFromUser+SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER, 0)+"/profile?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Profile profile = ProfileJSONParser.parserJsonProfile(response, context);
+                    userListener.onRefreshListaProfiles(profile);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            );
+            volleiQueue.add(request);
+        }
+    }
+
+    public void saveSettings(final String nome, final String nif, final Context context, final boolean isConnected){
+        if(!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            StringRequest request = new StringRequest(Request.Method.PUT, mUrlGetStuffFromUser+"savesettings?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Profile profile = ProfileJSONParser.parserJsonProfile(response, context);
+                    userListener.onRefreshListaProfiles(profile);
+
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("idUser", SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER, 0).toString());
+                    params.put("nomeNovo", nome);
+                    params.put("nifNovo", nif);
                     return params;
                 }
             };
@@ -142,7 +200,8 @@ public class BeatBunnySingleton {
         mUrlAPIusersLogin = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
         mUrlAPIusersRegister = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
         mUrlAPIMusicas = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/music";
-        mUrlGetPlaylistsFromUser = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/user/";
+        mUrlGetStuffFromUser = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/user/";
+        mUrlAPIPutMusicInPlaylist = "http://"+ CURRENT_IP +":80/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate";
     }
 
     public String getIPInput() {
@@ -177,7 +236,8 @@ public class BeatBunnySingleton {
         mUrlAPIusersLogin = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
         mUrlAPIusersRegister = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
         mUrlAPIMusicas = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/music";
-        mUrlGetPlaylistsFromUser = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/user/";
+        mUrlGetStuffFromUser = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/user/";
+        mUrlAPIPutMusicInPlaylist = "http://"+ CURRENT_IP +":80/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate";
     }
 
 
@@ -192,9 +252,9 @@ public class BeatBunnySingleton {
         //Toast.makeText(context, "isConnected:" + isConnected, Toast.LENGTH_SHORT).show();
         if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            musicas = beatBunnyBD.getallMusicasBD();
+            /*musicas = beatBunnyBD.getallMusicasBD();
             if (musicaListener != null)
-                musicaListener.onRefreshListaMusica(musicas);
+                musicaListener.onRefreshListaMusica(musicas);*/
         } else {
             JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlAPIMusicas, null
                     , new Response.Listener<JSONArray>() {
@@ -244,21 +304,86 @@ public class BeatBunnySingleton {
             beatBunnyBD.removerMusicaBD(idMusica);
     }
 
+
+    public void getMusicFromProfileHasClientAPI(final Context context, final boolean isConnected){
+        if(!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlGetStuffFromUser + SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER, 0) + "/getmusicfromprofilehasclient?access-token=" + SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), null
+                    , new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    yourMusics = MusicaJSONParser.parserJsonMusicas(response, context);
+                    if (musicaListener != null)
+                        musicaListener.onRefreshListaMusica(yourMusics);
+
+                    getMusicFromProfileHasProducerAPI(context, isConnected);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            );
+            volleiQueue.add(request);
+        }
+    }
+
+    public void getMusicFromProfileHasProducerAPI(final Context context, final boolean isConnected){
+        if(!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlGetStuffFromUser + SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER, 0) + "/getmusicfromprofilehasproducer?access-token=" + SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), null
+                    , new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    listaMusicasProduzidas = MusicaJSONParser.parserJsonMusicas(response, context);
+                    yourMusics.addAll(listaMusicasProduzidas);
+                    if (musicaListener != null)
+                        musicaListener.onRefreshListaMusica(yourMusics);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            );
+            volleiQueue.add(request);
+        }
+    }
+
+
+
+
+
+
+
     public void getAllPlaylistsFromUserAPI(final Context context, final boolean isConnected) {
+        System.out.println("--------------------> IS CONNECTED\n"+isConnected);
         //Toast.makeText(context, "isConnected:" + isConnected, Toast.LENGTH_SHORT).show();
         if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            //playlists = beatBunnyBD.getAllPlaylists();
+            playlists = beatBunnyBD.getAllPlaylists();
             if (playlistListener != null)
                 playlistListener.onRefreshListaPlaylist(playlists);
+            for (Playlist playlist: playlists) {
+                System.out.println("--------------------> PLAYLISTS FROM USER\n");
+                System.out.println(playlist.getId());
+                System.out.println(playlist.getNome());
+                System.out.println(playlist.getCreationdate());
+            }
         } else {                                                                 //"http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/user/"
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlGetPlaylistsFromUser+SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER,0)+"/playlists?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), null
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlGetStuffFromUser +SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER,0)+"/playlists?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), null
                     , new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     playlists = PlaylistJSONParser.parserJsonPlaylists(response, context);
-                    /*adicionarMusicasBD(playlists);
-                    adicionarPlaylistsBD(playlists);*/
+                    /*adicionarMusicasBD(playlists);*/
+                    adicionarPlaylistsBD(playlists);
                     if (playlistListener != null)
                         playlistListener.onRefreshListaPlaylist(playlists);
 
@@ -279,18 +404,25 @@ public class BeatBunnySingleton {
         }
     }
 
+    private void adicionarPlaylistsBD(ArrayList<Playlist> playlists) {
+        beatBunnyBD.removerAllPlaylistsBD();
+        for (Playlist playlist : playlists)
+            beatBunnyBD.adicionarPlaylistBD(playlist);
+    }
+
     public void getAllMusicsFromEachPlaylist(final Context context, boolean isConnected ){
 
         if(!isConnected){
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            //playlists = beatBunnyBD.getAllPlaylists();
+            playlists = beatBunnyBD.getAllPlaylists();
             if (playlistListener != null)
                 playlistListener.onRefreshListaPlaylist(playlists);
+            System.out.println("--------------------> PLAYLISTS FROM USER\n"+playlists);
         }
         else {
             for (final Playlist pl : playlists) {
 
-                JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlGetPlaylistsFromUser+SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER,0)+"/playlists/"+pl.getId()+"/musics?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), null
+                JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlGetStuffFromUser +SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER,0)+"/playlists/"+pl.getId()+"/musics?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), null
                         , new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -306,12 +438,41 @@ public class BeatBunnySingleton {
                 );
                 volleiQueue.add(request);
             }
-            //System.out.println("--------------------> PLAYLISTS FROM USER\n"+playlists);
+            System.out.println("--------------------> PLAYLISTS FROM USER\n"+playlists);
             if (playlistListener != null)
                 playlistListener.onRefreshListaPlaylist(playlists);
         }
 
     }
+
+    public void createNewPlaylist(final Context context, final boolean isConnected, final String nomePlaylist){
+        if (!isConnected) {
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        } else {
+            StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIPutMusicInPlaylist+"?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    getAllPlaylistsFromUserAPI(context, isConnected);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("nome", nomePlaylist);
+                    params.put("idUser", SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER, 0).toString());
+                    return params;
+                }
+            };
+            volleiQueue.add(request);
+        }
+    }
+
+
 
 
 }

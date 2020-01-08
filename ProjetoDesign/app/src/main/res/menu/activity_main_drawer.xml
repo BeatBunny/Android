@@ -13,8 +13,8 @@
             android:id="@+id/nav_playlists"
             android:title="@string/your_playlists" />
         <item
-            android:id="@+id/nav_player"
-            android:title="Player" />
+            android:id="@+id/nav_your_musics"
+            android:title="@string/your_musics" />
         <item
             android:id="@+id/nav_settings"
             android:title="@string/settings"

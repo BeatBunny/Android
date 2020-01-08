@@ -193,18 +193,6 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public boolean adicionarProfileBD(Profile profile, int user_id){
-
-        ContentValues values = new ContentValues();
-        values.put(PROFILE_ID, profile.getProfileId());
-        values.put(PROFILE_NOME, profile.getNome());
-        values.put(PROFILE_SALDO, profile.getSaldo());
-        values.put(PROFILE_NIF, profile.getNif());
-        values.put(PROFILE_IMAGE, profile.getProfileimage());
-
-        return this.database.update(TABLE_USER, values, "id = ?", new String[]{user_id+""}) > 0;
-
-    }
 
     public boolean guardarUserBD(User user) {
 
@@ -233,6 +221,24 @@ public class BeatBunnyBDHelper extends SQLiteOpenHelper {
 
     public boolean removerAllUsersBD() {
         return database.delete(TABLE_USER, null, null) > 0;
+    }
+
+    public boolean removerAllPlaylistsBD() {
+        return database.delete(TABLE_PLAYLISTS, null, null) > 0;
+    }
+
+    public ArrayList<Playlist> getAllPlaylists() {
+        ArrayList<Playlist> playlists = new ArrayList<Playlist>();
+        Cursor cursor = this.database.query(TABLE_PLAYLISTS, new String[]{PLAYLISTS_ID, PLAYLISTS_NAME, PLAYLISTS_CREATIONDATE}, null, null, null,null, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Playlist auxPlaylist = new Playlist(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+                auxPlaylist.setId(cursor.getInt(0));
+                playlists.add(auxPlaylist);
+            }while (cursor.moveToNext());
+        }
+        return playlists;
     }
 }
 

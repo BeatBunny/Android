@@ -17,14 +17,6 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name="com.example.Detalhes_Musica_Activity"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name="com.example.projectdesign.Music"
-            android:theme="@style/Theme.AppCompat" />
-        <activity android:name="com.example.projectdesign.Playlist"
-            android:theme="@style/Theme.AppCompat" />
-        <activity android:name="com.example.projectdesign.Player"
-            android:theme="@style/Theme.AppCompat" />
-        <activity android:name="com.example.projectdesign.Search"
-            android:theme="@style/Theme.AppCompat" />
         <activity android:name=".RegisterActivity"
             android:theme="@style/Theme.AppCompat"/>
         <activity
