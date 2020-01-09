@@ -114,7 +114,7 @@ public class Settings extends Fragment implements UserListener {
         User_nome.setText(Objects.requireNonNull(getActivity()).getIntent().getStringExtra("USERNAME"));
         User_nome.setTextSize(25);
         User_nome.setTextColor(Color.parseColor("#80CBC4"));
-        User_balance.setText(Objects.requireNonNull(SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.SALDO_PROFILE, null))+" €");
+        User_balance.setText(String.format("%s €", Objects.requireNonNull(SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.SALDO_PROFILE, null))));
         Nome.setText(Objects.requireNonNull(SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.NOME_PROFILE, null)));
         Nif.setText(Objects.requireNonNull(SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.NIF_PROFILE, null)));
         Glide.with(getActivity().getApplicationContext())

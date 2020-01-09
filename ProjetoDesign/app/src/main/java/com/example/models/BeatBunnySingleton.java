@@ -20,6 +20,8 @@ import com.example.utils.ProfileJSONParser;
 import com.example.utils.UserJSONParser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,9 +33,7 @@ import java.util.Map;
 //import com.example.utils.LivroJsonParser;
 
 public class BeatBunnySingleton {
-    private static final int ADICIONAR_BD = 1;
-    private static final int EDITAR_BD = 2;
-    private static final int REMOVER_BD = 3;
+
     private ArrayList<Musica> musicas;
     private ArrayList<Musica> yourMusics;
     private ArrayList<Musica> listaMusicasProduzidas;
@@ -46,9 +46,7 @@ public class BeatBunnySingleton {
 
     private UserListener userListener;
 
-    public String CURRENT_IP;
-
-    private String tokenAPI = "AMSI-TOKEN";
+    private String CURRENT_IP;
 
     private String mUrlAPIusersLogin = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
     private String mUrlAPIusersRegister = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
@@ -57,6 +55,8 @@ public class BeatBunnySingleton {
     private String mUrlGetStuffFromUser;
 
     private static RequestQueue volleiQueue;
+
+    private boolean tof;
 
 
     public void setUserListener(UserListener userListener) {
@@ -75,11 +75,12 @@ public class BeatBunnySingleton {
         return INSTANCE;
     }
 
+
+
+
     public void loginUserAPI(final String username, final String password, final Context context, final boolean isConnected) {
         if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            //TODO: fazer aparecer botão para entrar como guest
-            //TODO: fazer função de entrar como guest
         } else {
             StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIusersLogin, new Response.Listener<String>() {
                 @Override
@@ -164,8 +165,6 @@ public class BeatBunnySingleton {
     public void registoUserAPI(final String username, final String password, final String email, final String nome, final String nif, final Context context, boolean isConnected) {
         if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            //TODO: fazer aparecer botão para entrar como guest
-            //TODO: fazer função de entrar como guest
         } else {
             StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIusersRegister, new Response.Listener<String>() {
                 @Override
@@ -246,9 +245,13 @@ public class BeatBunnySingleton {
         return musicas;
     }
 
+    public ArrayList<Musica> getAllMusics(){
+        return this.musicas;
+    }
+
 
     /*****************************Métodos que acedem à API******************************/
-    public void getAllMusicasAPI(final Context context, boolean isConnected) {
+    public void getAllMusicasAPI(final Context context, final boolean isConnected) {
         //Toast.makeText(context, "isConnected:" + isConnected, Toast.LENGTH_SHORT).show();
         if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -315,8 +318,8 @@ public class BeatBunnySingleton {
                 @Override
                 public void onResponse(JSONArray response) {
                     yourMusics = MusicaJSONParser.parserJsonMusicas(response, context);
-                    if (musicaListener != null)
-                        musicaListener.onRefreshListaMusica(yourMusics);
+                    /*if (musicaListener != null)
+                        musicaListener.onRefreshListaMusica(yourMusics);*/
 
                     getMusicFromProfileHasProducerAPI(context, isConnected);
                 }
@@ -342,8 +345,8 @@ public class BeatBunnySingleton {
                 public void onResponse(JSONArray response) {
                     listaMusicasProduzidas = MusicaJSONParser.parserJsonMusicas(response, context);
                     yourMusics.addAll(listaMusicasProduzidas);
-                    if (musicaListener != null)
-                        musicaListener.onRefreshListaMusica(yourMusics);
+                    /*if (musicaListener != null)
+                        musicaListener.onRefreshListaMusica(yourMusics);*/
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -356,8 +359,28 @@ public class BeatBunnySingleton {
         }
     }
 
+    public ArrayList<Musica> getYourStuffAndUpdateList(final Context context, final boolean isConnected){
+        getMusicFromProfileHasClientAPI(context, isConnected);
+        if (musicaListener != null)
+            musicaListener.onRefreshListaMusica(yourMusics);
+        return yourMusics;
+    }
 
+    public ArrayList<Musica> getYourStuffAndDontUpdateList(final Context context, final boolean isConnected){
+        getMusicFromProfileHasClientAPI(context, isConnected);
+        ArrayList<Musica> yourStuff = this.yourMusics;
+        return yourStuff;
+    }
 
+    public Boolean checkIfYouOwnMusic(int idMusic){
+
+        for (Musica m: yourMusics) {
+            if(m.getId() == idMusic)
+                return true;
+        }
+
+        return false;
+    }
 
 
 
@@ -473,6 +496,45 @@ public class BeatBunnySingleton {
     }
 
 
+    public void buySongAPI(final Context context, final boolean isConnected, final int idMusica) {
+        tof = false;
+        if (!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            StringRequest request = new StringRequest(Request.Method.POST, mUrlGetStuffFromUser+"buysong?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    System.out.println("------------------------->"+response);
+                    try {
+                        JSONObject responseContent = new JSONObject(response);
+                        String resposta = responseContent.getString("SaveError");
+                        Toast.makeText(context, resposta, Toast.LENGTH_SHORT).show();
+                        if(resposta == "Music Bought"){
+                            tof = true;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    getMusicFromProfileHasClientAPI(context, isConnected);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("idMusicaParaComprar", String.valueOf(idMusica));
+                    params.put("idUser", SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER, 0).toString());
+                    return params;
+                }
+            };
+            volleiQueue.add(request);
+        }
+    }
 
 
 }

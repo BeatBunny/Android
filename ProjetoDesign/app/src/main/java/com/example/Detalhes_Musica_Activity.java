@@ -22,6 +22,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.models.BeatBunnySingleton;
 import com.example.models.Musica;
 import com.example.projectdesign.R;
+import com.example.utils.MusicaJSONParser;
 
 import java.io.IOException;
 
@@ -32,12 +33,15 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
 
     public Musica musica;
     private int idMusica;
+    private Boolean is_bought;
     private TextView Artist, Muisic;
     private ImageView MusicCover;
     private ProgressBar progressBar;
     private ImageButton play;
     private Button stop,back;
+    private Button next;
     private MediaPlayer mediaPlayer;
+    private Button buttonBuySong;
     private SeekBar sbar;
     private TextView textViewTituloJava;
     private TextView textViewSerieJava;
@@ -65,21 +69,24 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.BLACK));
         ab.setDisplayHomeAsUpEnabled(true);
-        ab.setDisplayShowTitleEnabled(false);
+        ab.setDisplayShowTitleEnabled(true);
 
-//        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+//        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true); b
 
-        sbar = findViewById(R.id.seekBarMusic);
         currentIP = BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput();
         idMusica = getIntent().getIntExtra("DETALHES", -1);
-        play = this.findViewById(R.id.playMusic);
-        back = this.findViewById(R.id.backMusic);
+        is_bought = getIntent().getBooleanExtra("IS_BOUGHT", false);
 
         musica = BeatBunnySingleton.getInstance(getApplicationContext()).getMusica(idMusica);
 
         textViewTituloJava = findViewById(R.id.nomeMusica);
         imageViewCoverMusicJava = findViewById(R.id.imageViewCoverMusica);
         nomeArtistaJava = findViewById(R.id.nomeArtistaMusicaActivityPlayer);
+        buttonBuySong = findViewById(R.id.buttonBuySong);
+        play = this.findViewById(R.id.playMusic);
+        back = this.findViewById(R.id.backMusic);
+        sbar = findViewById(R.id.seekBarMusic);
+        next = findViewById(R.id.nextMusic);
 
         if(musica != null) {
             setTitle(musica.getTitle());
@@ -92,62 +99,82 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
                     .fitCenter().into(imageViewCoverMusicJava);
 
             mediaPlayer = new MediaPlayer();
-            final String musicURL = "http://" + currentIP + ":80/BeatBunny/advanced/frontend/web/" + musica.getMusicpath() + "/music_" + musica.getId() + "_" + musica.getTitle() + ".mp3";
-             try {
-                mediaPlayer.setDataSource(musicURL);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(is_bought){
+                temCompradoPorIssoMostra();
             }
-                    play.setOnClickListener(new View.OnClickListener() {
-                        private boolean Playing = false;
-                        private boolean GotMusic = false;
+            else{
+                naoTemCompradoPorIssoEsconde();
+            }
 
-                    public void onClick(View v) {
-                        if (back.getText()==" "){
-                            this.Playing=false;
-                            this.GotMusic=false;
-                        }
-                        if (!this.Playing) {
-                            back.setText(".");
-                            if(this.GotMusic ) {
-                                mediaPlayer.start();
-                            }else {
-                                mediaPlayer.prepareAsync();
-                                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                    @Override
-                                    public void onPrepared(MediaPlayer mp) {
-                                        mp.start();
-                                        sbar.setProgress(0);
-                                        sbar.setMax(mediaPlayer.getDuration());
-                                    }
-                                });
-                            }
-                            this.Playing = true;
-                            play.setBackgroundResource(R.drawable.stop);
-                        } else {
-                            mediaPlayer.pause();
-                            play.setBackgroundResource(R.drawable.plays);
-                            this.Playing=false;
-                            this.GotMusic=true;
-                        }
-                    }
 
-                });
-                final Thread runSekBar = new runSeekBar();
-                runSekBar.start();
-                back.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    play.setBackgroundResource(R.drawable.plays);
-                    back.setText(" ");
-                    back.setTextScaleX(1);
-                    mediaPlayer.stop();
-                }
-            });
         }else{
-            setTitle("Music X");
+            finish();
         }
     }
+
+    private void naoTemCompradoPorIssoEsconde(){
+        buttonBuySong.setVisibility(View.VISIBLE);
+        play.setVisibility(View.GONE);
+        back.setVisibility(View.GONE);
+        sbar.setVisibility(View.GONE);
+        next.setVisibility(View.GONE);
+    }
+
+    private void temCompradoPorIssoMostra(){
+        buttonBuySong.setVisibility(View.GONE);
+        final String musicURL = "http://" + currentIP + ":80/BeatBunny/advanced/frontend/web/" + musica.getMusicpath() + "/music_" + musica.getId() + "_" + musica.getTitle() + ".mp3";
+        try {
+            mediaPlayer.setDataSource(musicURL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        play.setOnClickListener(new View.OnClickListener() {
+            private boolean Playing = false;
+            private boolean GotMusic = false;
+            public void onClick(View v) {
+                if (back.getText()==" "){
+                    this.Playing=false;
+                    this.GotMusic=false;
+                }
+                if (!this.Playing) {
+                    back.setText(".");
+                    if(this.GotMusic ) {
+                        mediaPlayer.start();
+                    }else {
+                        mediaPlayer.prepareAsync();
+                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                                mp.start();
+                                sbar.setProgress(0);
+                                sbar.setMax(mediaPlayer.getDuration());
+                            }
+                        });
+                    }
+                    this.Playing = true;
+                    play.setBackgroundResource(R.drawable.stop);
+                } else {
+                    mediaPlayer.pause();
+                    play.setBackgroundResource(R.drawable.plays);
+                    this.Playing=false;
+                    this.GotMusic=true;
+                }
+            }
+
+        });
+        final Thread runSekBar = new runSeekBar();
+        runSekBar.start();
+        back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                play.setBackgroundResource(R.drawable.plays);
+                back.setText(" ");
+                back.setTextScaleX(1);
+                mediaPlayer.stop();
+            }
+        });
+    }
+
 
     private void setSupportActionBar(Toolbar toolbarTop) {
 
@@ -160,6 +187,12 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
         }
         finish();
         return true;
+    }
+
+    public void onClickBuyMusic(View view) {
+        //TODO: BUY MUSIC IN SINGLETON
+        BeatBunnySingleton.getInstance(getApplicationContext()).buySongAPI(getApplicationContext(), MusicaJSONParser.isConnectionInternet(getApplicationContext()),idMusica);
+        finish();
     }
 
     public class runSeekBar extends Thread {
@@ -180,6 +213,9 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
                 }
             }
         }
+
+
+
 }
 
 

@@ -29,6 +29,7 @@ public class YourmusicsFragment extends Fragment implements MusicaListener {
 
     private GridView yourMusicsGrid;
     private ImageView imageViewGrelhaJava;
+    private ArrayList<Musica> listaMusicasCompradasProduzidas;
     private SearchView searchView;
 
     public YourmusicsFragment() {
@@ -40,17 +41,20 @@ public class YourmusicsFragment extends Fragment implements MusicaListener {
 
         View view = inflater.inflate(R.layout.fragment_yourmusics, container, false);
         setHasOptionsMenu(true);
-        //listamusicas = BeatBunnySingleton.getInstance(getContext()).getListaMusicas();
+
 
         yourMusicsGrid = view.findViewById(R.id.YourMusicsGrid);
         imageViewGrelhaJava = view.findViewById(R.id.imageViewGrelha);
-        //grelhaMusicas.setAdapter(new GrelhaMusicaAdaptor(getContext(), listamusicas));
+
         yourMusicsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
                 Musica musica = (Musica) parent.getItemAtPosition(position);
+
+                boolean isYours = BeatBunnySingleton.getInstance(getContext()).checkIfYouOwnMusic(musica.getId());
                 Intent intent = new Intent(getContext(), Detalhes_Musica_Activity.class);
                 intent.putExtra("DETALHES",musica.getId());
+                intent.putExtra("IS_BOUGHT", isYours);
                 startActivity(intent);
 
                 System.out.println("--> Musica clicada = "+musica.getTitle());
@@ -94,7 +98,7 @@ public class YourmusicsFragment extends Fragment implements MusicaListener {
             @Override
             public boolean onQueryTextChange(String newText) {
                 ArrayList<Musica> filtroListaMusica = new ArrayList<Musica>();
-                for (Musica m:BeatBunnySingleton.getInstance(getContext()).getListaMusicas())
+                for (Musica m:BeatBunnySingleton.getInstance(getContext()).getAllMusics())
                     if(m.getTitle().toLowerCase().contains(newText.toLowerCase()))
                         filtroListaMusica.add(m);
 
@@ -117,7 +121,7 @@ public class YourmusicsFragment extends Fragment implements MusicaListener {
         if(searchView!=null){
             searchView.onActionViewCollapsed();
         }
-        BeatBunnySingleton.getInstance(getContext()).getMusicFromProfileHasClientAPI(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
+        BeatBunnySingleton.getInstance(getContext()).getYourStuffAndUpdateList(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
 
         super.onResume();
     }

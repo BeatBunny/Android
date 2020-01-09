@@ -26,9 +26,11 @@ import com.example.utils.MusicaJSONParser;
 import java.util.ArrayList;
 public class Grelha_mainMenu extends Fragment implements MusicaListener {
     private GridView grelhaMusicas;
-    private ArrayList<Musica> listamusicas;
+    private ArrayList<Musica> allMusics;
+    private ArrayList<Musica> listaMusicasCompradasProduzidas;
     private ImageView imageViewGrelhaJava;
     private SearchView searchView;
+
     public Grelha_mainMenu() {
         // Required empty public constructor
     }
@@ -38,17 +40,24 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         setHasOptionsMenu(true);
-        //listamusicas = BeatBunnySingleton.getInstance(getContext()).getListaMusicas();
 
         grelhaMusicas = view.findViewById(R.id.GrelhaDeMusicas);
         imageViewGrelhaJava = view.findViewById(R.id.imageViewGrelha);
-        //grelhaMusicas.setAdapter(new GrelhaMusicaAdaptor(getContext(), listamusicas));
+
+        BeatBunnySingleton.getInstance(getContext()).getAllMusicasAPI(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
+
+
         grelhaMusicas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
                 Musica musica = (Musica) parent.getItemAtPosition(position);
+                boolean isYours = false;
+
+                isYours = BeatBunnySingleton.getInstance(getContext()).checkIfYouOwnMusic(musica.getId());
+
                 Intent intent = new Intent(getContext(), Detalhes_Musica_Activity.class);
                 intent.putExtra("DETALHES",musica.getId());
+                intent.putExtra("IS_BOUGHT", isYours);
                 startActivity(intent);
 
                 System.out.println("--> Musica clicada = "+musica.getTitle());
@@ -79,7 +88,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
             @Override
             public boolean onQueryTextChange(String newText) {
                 ArrayList<Musica> filtroListaMusica = new ArrayList<Musica>();
-                for (Musica m:BeatBunnySingleton.getInstance(getContext()).getListaMusicas())
+                for (Musica m:BeatBunnySingleton.getInstance(getContext()).getAllMusics())
                     if(m.getTitle().toLowerCase().contains(newText.toLowerCase()))
                         filtroListaMusica.add(m);
 
@@ -105,6 +114,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
             searchView.onActionViewCollapsed();
         }
         BeatBunnySingleton.getInstance(getContext()).getAllMusicasAPI(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
+        listaMusicasCompradasProduzidas = BeatBunnySingleton.getInstance(getContext()).getYourStuffAndDontUpdateList(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
         //BeatBunnySingleton.getInstance(getContext()).getAllUsersAPI(getContext(), UserJSONParser.isConnectionInternet(getContext()));
 
         super.onResume();

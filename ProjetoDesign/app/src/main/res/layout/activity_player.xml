@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Player">
+    tools:context="com.example.Detalhes_Musica_Activity">
 
 
     <ScrollView
@@ -57,7 +57,8 @@
                 android:id="@+id/buttonBuySong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button"
+                android:onClick="onClickBuyMusic"
+                android:text="@string/buy_this_song"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +105,7 @@
                 tools:src="@drawable/plays" />
 
             <Button
-                android:id="@+id/skipMusic"
+                android:id="@+id/nextMusic"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="69dp"
