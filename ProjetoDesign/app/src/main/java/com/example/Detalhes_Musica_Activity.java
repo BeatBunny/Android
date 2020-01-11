@@ -34,7 +34,7 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
     public Musica musica;
     private int idMusica;
     private Boolean is_bought;
-    private TextView Artist, Muisic;
+    private TextView Artist, Muisic,pvp;
     private ImageView MusicCover;
     private ProgressBar progressBar;
     private ImageButton play;
@@ -78,11 +78,11 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
         is_bought = getIntent().getBooleanExtra("IS_BOUGHT", false);
 
         musica = BeatBunnySingleton.getInstance(getApplicationContext()).getMusica(idMusica);
-
         textViewTituloJava = findViewById(R.id.nomeMusica);
         imageViewCoverMusicJava = findViewById(R.id.imageViewCoverMusica);
         nomeArtistaJava = findViewById(R.id.nomeArtistaMusicaActivityPlayer);
         buttonBuySong = findViewById(R.id.buttonBuySong);
+        pvp = findViewById(R.id.pvpText);
         play = this.findViewById(R.id.playMusic);
         back = this.findViewById(R.id.backMusic);
         sbar = findViewById(R.id.seekBarMusic);
@@ -91,7 +91,8 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
         if(musica != null) {
             setTitle(musica.getTitle());
             textViewTituloJava.setText(musica.getTitle());
-            nomeArtistaJava.setText(musica.getProducer());
+            nomeArtistaJava.setText(musica.getLaunchdate());
+            pvp.setText(String.valueOf(musica.getPvp())+" €");
             Glide.with(getApplicationContext())
                     .load("http://" + currentIP + ":80/BeatBunny/advanced/frontend/web/" + musica.getMusiccover() + "/image_" + musica.getId() + ".png")
                     .placeholder(logo_white)
@@ -114,6 +115,7 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
 
     private void naoTemCompradoPorIssoEsconde(){
         buttonBuySong.setVisibility(View.VISIBLE);
+        pvp.setVisibility(View.VISIBLE);
         play.setVisibility(View.GONE);
         back.setVisibility(View.GONE);
         sbar.setVisibility(View.GONE);
@@ -122,6 +124,7 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
 
     private void temCompradoPorIssoMostra(){
         buttonBuySong.setVisibility(View.GONE);
+        pvp.setVisibility(View.GONE);
         final String musicURL = "http://" + currentIP + ":80/BeatBunny/advanced/frontend/web/" + musica.getMusicpath() + "/music_" + musica.getId() + "_" + musica.getTitle() + ".mp3";
         try {
             mediaPlayer.setDataSource(musicURL);
@@ -193,6 +196,9 @@ public class Detalhes_Musica_Activity extends AppCompatActivity {
         //TODO: BUY MUSIC IN SINGLETON
         BeatBunnySingleton.getInstance(getApplicationContext()).buySongAPI(getApplicationContext(), MusicaJSONParser.isConnectionInternet(getApplicationContext()),idMusica);
         finish();
+    }
+
+    public void play(View view) {
     }
 
     public class runSeekBar extends Thread {

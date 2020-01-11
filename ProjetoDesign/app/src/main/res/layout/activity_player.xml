@@ -7,9 +7,9 @@
     tools:context="com.example.Detalhes_Musica_Activity">
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,11 +33,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="38dp"
                 android:text="Non Stop Party"
                 android:textSize="25dp"
-                app:layout_constraintBottom_toTopOf="@+id/nomeArtistaMusicaActivityPlayer"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewCoverMusica"
-                tools:layout_editor_absoluteX="41dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewCoverMusica" />
 
             <TextView
                 android:id="@+id/nomeArtistaMusicaActivityPlayer"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="296dp"
+                android:layout_marginEnd="265dp"
                 android:text="Monster"
                 android:textSize="20dp"
                 android:textStyle="bold"
@@ -53,9 +53,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nomeMusica" />
 
+            <TextView
+                android:id="@+id/pvpText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="38dp"
+                android:layout_marginEnd="265dp"
+                android:text="PVP"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer" />
+
             <Button
                 android:id="@+id/buttonBuySong"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onClickBuyMusic"
                 android:text="@string/buy_this_song"
@@ -63,7 +76,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer" />
+                app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer"
+                app:layout_constraintVertical_bias="0.67" />
 
             <SeekBar
                 android:id="@+id/seekBarMusic"
@@ -116,7 +130,7 @@
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+<!--    </ScrollView>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
