@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
             main.putExtra("IDUSER", UserIdSaved);
             main.putExtra("USERNAME", UserUsernameSaved);
             main.putExtra("AUTH_KEY", UserAuthkeySaved);
-            System.out.println("->>>>>>>>>>>>>>>>>>> Tinha lá cenas guardadas:"+ UserIdSaved + " | "+UserUsernameSaved + " | "+UserAuthkeySaved);
+            System.out.println("->>>>>>>>>>>>>>>>>>> Tinha lá dados guardados:"+ UserIdSaved + " | "+UserUsernameSaved + " | "+UserAuthkeySaved);
             startActivity(main);
             finish();
         }
