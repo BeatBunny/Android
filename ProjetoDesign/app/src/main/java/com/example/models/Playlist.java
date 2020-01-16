@@ -12,15 +12,16 @@ public class Playlist {
         Id=id;
         Nome=nome;
         Creationdate = creationdate;
+        ListaMusicasDestaPlaylist = null;
     }
 
-    public void setId(int id){Id = id;}
-    public void setNome(String nome){Nome = nome;}
-    public void setCreationdate(String creationdate){Creationdate = creationdate;}
-    public void setListaMusicasDestaPlaylist(ArrayList<Musica> listaMusicasDestaPlaylist){ListaMusicasDestaPlaylist = listaMusicasDestaPlaylist;}
+    public void setId(int id){this.Id = id;}
+    public void setNome(String nome){this.Nome = nome;}
+    public void setCreationdate(String creationdate){this.Creationdate = creationdate;}
+    public void setListaMusicasDestaPlaylist(ArrayList<Musica> listaMusicasDestaPlaylist){this.ListaMusicasDestaPlaylist = listaMusicasDestaPlaylist;}
 
-    public int getId(){return Id;}
-    public String getNome(){return Nome;}
-    public String getCreationdate(){return Creationdate;}
-    public ArrayList<Musica> getListaMusicasDestaPlaylist(){return ListaMusicasDestaPlaylist;}
+    public int getId(){return this.Id;}
+    public String getNome(){return this.Nome;}
+    public String getCreationdate(){return this.Creationdate;}
+    public ArrayList<Musica> getListaMusicasDestaPlaylist(){return this.ListaMusicasDestaPlaylist;}
 }

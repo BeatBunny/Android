@@ -387,17 +387,16 @@ public class BeatBunnySingleton {
     }
 
     public Boolean checkIfYouOwnMusic(int idMusic){
-
         for (Musica m: yourMusics) {
             if(m.getId() == idMusic)
                 return true;
         }
-
         return false;
     }
 
 
-    public ArrayList<Playlist> getPlaylists() {
+    public ArrayList<Playlist> getPlaylists(final Context context, final boolean isConnected) {
+        getAllPlaylistsFromUserAPI(context, isConnected);
         return this.playlists;
     }
 
@@ -421,14 +420,10 @@ public class BeatBunnySingleton {
                 @Override
                 public void onResponse(JSONArray response) {
                     playlists = PlaylistJSONParser.parserJsonPlaylists(response, context);
-                    /*adicionarMusicasBD(playlists);*/
                     adicionarPlaylistsBD(playlists);
-                    if (playlistListener != null)
-                        playlistListener.onRefreshListaPlaylist(playlists);
-
 
                     System.out.println("--------------------> PLAYLISTS FROM USER\n\n\n\n"+playlists);
-                    getAllMusicsFromEachPlaylist(context, isConnected);
+                    getAllMusicsFromEachPlaylist(context, isConnected, playlists);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -449,7 +444,7 @@ public class BeatBunnySingleton {
             beatBunnyBD.adicionarPlaylistBD(playlist);
     }
 
-    public void getAllMusicsFromEachPlaylist(final Context context, boolean isConnected ){
+    public void getAllMusicsFromEachPlaylist(final Context context, boolean isConnected, ArrayList<Playlist> playlists){
 
         if(!isConnected){
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -461,11 +456,14 @@ public class BeatBunnySingleton {
         else {
             for (final Playlist pl : playlists) {
 
+                final ArrayList<Playlist> finalPlaylists = playlists;
                 JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlGetStuffFromUser +SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER,0)+"/playlists/"+pl.getId()+"/musics?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), null
                         , new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         pl.setListaMusicasDestaPlaylist(MusicaJSONParser.parserJsonMusicas(response, context));
+                        if (playlistListener != null)
+                            playlistListener.onRefreshListaPlaylist(finalPlaylists);
                         System.out.println("THIS IS PL ------------------- >>>> "+pl.getListaMusicasDestaPlaylist());
                     }
                 }, new Response.ErrorListener() {
@@ -478,8 +476,8 @@ public class BeatBunnySingleton {
                 volleiQueue.add(request);
             }
             System.out.println("--------------------> PLAYLISTS FROM USER\n"+playlists);
-            if (playlistListener != null)
-                playlistListener.onRefreshListaPlaylist(playlists);
+            /*if (playlistListener != null)
+                playlistListener.onRefreshListaPlaylist(playlists);*/
         }
     }
 

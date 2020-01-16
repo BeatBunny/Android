@@ -34,27 +34,6 @@ public class PlaylistJSONParser {
         return listaPlaylists;
     }
 
-    public static Playlist parserJsonMusicsFromPlaylist(String response, Context context){
-        Playlist auxMusica = null;
-        try {
-            JSONObject musica = new JSONObject(response);
-
-            int idMusica = musica.getInt("id");
-            String titleMusica = musica.getString("title");
-            String coverMusica = musica.getString("musiccover");
-            String genreMusica = musica.getString("genres_id");
-            String launchdateMusica = musica.getString("launchdate");
-            String lyricsMusica = musica.getString("lyrics");
-            String pathMusica = musica.getString("musicpath");
-            String producerMusica = musica.getString("producer_id");
-            double pvpMusica = musica.getDouble("pvp");
-
-       //     auxMusica = new Playlist(idMusica, titleMusica, launchdateMusica, pathMusica, genreMusica, lyricsMusica, coverMusica, producerMusica, (float) pvpMusica);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return auxMusica;
-    }
 
     public static boolean isConnectionInternet(Context context){
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

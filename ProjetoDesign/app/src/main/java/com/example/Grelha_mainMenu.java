@@ -20,6 +20,7 @@ import com.example.adapters.GrelhaMusicaAdapter;
 import com.example.listeners.MusicaListener;
 import com.example.models.BeatBunnySingleton;
 import com.example.models.Musica;
+import com.example.models.Playlist;
 import com.example.projectdesign.R;
 import com.example.utils.MusicaJSONParser;
 
@@ -30,6 +31,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
     private ArrayList<Musica> listaMusicasCompradasProduzidas;
     private ImageView imageViewGrelhaJava;
     private SearchView searchView;
+    private ArrayList<Playlist> listaComTodasAsPlaylists;
 
     public Grelha_mainMenu() {
         // Required empty public constructor
@@ -45,7 +47,6 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
         imageViewGrelhaJava = view.findViewById(R.id.imageViewGrelha);
 
         BeatBunnySingleton.getInstance(getContext()).getAllMusicasAPI(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
-
 
         grelhaMusicas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -104,6 +105,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
 
 
 

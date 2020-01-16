@@ -28,6 +28,7 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
 
     private int musicNumber = 0;
     private ArrayList<Playlist> playlists;
+    private ExpandingList expandingList;
 
 
     public PlaylistFragment() {
@@ -40,6 +41,10 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_playlist, container, false);
+
+        BeatBunnySingleton.getInstance(getContext()).getAllPlaylistsFromUserAPI(getContext(), PlaylistJSONParser.isConnectionInternet(getContext()));
+
+        expandingList = (ExpandingList) view.findViewById(R.id.expanding_list_playlists);
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
 
@@ -56,44 +61,7 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
             }
         });
 
-        ExpandingList expandingList = (ExpandingList) view.findViewById(R.id.expanding_list_playlists);
 
-        playlists = BeatBunnySingleton.getInstance(getContext()).getPlaylists();
-
-
-        //TODO: FOR A PARTIR DAQUI A ENGLOBAR AS PLAYLISTS
-        for( Playlist pl : playlists ) {
-            ExpandingItem item = expandingList.createNewItem(R.layout.expanding_layout_playlists);
-
-            ((TextView) item.findViewById(R.id.title_playlist)).setText(pl.getNome());
-
-            //TODO: CADA SUBITEM É UMA MUSICA, FOREACHE DENTRO DO FOREACH DAS PLAYLISTS PARA CADA UMA DAS PLAYLISTS ||||||||||| TIRAR COMENTARIOS PARA TESTAR (CURRENTLY NOT WORKING)
-            System.out.println("-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            for (Musica ms : pl.getListaMusicasDestaPlaylist() ) {
-                System.out.println(ms.getTitle() + "\n ----------------------------------");
-            }
-            item.createSubItems(pl.getListaMusicasDestaPlaylist().size());
-            for (Musica ms : pl.getListaMusicasDestaPlaylist()){
-                View subItem = item.getSubItemView(musicNumber);
-                subItem.findViewById(R.id.sub_playlist);
-
-
-                musicNumber++;
-            }
-
-           /* item.createSubItems(pl.getListaMusicasDestaPlaylist().size());
-
-            for( Musica ms : pl.getListaMusicasDestaPlaylist() ) {
-                View subItem = item.getSubItemView(musicNumber);
-                ((TextView) subItem.findViewById(R.id.sub_playlist)).setText(ms.getTitle());
-
-                musicNumber++;
-            }
-*/
-            item.setIndicatorColorRes(R.color.common_google_signin_btn_text_light_default);
-            item.setIndicatorIconRes(R.drawable.ic_musicbeat);
-
-        }
         //TODO: CRIAR PLAYLIST
             //feito api
                 //http://localhost/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate?access-token=XXX
@@ -183,11 +151,7 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
         dialogButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //BeatBunnySingleton.getInstance(getContext()).setIP(textNomePlaylist.getText().toString());
-                //Toast.makeText(getContext(), BeatBunnySingleton.getInstance(getContext()).getIPInput(), Toast.LENGTH_SHORT).show();
-
                 BeatBunnySingleton.getInstance(getContext()).createNewPlaylist(getContext(), PlaylistJSONParser.isConnectionInternet(getContext()), textNomePlaylist.getText().toString());
-
                 dialog.dismiss();
             }
         });
@@ -205,9 +169,31 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
 
     @Override
     public void onRefreshListaPlaylist(ArrayList<Playlist> playlist) {
+        playlists = playlist;
+        expandingList.removeAllViews();
+        for( Playlist pl : playlists ) {
+            ExpandingItem item = expandingList.createNewItem(R.layout.expanding_layout_playlists);
 
-        /*GrelhaMusicaAdapter grelhaMusicaAdapter = new GrelhaMusicaAdapter(getContext(), musicas);
-        grelhaMusicas.setAdapter(grelhaMusicaAdapter);*/
+            ((TextView) item.findViewById(R.id.title_playlist)).setText(pl.getNome());
+
+            //TODO: CADA SUBITEM É UMA MUSICA, FOREACHE DENTRO DO FOREACH DAS PLAYLISTS PARA CADA UMA DAS PLAYLISTS ||||||||||| TIRAR COMENTARIOS PARA TESTAR (CURRENTLY NOT WORKING)
+            System.out.println("-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+            if(pl.getListaMusicasDestaPlaylist() != null){
+                item.createSubItems(pl.getListaMusicasDestaPlaylist().size());
+                ArrayList<Musica> listaDeMusicasDaPlaylist = pl.getListaMusicasDestaPlaylist();
+                for (int i = 0; i < listaDeMusicasDaPlaylist.size(); i++){
+                    View subItem = item.getSubItemView(i);
+                    TextView musicThingy = subItem.findViewById(R.id.sub_playlist);
+                    musicThingy.setText(listaDeMusicasDaPlaylist.get(i).getTitle());
+                }
+            }
+
+
+            item.setIndicatorColorRes(R.color.common_google_signin_btn_text_light_default);
+            item.setIndicatorIconRes(R.drawable.ic_musicbeat);
+
+        }
     }
 
     @Override

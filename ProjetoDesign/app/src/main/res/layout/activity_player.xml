@@ -11,126 +11,143 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent">-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-98dp"
+        tools:layout_editor_absoluteY="-16dp">
+
+        <ImageView
+            android:id="@+id/imageViewCoverMusica"
+            android:layout_width="335dp"
+            android:layout_height="327dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="38dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/al3" />
+
+        <TextView
+            android:id="@+id/nomeMusica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Non Stop Party"
+            android:textSize="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCoverMusica" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddSongToPlaylist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/black"
+            android:clickable="true"
+            android:src="@drawable/ic_action_adicionar"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/seekBarMusic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCoverMusica"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/nomeArtistaMusicaActivityPlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="265dp"
+            android:text="Monster"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomeMusica" />
+
+        <TextView
+            android:id="@+id/pvpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="38dp"
+            android:layout_marginEnd="265dp"
+            android:text="PVP"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer" />
+
+        <Button
+            android:id="@+id/buttonBuySong"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:onClick="onClickBuyMusic"
+            android:text="@string/buy_this_song"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer"
+            app:layout_constraintVertical_bias="0.67" />
 
-            <ImageView
-                android:id="@+id/imageViewCoverMusica"
-                android:layout_width="335dp"
-                android:layout_height="327dp"
-                android:layout_marginStart="38dp"
-                android:layout_marginTop="52dp"
-                android:layout_marginEnd="38dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/al3" />
+        <SeekBar
+            android:id="@+id/seekBarMusic"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="336dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="31dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer"
+            tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/nomeMusica"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="38dp"
-                android:text="Non Stop Party"
-                android:textSize="25dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewCoverMusica" />
+        <Button
+            android:id="@+id/backMusic"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="69dp"
+            android:background="@drawable/back"
+            app:layout_constraintEnd_toStartOf="@+id/playMusic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"
+            tools:ignore="MissingConstraints" />
 
-            <TextView
-                android:id="@+id/nomeArtistaMusicaActivityPlayer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="38dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="265dp"
-                android:text="Monster"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomeMusica" />
+        <ImageButton
+            android:id="@+id/playMusic"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="69dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/plays"
+            android:onClick="play"
+            app:layout_constraintStart_toEndOf="@+id/backMusic"
+            app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"
+            tools:src="@drawable/plays" />
 
-            <TextView
-                android:id="@+id/pvpText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="38dp"
-                android:layout_marginEnd="265dp"
-                android:text="PVP"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer" />
+        <Button
+            android:id="@+id/nextMusic"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="69dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/skip"
+            app:layout_constraintStart_toEndOf="@+id/playMusic"
+            app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"
+            tools:ignore="MissingConstraints" />
 
-            <Button
-                android:id="@+id/buttonBuySong"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClickBuyMusic"
-                android:text="@string/buy_this_song"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer"
-                app:layout_constraintVertical_bias="0.67" />
 
-            <SeekBar
-                android:id="@+id/seekBarMusic"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="336dp"
-                android:layout_height="29dp"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="19dp"
-                android:layout_marginEnd="31dp"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nomeArtistaMusicaActivityPlayer"
-                tools:visibility="visible" />
-
-            <Button
-                android:id="@+id/backMusic"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="46dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="69dp"
-                android:background="@drawable/back"
-                app:layout_constraintEnd_toStartOf="@+id/playMusic"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"
-                tools:ignore="MissingConstraints" />
-
-            <ImageButton
-                android:id="@+id/playMusic"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="69dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/plays"
-                android:onClick="play"
-                app:layout_constraintStart_toEndOf="@+id/backMusic"
-                app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"
-                tools:src="@drawable/plays" />
-
-            <Button
-                android:id="@+id/nextMusic"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="69dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/skip"
-                app:layout_constraintStart_toEndOf="@+id/playMusic"
-                app:layout_constraintTop_toBottomOf="@+id/seekBarMusic"
-                tools:ignore="MissingConstraints" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    </ScrollView>-->
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    </ScrollView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
