@@ -16,6 +16,7 @@ import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
 import com.example.listeners.PlaylistListener;
 import com.example.models.BeatBunnySingleton;
+import com.example.models.Musica;
 import com.example.models.Playlist;
 import com.example.utils.PlaylistJSONParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +25,12 @@ import java.util.ArrayList;
 
 
 public class PlaylistFragment extends Fragment implements PlaylistListener {
+
+    int playlistNumber = 1;
+    int musicNumber = 1;
+    ArrayList<Playlist> playlists;
+    int numberOfPlaylists;
+
 
     public PlaylistFragment() {
 
@@ -53,24 +60,30 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
 
         ExpandingList expandingList = (ExpandingList) view.findViewById(R.id.expanding_list_playlists);
 
+        playlists = BeatBunnySingleton.getInstance(getContext()).getPlaylists();
+
+
         //TODO: FOR A PARTIR DAQUI A ENGLOBAR AS PLAYLISTS
-        ExpandingItem item = expandingList.createNewItem(R.layout.expanding_layout_playlists);
+        for( Playlist pl : playlists ) {
+            ExpandingItem item = expandingList.createNewItem(R.layout.expanding_layout_playlists);
 
-        ((TextView) item.findViewById(R.id.title_playlist)).setText("It Works!!");
+            ((TextView) item.findViewById(R.id.title_playlist)).setText(pl.getNome());
 
-        //TODO: CADA SUBITEM É UMA MUSICA, FOREACHE DENTRO DO FOREACH DAS PLAYLISTS PARA CADA UMA DAS PLAYLISTS
-        item.createSubItems(5);
+            //TODO: CADA SUBITEM É UMA MUSICA, FOREACHE DENTRO DO FOREACH DAS PLAYLISTS PARA CADA UMA DAS PLAYLISTS ||||||||||| TIRAR COMENTARIOS PARA TESTAR (CURRENTLY NOT WORKING)
+           /* item.createSubItems(pl.getListaMusicasDestaPlaylist().size());
 
-        View subItemZero = item.getSubItemView(0);
-        ((TextView) subItemZero.findViewById(R.id.sub_playlist)).setText("Cool");
+            for( Musica ms : pl.getListaMusicasDestaPlaylist() ) {
+                View subItem = item.getSubItemView(musicNumber);
+                ((TextView) subItem.findViewById(R.id.sub_playlist)).setText(ms.getTitle());
 
-        View subItemOne = item.getSubItemView(1);
-        ((TextView) subItemOne.findViewById(R.id.sub_playlist)).setText("Awesome");
+                musicNumber++;
+            }
+*/
+            item.setIndicatorColorRes(R.color.common_google_signin_btn_text_light_default);
+            item.setIndicatorIconRes(R.drawable.ic_musicbeat);
 
-        item.setIndicatorColorRes(R.color.common_google_signin_btn_text_light_default);
-        item.setIndicatorIconRes(R.drawable.ic_musicbeat);
-
-
+            playlistNumber++;
+        }
         //TODO: CRIAR PLAYLIST
             //feito api
                 //http://localhost/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate?access-token=XXX

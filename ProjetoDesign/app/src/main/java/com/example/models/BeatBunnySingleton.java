@@ -383,7 +383,9 @@ public class BeatBunnySingleton {
     }
 
 
-
+    public ArrayList<Playlist> getPlaylists() {
+        return this.playlists;
+    }
 
     public void getAllPlaylistsFromUserAPI(final Context context, final boolean isConnected) {
         System.out.println("--------------------> IS CONNECTED\n"+isConnected);
