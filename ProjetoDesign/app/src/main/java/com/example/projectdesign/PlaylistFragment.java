@@ -26,10 +26,8 @@ import java.util.ArrayList;
 
 public class PlaylistFragment extends Fragment implements PlaylistListener {
 
-    int playlistNumber = 1;
-    int musicNumber = 1;
-    ArrayList<Playlist> playlists;
-    int numberOfPlaylists;
+    private int musicNumber = 0;
+    private ArrayList<Playlist> playlists;
 
 
     public PlaylistFragment() {
@@ -70,6 +68,19 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
             ((TextView) item.findViewById(R.id.title_playlist)).setText(pl.getNome());
 
             //TODO: CADA SUBITEM É UMA MUSICA, FOREACHE DENTRO DO FOREACH DAS PLAYLISTS PARA CADA UMA DAS PLAYLISTS ||||||||||| TIRAR COMENTARIOS PARA TESTAR (CURRENTLY NOT WORKING)
+            System.out.println("-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            for (Musica ms : pl.getListaMusicasDestaPlaylist() ) {
+                System.out.println(ms.getTitle() + "\n ----------------------------------");
+            }
+            item.createSubItems(pl.getListaMusicasDestaPlaylist().size());
+            for (Musica ms : pl.getListaMusicasDestaPlaylist()){
+                View subItem = item.getSubItemView(musicNumber);
+                subItem.findViewById(R.id.sub_playlist);
+
+
+                musicNumber++;
+            }
+
            /* item.createSubItems(pl.getListaMusicasDestaPlaylist().size());
 
             for( Musica ms : pl.getListaMusicasDestaPlaylist() ) {
@@ -82,7 +93,6 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
             item.setIndicatorColorRes(R.color.common_google_signin_btn_text_light_default);
             item.setIndicatorIconRes(R.drawable.ic_musicbeat);
 
-            playlistNumber++;
         }
         //TODO: CRIAR PLAYLIST
             //feito api
@@ -196,6 +206,8 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
     @Override
     public void onRefreshListaPlaylist(ArrayList<Playlist> playlist) {
 
+        /*GrelhaMusicaAdapter grelhaMusicaAdapter = new GrelhaMusicaAdapter(getContext(), musicas);
+        grelhaMusicas.setAdapter(grelhaMusicaAdapter);*/
     }
 
     @Override
