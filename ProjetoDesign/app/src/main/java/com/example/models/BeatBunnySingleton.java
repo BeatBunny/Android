@@ -48,10 +48,10 @@ public class BeatBunnySingleton {
 
     private String CURRENT_IP;
 
-    private String mUrlAPIusersLogin = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
-    private String mUrlAPIusersRegister = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
-    private String mUrlAPIMusicas = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/music";
-    private String mUrlAPIPutMusicInPlaylist = "http://"+CURRENT_IP+":80/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate";
+    private String mUrlAPIusersLogin = "http://localhost/BeatBunny/advanced/backend/web/v1/userregisterandlogin/login";
+    private String mUrlAPIusersRegister = "http://localhost/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
+    private String mUrlAPIMusicas = "http://localhost/BeatBunny/advanced/backend/web/v1/music";
+    private String mUrlAPIPutMusicInPlaylist = "http://localhost/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate";
     private String mUrlGetStuffFromUser;
 
     private static RequestQueue volleiQueue;
@@ -169,8 +169,22 @@ public class BeatBunnySingleton {
             StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIusersRegister, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    User user = UserJSONParser.parserJsonUser(response, context);
-                    userListener.onRefreshListaUser(user);
+
+                    System.out.println("------------------------->"+response);
+                    try {
+                        JSONObject responseContent = new JSONObject(response);
+                        String resposta = responseContent.getString("SaveError");
+                        Toast.makeText(context, resposta, Toast.LENGTH_SHORT).show();
+                        if(resposta.contentEquals("Registered User")){
+                            User user = UserJSONParser.parserJsonUser(response, context);
+                            userListener.onRefreshListaUser(user);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    /*User user = UserJSONParser.parserJsonUser(response, context);
+                    userListener.onRefreshListaUser(user);*/
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -467,7 +481,6 @@ public class BeatBunnySingleton {
             if (playlistListener != null)
                 playlistListener.onRefreshListaPlaylist(playlists);
         }
-
     }
 
     public void createNewPlaylist(final Context context, final boolean isConnected, final String nomePlaylist){

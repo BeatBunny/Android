@@ -7,12 +7,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.listeners.UserListener;
 import com.example.models.BeatBunnySingleton;
 import com.example.models.Profile;
+import com.example.models.SharedPreferencesSettersGetters;
 import com.example.models.User;
 import com.example.utils.UserJSONParser;
 
@@ -53,6 +55,10 @@ public class RegisterActivity extends AppCompatActivity implements UserListener 
             Password.setError("Insert Password");
             return;
         }
+        if(password.length() < 6){
+            Password.setError("Password must be bigger than 6 characters");
+            return;
+        }
         String nome = Nome.getText().toString();
         if (nome.length()==0){
             Nome.setError("Insert Name");
@@ -63,7 +69,6 @@ public class RegisterActivity extends AppCompatActivity implements UserListener 
             Nif.setError("Insert Nif");
             return;
         }
-
         if(!nif.matches("[0-9]+")){
             Nif.setError("NIF has to be numbers only");
             return;
@@ -104,32 +109,43 @@ public class RegisterActivity extends AppCompatActivity implements UserListener 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+
         if(id == R.id.action_settings){
+            createDialog();
 
-            final Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.ip_picker_dialog);
-            dialog.setTitle("IP ADDRESS");
-            final EditText textIP = dialog.findViewById(R.id.ipDialog);
-            Button dialogButtonSave = (Button) dialog.findViewById(R.id.buttonSave);
-            Button dialogButtonCancel = (Button) dialog.findViewById(R.id.buttonCancel);
-
-            dialogButtonSave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    BeatBunnySingleton.getInstance(getApplicationContext()).setIP(textIP.getText().toString());
-                    dialog.dismiss();
-                }
-            });
-
-            dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.cancel();
-                }
-            });
-
-            dialog.show();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public Dialog createDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.ip_picker_dialog);
+        dialog.setTitle("IP ADDRESS");
+        final EditText textIP = dialog.findViewById(R.id.ipDialog);
+        textIP.setText(SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.SETTINGS_IP, null));
+        Button dialogButtonSave = (Button) dialog.findViewById(R.id.buttonSave);
+        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.buttonCancel);
+
+        dialogButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BeatBunnySingleton.getInstance(getApplicationContext()).setIP(textIP.getText().toString());
+                Toast.makeText(getApplicationContext(), BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput(), Toast.LENGTH_SHORT).show();
+                textIP.setText(BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput());
+                dialog.dismiss();
+            }
+        });
+
+        dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+        return dialog;
+    }
+
 }
