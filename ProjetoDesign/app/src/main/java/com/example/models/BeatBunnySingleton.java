@@ -549,5 +549,28 @@ public class BeatBunnySingleton {
         }
     }
 
+    public void getSaldoAfterPurchase(final Context context, final boolean isConnected){
+        if (!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            StringRequest request = new StringRequest(Request.Method.GET, mUrlGetStuffFromUser +SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER,0)+"/saldoprofile?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null)
+            , new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    String saldoDepoisDaCompra = ProfileJSONParser.parserJsonSaldo(response, context);
+                    SharedPreferencesSettersGetters.writeString(SharedPreferencesSettersGetters.SALDO_PROFILE, saldoDepoisDaCompra);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            );
+            volleiQueue.add(request);
+        }
+    }
+
 
 }

@@ -50,6 +50,7 @@
             android:backgroundTint="@color/black"
             android:clickable="true"
             android:src="@drawable/ic_action_adicionar"
+            android:visibility="gone"
             app:borderWidth="0dp"
             app:layout_constraintBottom_toTopOf="@+id/seekBarMusic"
             app:layout_constraintEnd_toEndOf="parent"

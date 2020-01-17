@@ -29,6 +29,18 @@ public class ProfileJSONParser {
         return auxProfile;
     }
 
+    public static String parserJsonSaldo(String response, Context context){
+        String auxSaldo = null;
+        try{
+            JSONObject profile = new JSONObject(response);
+            String profile_saldo = profile.getString("saldo");
+            auxSaldo = profile_saldo;
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return auxSaldo;
+    }
+
     public static boolean isConnectionInternet(Context context){
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();

@@ -211,6 +211,7 @@ public class Detalhes_Musica_Activity extends AppCompatActivity implements Playl
     public void onClickBuyMusic(View view) {
         //TODO: BUY MUSIC IN SINGLETON
         BeatBunnySingleton.getInstance(getApplicationContext()).buySongAPI(getApplicationContext(), MusicaJSONParser.isConnectionInternet(getApplicationContext()),idMusica);
+        BeatBunnySingleton.getInstance(getApplicationContext()).getSaldoAfterPurchase(getApplicationContext(), MusicaJSONParser.isConnectionInternet(getApplicationContext()));
         finish();
     }
 
@@ -294,10 +295,10 @@ public class Detalhes_Musica_Activity extends AppCompatActivity implements Playl
             public void onClick(View v) {
                 dialog.cancel();
             }*
-        });*/
+        });
         if(!isFinishing()){
             dialog.show();
-        }
+        }*/
         return dialog;
     }
 
