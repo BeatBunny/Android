@@ -14,7 +14,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/logout_dialog_title"
+                android:id="@+id/delete_playlist_dialog_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -27,14 +27,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/logoutTextView"
+                    android:id="@+id/playlistToDelete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="4dp"
                     android:layout_marginBottom="4dp"
-                    android:text="@string/trullyLogout" />
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -43,14 +43,14 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/buttonCancelLogout"
+                    android:id="@+id/buttonDeleteCancelPlaylist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cancel" />
 
                 <Button
-                    android:id="@+id/buttonYes"
+                    android:id="@+id/buttonDeleteSavePlaylist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

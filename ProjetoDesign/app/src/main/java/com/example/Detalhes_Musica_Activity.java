@@ -2,6 +2,7 @@ package com.example;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -28,6 +29,7 @@ import com.example.listeners.PlaylistListener;
 import com.example.models.BeatBunnySingleton;
 import com.example.models.Musica;
 import com.example.models.Playlist;
+import com.example.projectdesign.ChoosePlaylistActivity;
 import com.example.projectdesign.R;
 import com.example.utils.MusicaJSONParser;
 import com.example.utils.PlaylistJSONParser;
@@ -58,6 +60,7 @@ public class Detalhes_Musica_Activity extends AppCompatActivity implements Playl
     private TextView textViewAnoJava;
     private TextView textViewAutorJava;
     private TextView nomeArtistaJava;
+    private FloatingActionButton fab;
 
     private ImageView imageViewCoverMusicJava;
     private int isPlaying;
@@ -88,6 +91,23 @@ public class Detalhes_Musica_Activity extends AppCompatActivity implements Playl
 
 
         BeatBunnySingleton.getInstance(getApplicationContext()).setPlaylistListener(this);
+
+        fab = findViewById(R.id.fabAddSongToPlaylist);
+        fab.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(!PlaylistJSONParser.isConnectionInternet(getApplicationContext())){
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent choose = new Intent(getApplicationContext(), ChoosePlaylistActivity.class);
+                    choose.putExtra("idMusica", idMusica);
+                    startActivity(choose);
+                }
+            }
+        });
+
 
         currentIP = BeatBunnySingleton.getInstance(getApplicationContext()).getIPInput();
         idMusica = getIntent().getIntExtra("DETALHES", -1);
@@ -136,11 +156,13 @@ public class Detalhes_Musica_Activity extends AppCompatActivity implements Playl
         back.setVisibility(View.GONE);
         sbar.setVisibility(View.GONE);
         next.setVisibility(View.GONE);
+        fab.setVisibility(View.GONE);
     }
 
     private void temCompradoPorIssoMostra(){
         buttonBuySong.setVisibility(View.GONE);
         pvp.setVisibility(View.GONE);
+        fab.setVisibility(View.VISIBLE);
         final String musicURL = "http://" + currentIP + ":80/BeatBunny/advanced/frontend/web/" + musica.getMusicpath() + "/music_" + musica.getId() + "_" + musica.getTitle() + ".mp3";
         try {
             mediaPlayer.setDataSource(musicURL);
@@ -247,83 +269,9 @@ public class Detalhes_Musica_Activity extends AppCompatActivity implements Playl
         }
     }
 
-
-
-    public Dialog createDialog2() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-
-        ArrayAdapter<Playlist> arrayAdapter = new ArrayAdapter<Playlist>(Detalhes_Musica_Activity.this, android.R.layout.select_dialog_singlechoice);
-
-        arrayAdapter.addAll(listaComTodasAsPlaylists);
-        builder.setTitle("Add this song to a Playlist")
-                .setIcon(R.drawable.logo)
-                .setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-
-                    }
-                });
-        return builder.show();
-    }
-
-    public Dialog createDialog() {
-
-        final Dialog dialog = new Dialog(getApplicationContext());
-        dialog.setContentView(R.layout.add_song_to_playlist);
-        dialog.setTitle("New Playlist");
-/*
-        Button dialogButtonSave = (Button) dialog.findViewById(R.id.buttonSaveAddSongToPlaylist);
-        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.buttonCancelNotAddSongToPlaylist);
-
-        dialogButtonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //BeatBunnySingleton.getInstance(getContext()).setIP(textNomePlaylist.getText().toString());
-                //Toast.makeText(getContext(), BeatBunnySingleton.getInstance(getContext()).getIPInput(), Toast.LENGTH_SHORT).show();
-
-                //BeatBunnySingleton.getInstance(getContext()).createNewPlaylist(getContext(), PlaylistJSONParser.isConnectionInternet(getContext()), textNomePlaylist.getText().toString());
-
-                dialog.dismiss();
-            }
-        });
-
-        dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }*
-        });
-        if(!isFinishing()){
-            dialog.show();
-        }*/
-        return dialog;
-    }
-
-
-    @Override
-    public boolean isFinishing() {
-        return super.isFinishing();
-    }
-
     @Override
     public void onResume() {
         BeatBunnySingleton.getInstance(getApplicationContext()).getAllPlaylistsFromUserAPI(getApplicationContext(), PlaylistJSONParser.isConnectionInternet(getApplicationContext()));
-        FloatingActionButton fab = findViewById(R.id.fabAddSongToPlaylist);
-        fab.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                if(!PlaylistJSONParser.isConnectionInternet(getApplicationContext())){
-                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    createDialog();
-                }
-            }
-        });
         super.onResume();
     }
 

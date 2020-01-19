@@ -16,9 +16,10 @@
     <string name="logout">Logout</string>
     <string name="your_musics">Your Musics</string>
     <string name="home">Home</string>
-    <string name="yes">Yes</string>
     <string name="your_playlists">Your Playlists</string>
     <string name="player" />
     <string name="playlist_s_name">Playlist\'s Name</string>
     <string name="buy_this_song">Buy this Song</string>
+    <string name="delete_playlist">Delete Playlist</string>
+    <string name="yes">Yes</string>
 </resources>

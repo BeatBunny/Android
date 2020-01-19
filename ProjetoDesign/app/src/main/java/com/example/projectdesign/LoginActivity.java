@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -135,6 +136,8 @@ public class LoginActivity extends AppCompatActivity implements UserListener {
 
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.ip_picker_dialog);
+        TextView titulo = dialog.findViewById(R.id.ip_picker_dialog_title);
+        titulo.setText("IP ADDRESS");
         dialog.setTitle("IP ADDRESS");
         final EditText textIP = dialog.findViewById(R.id.ipDialog);
         textIP.setText(SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.SETTINGS_IP, null));

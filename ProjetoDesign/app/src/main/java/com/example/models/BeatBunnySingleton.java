@@ -52,6 +52,7 @@ public class BeatBunnySingleton {
     private String mUrlAPIusersRegister = "http://localhost/BeatBunny/advanced/backend/web/v1/userregisterandlogin/register";
     private String mUrlAPIMusicas = "http://localhost/BeatBunny/advanced/backend/web/v1/music";
     private String mUrlAPIPutMusicInPlaylist = "http://localhost/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate";
+    private String mUrlGetStuffFromPlaylists = "http://localhost/BeatBunny/advanced/backend/web/v1/playlists/";
     private String mUrlGetStuffFromUser;
 
     private static RequestQueue volleiQueue;
@@ -215,6 +216,7 @@ public class BeatBunnySingleton {
         mUrlAPIMusicas = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/music";
         mUrlGetStuffFromUser = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/user/";
         mUrlAPIPutMusicInPlaylist = "http://"+ CURRENT_IP +":80/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate";
+        mUrlGetStuffFromPlaylists = "http://"+ CURRENT_IP +":80/BeatBunny/advanced/backend/web/v1/playlists/";
     }
 
     public String getIPInput() {
@@ -251,6 +253,7 @@ public class BeatBunnySingleton {
         mUrlAPIMusicas = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/music";
         mUrlGetStuffFromUser = "http://" + CURRENT_IP + ":80/BeatBunny/advanced/backend/web/v1/user/";
         mUrlAPIPutMusicInPlaylist = "http://"+ CURRENT_IP +":80/BeatBunny/advanced/backend/web/v1/playlists/playlistcreate";
+        mUrlGetStuffFromPlaylists = "http://"+ CURRENT_IP +":80/BeatBunny/advanced/backend/web/v1/playlists/";
     }
 
 
@@ -433,8 +436,6 @@ public class BeatBunnySingleton {
             }
             );
             volleiQueue.add(request);
-
-
         }
     }
 
@@ -451,30 +452,35 @@ public class BeatBunnySingleton {
             playlists = beatBunnyBD.getAllPlaylists();
             if (playlistListener != null)
                 playlistListener.onRefreshListaPlaylist(playlists);
-            System.out.println("--------------------> PLAYLISTS FROM USER\n"+playlists);
         }
         else {
-            for (final Playlist pl : playlists) {
 
-                final ArrayList<Playlist> finalPlaylists = playlists;
-                JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlGetStuffFromUser +SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER,0)+"/playlists/"+pl.getId()+"/musics?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), null
-                        , new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        pl.setListaMusicasDestaPlaylist(MusicaJSONParser.parserJsonMusicas(response, context));
-                        if (playlistListener != null)
-                            playlistListener.onRefreshListaPlaylist(finalPlaylists);
-                        System.out.println("THIS IS PL ------------------- >>>> "+pl.getListaMusicasDestaPlaylist());
+                for (final Playlist pl : playlists) {
+
+                    final ArrayList<Playlist> finalPlaylists = playlists;
+                    JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, mUrlGetStuffFromUser +SharedPreferencesSettersGetters.readInt(SharedPreferencesSettersGetters.ID_USER,0)+"/playlists/"+pl.getId()+"/musics?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), null
+                            , new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            pl.setListaMusicasDestaPlaylist(MusicaJSONParser.parserJsonMusicas(response, context));
+                            if (playlistListener != null)
+                                playlistListener.onRefreshListaPlaylist(finalPlaylists);
+                            System.out.println("THIS IS PL ------------------- >>>> "+pl.getListaMusicasDestaPlaylist());
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                    );
+                    volleiQueue.add(request);
+
+
                 }
-                );
-                volleiQueue.add(request);
-            }
+                if(playlists.size() == 0)
+                    if (playlistListener != null)
+                        playlistListener.onRefreshListaPlaylist(playlists);
             System.out.println("--------------------> PLAYLISTS FROM USER\n"+playlists);
             /*if (playlistListener != null)
                 playlistListener.onRefreshListaPlaylist(playlists);*/
@@ -507,6 +513,75 @@ public class BeatBunnySingleton {
             volleiQueue.add(request);
         }
     }
+
+    public void deletePlayistAPI(final Context context, final boolean isConnected, final int idPlaylist){
+        if (!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            StringRequest request = new StringRequest(Request.Method.DELETE, mUrlGetStuffFromPlaylists+"playlistdelete/"+idPlaylist+"?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject responseContent = new JSONObject(response);
+                        boolean resposta = responseContent.getBoolean("SaveError");
+                        if(resposta)
+                            Toast.makeText(context, "Playlist Deleted Successfully", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(context, "Playlist Deleted Unsuccessfully", Toast.LENGTH_SHORT).show();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    getAllPlaylistsFromUserAPI(context, isConnected);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            volleiQueue.add(request);
+        }
+    }
+
+    public void putSongInPlaylist(final Context context, final boolean isConnected, final int idMusica , final int idPlaylist){
+        if (!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            StringRequest request = new StringRequest(Request.Method.POST, mUrlGetStuffFromPlaylists+"putsong?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject responseContent = new JSONObject(response);
+                        boolean resposta = responseContent.getBoolean("SaveError");
+                        if(resposta)
+                            Toast.makeText(context, "Music added to chosen Playlist", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(context, "Error adding Music to Playlist", Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("idMusic", String.valueOf(idMusica));
+                    params.put("idPlaylist", String.valueOf(idPlaylist));
+                    return params;
+                }
+            };
+            volleiQueue.add(request);
+        }
+    }
+
 
 
     public void buySongAPI(final Context context, final boolean isConnected, final int idMusica) {

@@ -89,6 +89,8 @@ public class MenuMainActivity extends AppCompatActivity implements
     public Dialog createDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.logout_dialog);
+        TextView titulo = dialog.findViewById(R.id.logout_dialog_title);
+        titulo.setText("Logout");
         Button dialogButtonSave = (Button) dialog.findViewById(R.id.buttonYes);
         Button dialogButtonCancel = (Button) dialog.findViewById(R.id.buttonCancelLogout);
         boolean returningShit = false;

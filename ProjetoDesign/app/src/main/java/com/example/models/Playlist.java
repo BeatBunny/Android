@@ -24,4 +24,9 @@ public class Playlist {
     public String getNome(){return this.Nome;}
     public String getCreationdate(){return this.Creationdate;}
     public ArrayList<Musica> getListaMusicasDestaPlaylist(){return this.ListaMusicasDestaPlaylist;}
+
+    @Override
+    public String toString() {
+        return Nome;
+    }
 }
