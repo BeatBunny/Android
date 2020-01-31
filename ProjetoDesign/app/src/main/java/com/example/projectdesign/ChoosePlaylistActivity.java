@@ -46,7 +46,7 @@ public class ChoosePlaylistActivity extends AppCompatActivity implements Playlis
             public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
                 Playlist playlist = (Playlist) parent.getItemAtPosition(position);
                 BeatBunnySingleton.getInstance(getApplicationContext()).putSongInPlaylist(getApplicationContext(), PlaylistJSONParser.isConnectionInternet(getApplicationContext()), idMusica, playlist.getId());
-
+                finish();
             }
         });
 

@@ -23,6 +23,7 @@ import com.example.models.Musica;
 import com.example.models.Playlist;
 import com.example.projectdesign.R;
 import com.example.utils.MusicaJSONParser;
+import com.example.utils.ProfileJSONParser;
 
 import java.util.ArrayList;
 public class Grelha_mainMenu extends Fragment implements MusicaListener {
@@ -117,6 +118,7 @@ public class Grelha_mainMenu extends Fragment implements MusicaListener {
         }
         BeatBunnySingleton.getInstance(getContext()).getAllMusicasAPI(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
         listaMusicasCompradasProduzidas = BeatBunnySingleton.getInstance(getContext()).getYourStuffAndDontUpdateList(getContext(), MusicaJSONParser.isConnectionInternet(getContext()));
+        BeatBunnySingleton.getInstance(getContext()).getSaldoAfterPurchase(getContext(), ProfileJSONParser.isConnectionInternet(getContext()));
         //BeatBunnySingleton.getInstance(getContext()).getAllUsersAPI(getContext(), UserJSONParser.isConnectionInternet(getContext()));
 
         super.onResume();

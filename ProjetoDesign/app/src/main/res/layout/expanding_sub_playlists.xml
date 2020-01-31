@@ -4,26 +4,64 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     xmlns:tools="http://schemas.android.com/tools">
-    <TextView
-        android:id="@+id/sub_playlist_textview"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:textSize="18sp"
-        android:gravity="center_vertical|left"
-        tools:visibility="visible"/>
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonDeletePlaylist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:foregroundGravity="center_vertical|center_horizontal"
-        android:text="@string/delete_playlist"
-        android:textAlignment="center"
-        android:textIsSelectable="false"
-        android:textSize="18sp"
-        tools:visibility="gone" />
+        <LinearLayout
+            android:id="@+id/sub_linear_layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/sub_playlist_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:foregroundGravity="left"
+                android:gravity="center_vertical|left"
+                android:textSize="18sp"
+                tools:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonRemoveMusicFromPlaylist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:layout_weight="0"
+                android:background="@drawable/roundedbutton"
+                android:minWidth="22dip"
+                android:minHeight="22dip"
+                android:text="@string/remove_music_string"
+                android:textColor="#000000"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sub_linear_layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:visibility="gone">
+
+            <Button
+                android:id="@+id/buttonDeletePlaylist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center_vertical|center_horizontal"
+                android:text="@string/delete_playlist"
+                android:textAlignment="center"
+                android:textIsSelectable="false"
+                android:textSize="18sp"
+                tools:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

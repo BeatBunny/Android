@@ -22,4 +22,5 @@
     <string name="buy_this_song">Buy this Song</string>
     <string name="delete_playlist">Delete Playlist</string>
     <string name="yes">Yes</string>
+    <string name="remove_music_string">-</string>
 </resources>

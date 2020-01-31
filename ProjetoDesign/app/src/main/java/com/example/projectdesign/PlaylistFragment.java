@@ -1,12 +1,14 @@
 package com.example.projectdesign;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
+import com.example.Detalhes_Musica_Activity;
 import com.example.listeners.PlaylistListener;
 import com.example.models.BeatBunnySingleton;
 import com.example.models.Musica;
@@ -109,18 +112,52 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
                 if( pl.getListaMusicasDestaPlaylist().size() > 0){
                     int itemsParaForeach = (pl.getListaMusicasDestaPlaylist().size() + 1);
                     item.createSubItems(itemsParaForeach);
-                    ArrayList<Musica> listaDeMusicasDaPlaylist = pl.getListaMusicasDestaPlaylist();
+                    final ArrayList<Musica> listaDeMusicasDaPlaylist = pl.getListaMusicasDestaPlaylist();
                     for (int i = 0; i < pl.getListaMusicasDestaPlaylist().size() ; i++){
                         View subItem = item.getSubItemView(i);
+                        LinearLayout linearLayout1 = subItem.findViewById(R.id.sub_linear_layout_1);
+                        linearLayout1.setVisibility(View.VISIBLE);
+                        LinearLayout linearLayout2 = subItem.findViewById(R.id.sub_linear_layout_2);
+                        linearLayout2.setVisibility(View.GONE);
                         TextView musicThingy = subItem.findViewById(R.id.sub_playlist_textview);
+                        Button removeMusicFromPlaylist = subItem.findViewById(R.id.buttonRemoveMusicFromPlaylist);
                         Button deletePlaylistButton = subItem.findViewById(R.id.buttonDeletePlaylist);
                         musicThingy.setVisibility(View.VISIBLE);
+                        removeMusicFromPlaylist.setVisibility(View.VISIBLE);
                         deletePlaylistButton.setVisibility(View.GONE);
                         musicThingy.setText(listaDeMusicasDaPlaylist.get(i).getTitle());
+                        final int finalI1 = i;
+                        musicThingy.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                boolean isYours = false;
+                                isYours = BeatBunnySingleton.getInstance(getContext()).checkIfYouOwnMusic(listaDeMusicasDaPlaylist.get(finalI1).getId());
+
+                                Intent intent = new Intent(getContext(), Detalhes_Musica_Activity.class);
+                                intent.putExtra("DETALHES",listaDeMusicasDaPlaylist.get(finalI1).getId());
+                                intent.putExtra("IS_BOUGHT", isYours);
+                                startActivity(intent);
+                            }
+                        });
+                        final int finalI = i;
+                        removeMusicFromPlaylist.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                createDialogRemoveMusicFromPlaylist(pl, listaDeMusicasDaPlaylist.get(finalI));
+                                //createDialogDeletePlaylist(pl);
+                            }
+                        });
+
 
                     }
                     View dubItem = item.getSubItemView(pl.getListaMusicasDestaPlaylist().size());
+                    LinearLayout linearLayout1 = dubItem.findViewById(R.id.sub_linear_layout_1);
+                    linearLayout1.setVisibility(View.GONE);
+                    LinearLayout linearLayout2 = dubItem.findViewById(R.id.sub_linear_layout_2);
+                    linearLayout2.setVisibility(View.VISIBLE);
                     Button deletePlaylist = dubItem.findViewById(R.id.buttonDeletePlaylist);
+                    Button removeMusicFromPlaylist = dubItem.findViewById(R.id.buttonRemoveMusicFromPlaylist);
+                    removeMusicFromPlaylist.setVisibility(View.GONE);
                     deletePlaylist.setVisibility(View.VISIBLE);
                     deletePlaylist.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -133,6 +170,10 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
                     int itemsParaForeach = 1;
                     item.createSubItems(itemsParaForeach);
                     View subItem = item.getSubItemView(0);
+                    LinearLayout linearLayout1 = subItem.findViewById(R.id.sub_linear_layout_1);
+                    linearLayout1.setVisibility(View.GONE);
+                    LinearLayout linearLayout2 = subItem.findViewById(R.id.sub_linear_layout_2);
+                    linearLayout2.setVisibility(View.VISIBLE);
                     Button deletePlaylist = subItem.findViewById(R.id.buttonDeletePlaylist);
                     deletePlaylist.setVisibility(View.VISIBLE);
                     deletePlaylist.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +190,33 @@ public class PlaylistFragment extends Fragment implements PlaylistListener {
             item.setIndicatorIconRes(R.drawable.ic_musicbeat);
 
         }
+    }
+
+    private void createDialogRemoveMusicFromPlaylist(final Playlist pl, final Musica musicaParaRetirarDaPlaylist) {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.delete_playlist_dialog);
+        TextView titulo = dialog.findViewById(R.id.delete_playlist_dialog_title);
+        titulo.setText("Remove Song");
+        final TextView textNomePlaylist = dialog.findViewById(R.id.playlistToDelete);
+        Button dialogButtonSave = (Button) dialog.findViewById(R.id.buttonDeleteSavePlaylist);
+        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.buttonDeleteCancelPlaylist);
+        textNomePlaylist.setText(musicaParaRetirarDaPlaylist.getTitle());
+        dialogButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BeatBunnySingleton.getInstance(getContext()).removeSongFromPlaylist(getContext(), PlaylistJSONParser.isConnectionInternet(getContext()), pl.getId(), musicaParaRetirarDaPlaylist.getId());
+                dialog.dismiss();
+            }
+        });
+
+        dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 
 

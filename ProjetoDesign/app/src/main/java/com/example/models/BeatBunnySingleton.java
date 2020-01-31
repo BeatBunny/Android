@@ -582,6 +582,44 @@ public class BeatBunnySingleton {
         }
     }
 
+    public void removeSongFromPlaylist(final Context context, final boolean isConnected,final int idPlaylist, final int idMusica ){
+        if (!isConnected){
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            StringRequest request = new StringRequest(Request.Method.POST, mUrlGetStuffFromPlaylists+"playlistremovesong?access-token="+SharedPreferencesSettersGetters.readString(SharedPreferencesSettersGetters.AUTH_KEY, null), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject responseContent = new JSONObject(response);
+                        boolean resposta = responseContent.getBoolean("SaveError");
+                        if(resposta)
+                            Toast.makeText(context, "Music removed from Playlist", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(context, "Error removing Music from Playlist", Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    getAllPlaylistsFromUserAPI(context, isConnected);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("idMusic", String.valueOf(idMusica));
+                    params.put("idPlaylist", String.valueOf(idPlaylist));
+                    return params;
+                }
+            };
+            volleiQueue.add(request);
+        }
+    }
+
 
 
     public void buySongAPI(final Context context, final boolean isConnected, final int idMusica) {
